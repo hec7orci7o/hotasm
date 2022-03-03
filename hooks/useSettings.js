@@ -1,17 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 export default function useSettings() {
   const [config, setConfig] = useState([]);
-  const [translate, setTranslate] = useState({});
+  const [translator, setTranslator] = useState({});
 
   useEffect(() => {
-    // crear translate en base a config
-    // {
-    //  name: {
-    //      num: x,
-    //      df:  y
-    // }
-  }, [config]);
+    let dictionary = Object.assign(
+      {},
+      ...config.map((x) => ({
+        [x.name]: {
+          num: x.num,
+          df: x.df,
+        },
+      }))
+    );
+    setTranslator(dictionary);
+  }, [config, setTranslator]);
 
   const addConf = () => {
     setConfig([
@@ -26,7 +30,6 @@ export default function useSettings() {
   };
 
   const updateConf = (data) => {
-    console.log(data);
     let copy = config;
     for (let i = 0; i < copy.length; i++)
       if (copy[i].id === data.id) copy[i] = data;
@@ -37,5 +40,5 @@ export default function useSettings() {
     setConfig(config.filter((s) => s.id !== id));
   };
 
-  return { config, addConf, updateConf, removeConf };
+  return { config, translator, addConf, updateConf, removeConf };
 }

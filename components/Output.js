@@ -6,7 +6,7 @@ export default function Output({ bin, mem }) {
     <div className="col-span-2 bg-[#263238]">
       <div className="flex flex-wrap w-full p-8 gap-6">
         {/* --- BIN OUTPUT --- */}
-        <div className="w-full p-4 bg-[#222D32] text-white relative z-0">
+        <div className="w-full p-4 bg-[#222D32] text-white relative z-0 min-h-[20rem]">
           <button
             onClick={() =>
               copy(String(bin).replace(/,/g, "\n"), {
@@ -28,7 +28,7 @@ export default function Output({ bin, mem }) {
           </div>
         </div>
         {/* --- MEM OUTPUT --- */}
-        <div className="w-full p-4 bg-[#222D32] text-white relative z-0">
+        <div className="w-full p-4 bg-[#222D32] text-white relative z-0 min-h-[10rem]">
           <button
             onClick={() =>
               copy(String(mem.props.children).replace(/,(.*), /g, "\n"), {

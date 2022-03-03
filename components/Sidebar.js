@@ -1,10 +1,8 @@
-import { useState } from "react";
 import { FiPlus } from "react-icons/fi";
 import Setting from "./Setting";
 import useCalc from "../hooks/useCalc";
-import useSettings from "../hooks/useSettings";
 
-export default function Sidebar() {
+export default function Sidebar({ config, addConf, updateConf, removeConf }) {
   const {
     dec,
     bin,
@@ -16,8 +14,6 @@ export default function Sidebar() {
     updateBinario,
     updateHexadecimal,
   } = useCalc();
-
-  const { config, addConf, updateConf, removeConf } = useSettings();
 
   return (
     <div className="col-span-2 bg-[#F8FAFD]">
@@ -57,7 +53,6 @@ export default function Sidebar() {
           </div>
         </div>
       </div>
-      <button onClick={() => console.log(config)}>show</button>
       {/* --- CALCULATION --- */}
       <div className="h-1/2 w-full p-8">
         <h2 className="font-bold text-lg text-center mb-5 capitalize">
