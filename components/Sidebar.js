@@ -1,8 +1,7 @@
-import { FiPlus } from "react-icons/fi";
-import Setting from "./Setting";
 import useCalc from "../hooks/useCalc";
+import { useState } from "react";
 
-export default function Sidebar({ config, addConf, updateConf, removeConf }) {
+export default function Sidebar({ load, unload }) {
   const {
     dec,
     bin,
@@ -15,42 +14,49 @@ export default function Sidebar({ config, addConf, updateConf, removeConf }) {
     updateHexadecimal,
   } = useCalc();
 
+  const [config, setConfig] = useState("");
+  const [nbits, setNbits] = useState(0);
+
   return (
     <div className="col-span-2 bg-[#F8FAFD]">
       {/* --- PARAMETERS --- */}
-      <div className="h-1/2 w-full p-8">
-        <h2 className="font-bold text-lg text-center mb-5 capitalize">
-          configuración
-        </h2>
-        <div className="grid grid-cols-8 gap-1 grid-flow-row auto-rows-max">
-          <div className="w-full flex justify-center col-start-2 col-span-2 bg-gray-300 rounded-sm">
-            <span className="text-sm font-medium p-2">name</span>
-          </div>
-          <div className="w-full flex justify-center col-span-2 bg-gray-300 rounded-sm">
-            <span className="text-sm font-medium p-2">nºbits</span>
-          </div>
-          <div className="w-full flex justify-center col-span-2 bg-gray-300 rounded-sm">
-            <span className="text-sm font-medium p-2">df bits</span>
-          </div>
+      <div className="flex gap-2 flex-wrap h-1/2 w-full p-8">
+        <div className="flex justify-center items-center h-60 w-full bg-[#EFF2F5] relative">
+          <h3 className="uppercase font-bold text-3xl opacity-30">config</h3>
+          <textarea
+            id="config"
+            name="config"
+            className="w-full h-full resize-none bg-transparent p-4 absolute top-0 left-0"
+            onChange={(e) => setConfig(e.target.value)}
+          />
+        </div>
+        <div className="w-full flex justify-between items-center bg-[#EFF2F5] px-6 py-2">
+          <h3 className="uppercase font-bold text-xl opacity-30">inst</h3>
+          <label htmlFor="inst">
+            <input
+              className="w-8 h-8 bg-transparent border-2 border-black rounded-md p-1"
+              onChange={(e) => setNbits(Number(e.target.value))}
+            />
+            <span id="inst" name="inst" className="ml-2">
+              bits
+            </span>
+          </label>
+        </div>
+        <div className="w-full flex gap-2 justify-center">
           <button
-            onClick={addConf}
-            className="col-span-1 mx-auto font-medium p-2"
+            type="submit"
+            className="text-xl w-1/2 p-2 bg-[#EFF2F5]"
+            onClick={() => load(config, nbits)}
           >
-            <FiPlus className="w-5 h-5 hover:text-green-600" />
+            <span className="font-bold text-xl opacity-30">load</span>
           </button>
-          <div className="col-span-8 grid grid-cols-1 gap-1 mt-2">
-            {config.map((c) => (
-              <Setting
-                key={c.id}
-                id={c.id}
-                name={c.name}
-                num={c.num}
-                df={c.df}
-                updFun={updateConf}
-                delFun={removeConf}
-              />
-            ))}
-          </div>
+          <button
+            type="button"
+            className="text-xl w-1/2 p-2 bg-[#EFF2F5]"
+            onClick={() => unload()}
+          >
+            <span className="font-bold text-xl opacity-30">unload</span>
+          </button>
         </div>
       </div>
       {/* --- CALCULATION --- */}
@@ -63,7 +69,7 @@ export default function Sidebar({ config, addConf, updateConf, removeConf }) {
             <div className="flex flex-wrap gap-1 col-start-2 col-span-6">
               <label className="font-medium">Decimal</label>
               <input
-                onClick={setDecimal}
+                onClick={() => setDecimal()}
                 onChange={(e) => updateDecimal(e.target.value)}
                 className="w-full bg-gray-300 rounded-sm py-2 px-4"
                 value={dec}
@@ -74,7 +80,7 @@ export default function Sidebar({ config, addConf, updateConf, removeConf }) {
             <div className="flex flex-wrap gap-1 col-start-2 col-span-6">
               <label className="font-medium">Binario</label>
               <input
-                onClick={setBinario}
+                onClick={() => setBinario()}
                 onChange={(e) => updateBinario(e.target.value)}
                 className="w-full bg-gray-300 rounded-sm py-2 px-4"
                 value={bin}
@@ -85,7 +91,7 @@ export default function Sidebar({ config, addConf, updateConf, removeConf }) {
             <div className="flex flex-wrap gap-1 col-start-2 col-span-6">
               <label className="font-medium">Hexadecimal</label>
               <input
-                onClick={setHexadecimal}
+                onClick={() => setHexadecimal()}
                 onChange={(e) => updateHexadecimal(e.target.value)}
                 className="w-full bg-gray-300 rounded-sm py-2 px-4"
                 value={hex}

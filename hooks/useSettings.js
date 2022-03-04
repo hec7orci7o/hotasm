@@ -1,44 +1,48 @@
-import { useState, useEffect, useCallback } from "react";
-
+import { useState } from "react";
 export default function useSettings() {
-  const [config, setConfig] = useState([]);
-  const [translator, setTranslator] = useState({});
+  const [config, setConfig] = useState("");
+  const [nbits, setNbits] = useState(0);
 
-  useEffect(() => {
-    let dictionary = Object.assign(
-      {},
-      ...config.map((x) => ({
-        [x.name]: {
-          num: x.num,
-          df: x.df,
-        },
-      }))
-    );
-    setTranslator(dictionary);
-  }, [config, setTranslator]);
-
-  const addConf = () => {
-    setConfig([
-      ...config,
-      {
-        id: config.length,
-        name: null,
-        num: null,
-        df: null,
-      },
-    ]);
+  const handleLoad = (_c, _n) => {
+    setConfig(_c);
+    setNbits(_n);
   };
 
-  const updateConf = (data) => {
-    let copy = config;
-    for (let i = 0; i < copy.length; i++)
-      if (copy[i].id === data.id) copy[i] = data;
-    setConfig(copy);
+  const handleUnload = () => {
+    setConfig("");
+    setNbits(0);
   };
 
-  const removeConf = (id) => {
-    setConfig(config.filter((s) => s.id !== id));
+  const parse = (str) => {
+    // tokens
+    let tReg = /^(r[a-z])/;
+    let tConstant = /^(#[A-Z])/;
+    let tAddr = /^(\[r[a-z]\])/;
+    let tIdent = /^([a-zA-Z]*)/;
+    let tComma = /^,/;
+    let tSColon = /^;/;
+
+    // fallback
+    let tOther = /^[\r\n\t ]/;
+
+    // TO-DO: refactor switch
+    while (str !== "") {
+      if (tReg.test(str)) {
+        // generate reg token and remove beginning of string
+      } else if (tConstant.test(str)) {
+      } else if (tAddr.test(str)) {
+      } else if (tIdent.test(str)) {
+      } else if (tComma.test(str)) {
+      } else if (tComma.test(str)) {
+      } else if (tOther.test(str)) {
+      } else {
+        throw new Error(`Unexpected token (${str[0]})`);
+      }
+    }
   };
 
-  return { config, translator, addConf, updateConf, removeConf };
+  return {
+    handleLoad,
+    handleUnload,
+  };
 }

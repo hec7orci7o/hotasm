@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 
 export default function useEditor(translator) {
-  console.log(translator);
   const [rawCode, setCode] = useState("");
   const [binOut, setBOut] = useState([]);
   const [memOut, setMOut] = useState(<></>);
