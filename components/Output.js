@@ -3,7 +3,7 @@ import copy from "copy-to-clipboard";
 
 export default function Output({ bin, mem }) {
   return (
-    <div className="col-span-2 bg-[#263238]">
+    <div className="col-start-6 col-span-2 bg-[#263238]">
       <div className="flex flex-wrap w-full p-8 gap-6">
         {/* --- BIN OUTPUT --- */}
         <div className="w-full p-4 bg-[#222D32] text-white relative z-0 min-h-[20rem]">
@@ -18,7 +18,7 @@ export default function Output({ bin, mem }) {
           >
             <FiCopy className="w-4 h-4" />
           </button>
-          <div className="text-base">
+          <div className="text-base font-mono">
             {bin.map((line, id) => (
               <div key={id}>
                 <span>{line}</span>
@@ -40,7 +40,7 @@ export default function Output({ bin, mem }) {
           >
             <FiCopy className="w-4 h-4" />
           </button>
-          <div className="text-base">
+          <div className="text-base font-mono">
             <span>{mem}</span>
           </div>
         </div>

@@ -4,13 +4,13 @@ export default function useCalc() {
   const BASE_2 = 2;
   const BASE_10 = 10;
   const BASE_16 = 16;
-  const [caso, setCaso] = useState("DEC");
+  const [caso, setCaso] = useState("");
   const [dec, setDec] = useState(0);
   const [bin, setBin] = useState(0);
   const [hex, setHex] = useState(0);
 
   const updateDecimal = (_n) => {
-    setDec(_n);
+    setDec(_n === "" ? 0 : _n);
   };
   const updateBinario = (_n) => {
     setBin(_n);
@@ -46,11 +46,11 @@ export default function useCalc() {
     dec,
     bin,
     hex,
-    setDecimal,
-    setBinario,
-    setHexadecimal,
     updateDecimal,
     updateBinario,
     updateHexadecimal,
+    setDecimal,
+    setBinario,
+    setHexadecimal,
   };
 }

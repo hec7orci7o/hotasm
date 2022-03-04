@@ -3,51 +3,40 @@ import Editor from "../components/Editor";
 import Output from "../components/Output";
 import useEditor from "../hooks/useEditor";
 import useSettings from "../hooks/useSettings";
+import Link from "next/link";
+import { FiBook, FiGithub, FiGift } from "react-icons/fi";
 
 export default function Home() {
   const { binOut, memOut, updateCode } = useEditor();
   const { handleLoad, handleUnload } = useSettings();
 
   return (
-    <div className="h-screen grid grid-cols-7 gap-4">
+    <div className="h-screen grid grid-cols-7 gap-4 overflow-hidden">
       {/* CONFIG */}
       <Sidebar load={handleLoad} unload={handleUnload} />
-      {/* EDITOR */}
-      <Editor write={() => {}} />
+      <div className="flex flex-wrap gap-y-2 col-start-3 col-span-3 py-4 px-8">
+        <div className="h-16 flex justify-between items-center w-full border-2 p-4 text-base font-mono">
+          <div></div>
+          <div className="flex gap-4">
+            <a href="https://www.buymeacoffee.com/hec7orci7o">
+              <FiGift className="w-5 h-5 opacity-80 hover:brightness-150 hover:opacity-100" />
+            </a>
+            <a href="https://github.com/hec7orci7o/cuddly-adventure">
+              <FiGithub className="w-5 h-5 opacity-80 hover:brightness-150 hover:opacity-100" />
+            </a>
+            <Link href="/docs">
+              <a>
+                <FiBook className="w-5 h-5 opacity-80 hover:brightness-150 hover:opacity-100" />
+              </a>
+            </Link>
+          </div>
+        </div>
+        {/* EDITOR */}
+        <Editor write={() => {}} />
+      </div>
+
       {/* OUTPUT */}
-      <Output bin={binOut} mem={memOut} />
+      <Output bin={["0000000000000", "00000000"]} mem={memOut} />
     </div>
   );
 }
-
-/*
-// formatos de inst
-mov K,rd ; SignExt(K) -> BR(rd) K cte de 16 bits 
-add ra,rb,rd ; BR(ra) + BR(rb) -> BR(rd) 
-Plantilla:
---------------------------------
-add @ra, rb, rd; 1 22:22 15:10 9:5 4:0
-mov K, rd; 0 22:22 21:16 4:0
-
-"add" : {
-  co : 1
-  fields : {
-    co: (22, 22)
-    ra: (15, 10),
-    rb: (9, 5),
-    rd: (4, 0)
-  }
-}
-
-
-ld r1, [r1]
-add r4, r1, r3
-mov #4, r5
-*/
-
-/*
-[
-  "add ra, rb, rd; 1 22:22 15:10 9:5 4:0",
-  "mov #K, rd; 0 22:22 21:16 4:0"
-]
-*/
