@@ -1,7 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 export default function useSettings() {
   const [config, setConfig] = useState("");
   const [nbits, setNbits] = useState(0);
+
+  useEffect(() => {
+    console.log(config, nbits);
+    parse(config);
+  }, [config, nbits]);
 
   const handleLoad = (_c, _n) => {
     setConfig(_c);
@@ -28,13 +34,18 @@ export default function useSettings() {
     // TO-DO: refactor switch
     while (str !== "") {
       if (tReg.test(str)) {
+        console.log(str.match(tReg));
         // generate reg token and remove beginning of string
       } else if (tConstant.test(str)) {
-      } else if (tAddr.test(str)) {
+        console.log(str.match(tConstant));
+      } else if (tReg.test(str)) {
+        console.log(str.match(tReg));
       } else if (tIdent.test(str)) {
+        console.log(str.match(tIdent));
       } else if (tComma.test(str)) {
-      } else if (tComma.test(str)) {
+        console.log(str.match(tComma));
       } else if (tOther.test(str)) {
+        console.log(str.match(tOther));
       } else {
         throw new Error(`Unexpected token (${str[0]})`);
       }
