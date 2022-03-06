@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { pairs, readToken } from "../logic/pairs";
+import { pairs, readToken } from "../logic/lexico";
 
 export default function useSettings() {
   const [config, setConfig] = useState("");
