@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
+import { pairs, readToken } from "../logic/pairs";
 
 export default function useSettings() {
   const [config, setConfig] = useState("");
   const [nbits, setNbits] = useState(0);
 
   useEffect(() => {
-    console.log(config, nbits);
-    parse(config);
+    try {
+      parse(config);
+    } catch (error) {
+      console.log(error);
+    }
   }, [config, nbits]);
 
   const handleLoad = (_c, _n) => {
@@ -20,35 +24,33 @@ export default function useSettings() {
   };
 
   const parse = (str) => {
-    // tokens
-    let tReg = /^(r[a-z])/;
-    let tConstant = /^(#[A-Z])/;
-    let tAddr = /^(\[r[a-z]\])/;
-    let tIdent = /^([a-zA-Z]*)/;
-    let tComma = /^,/;
-    let tSColon = /^;/;
+    let it = 0; // temporal para debug
+    let tokenList = [];
+    let kind;
+    let token;
 
-    // fallback
-    let tOther = /^[\r\n\t ]/;
+    while (str !== "" && it != 100) {
+      // generate token and remove beginning of string
+      if (pairs.reg.regex.test(str))
+        [str, kind, token] = readToken(str, pairs.reg);
+      else if (pairs.constant.regex.test(str))
+        [str, kind, token] = readToken(str, pairs.constant);
+      else if (pairs.number.regex.test(str))
+        [str, kind, token] = readToken(str, pairs.number);
+      else if (pairs.ident.regex.test(str))
+        [str, kind, token] = readToken(str, pairs.ident);
+      else if (pairs.range.regex.test(str))
+        [str, kind, token] = readToken(str, pairs.range);
+      else if (pairs.comma.regex.test(str))
+        [str, kind, token] = readToken(str, pairs.comma);
+      else if (pairs.sColon.regex.test(str))
+        [str, kind, token] = readToken(str, pairs.sColon);
+      else if (pairs.other.regex.test(str))
+        [str, kind, token] = readToken(str, pairs.other);
+      else throw new Error(`Unexpected token (${str[0]})`);
 
-    // TO-DO: refactor switch
-    while (str !== "") {
-      if (tReg.test(str)) {
-        console.log(str.match(tReg));
-        // generate reg token and remove beginning of string
-      } else if (tConstant.test(str)) {
-        console.log(str.match(tConstant));
-      } else if (tReg.test(str)) {
-        console.log(str.match(tReg));
-      } else if (tIdent.test(str)) {
-        console.log(str.match(tIdent));
-      } else if (tComma.test(str)) {
-        console.log(str.match(tComma));
-      } else if (tOther.test(str)) {
-        console.log(str.match(tOther));
-      } else {
-        throw new Error(`Unexpected token (${str[0]})`);
-      }
+      if (kind !== pairs.other.token) tokenList = [...tokenList, [kind, token]];
+      it++;
     }
   };
 
@@ -64,7 +66,7 @@ mov K,rd ; SignExt(K) -> BR(rd) K cte de 16 bits
 add ra,rb,rd ; BR(ra) + BR(rb) -> BR(rd) 
 Plantilla:
 --------------------------------
-add @ra, rb, rd; 1 22:22 15:10 9:5 4:0
+add ra, rb, rd; 1 22:22 15:10 9:5 4:0
 mov K, rd; 0 22:22 21:16 4:0
 
 "add" : {

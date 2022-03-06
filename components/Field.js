@@ -5,7 +5,7 @@ export default function Field({ name, value, update, select }) {
   return (
     <div className="h-10 flex flex-nowrap justify-between items-center gap-x-4 w-full bg-[#3B4449] bg-opacity-10">
       <div className="flex justify-center items-center w-20 h-full border-r-2 border-[#222D32] border-opacity-40 px-3">
-        <span className="font-sans font-medium text-base opacity-80 text-left w-full">
+        <span className="font-sans font-medium text-base opacity-80 text-left w-full select-none">
           {name}
         </span>
       </div>
@@ -25,9 +25,9 @@ export default function Field({ name, value, update, select }) {
               format: "text/plain",
             })
           }
-          className="text-[#222D32] rounded-md"
+          className="rounded-md"
         >
-          <FiCopy className="h-5 w-auto" />
+          <FiCopy className="h-5 w-auto text-[#263238] hover:text-[#222D32]" />
         </button>
       </div>
     </div>
