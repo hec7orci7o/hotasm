@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { pairs, readToken } from "../logic/lexico";
+import { parse } from "../logic/lexico";
+import { sintactico } from "../logic/sintactico";
 
 export default function useSettings() {
   const [config, setConfig] = useState("");
@@ -7,7 +8,8 @@ export default function useSettings() {
 
   useEffect(() => {
     try {
-      parse(config);
+      let tokenList = parse(config);
+      sintactico(tokenList);
     } catch (error) {
       console.log(error);
     }
@@ -21,37 +23,6 @@ export default function useSettings() {
   const handleUnload = () => {
     setConfig("");
     setNbits(0);
-  };
-
-  const parse = (str) => {
-    let it = 0; // temporal para debug
-    let tokenList = [];
-    let kind;
-    let token;
-
-    while (str !== "" && it != 100) {
-      // generate token and remove beginning of string
-      if (pairs.reg.regex.test(str))
-        [str, kind, token] = readToken(str, pairs.reg);
-      else if (pairs.constant.regex.test(str))
-        [str, kind, token] = readToken(str, pairs.constant);
-      else if (pairs.number.regex.test(str))
-        [str, kind, token] = readToken(str, pairs.number);
-      else if (pairs.ident.regex.test(str))
-        [str, kind, token] = readToken(str, pairs.ident);
-      else if (pairs.range.regex.test(str))
-        [str, kind, token] = readToken(str, pairs.range);
-      else if (pairs.comma.regex.test(str))
-        [str, kind, token] = readToken(str, pairs.comma);
-      else if (pairs.sColon.regex.test(str))
-        [str, kind, token] = readToken(str, pairs.sColon);
-      else if (pairs.other.regex.test(str))
-        [str, kind, token] = readToken(str, pairs.other);
-      else throw new Error(`Unexpected token (${str[0]})`);
-
-      if (kind !== pairs.other.token) tokenList = [...tokenList, [kind, token]];
-      it++;
-    }
   };
 
   return {
