@@ -2,6 +2,12 @@ import { FiCopy } from "react-icons/fi";
 import copy from "copy-to-clipboard";
 
 export default function Output({ bin, mem }) {
+  console.log(bin);
+  const aux = [
+    "1xxxxxxxxxxxxxx11xxx11",
+    "1xxxxxxxxxxxxx101xx101",
+    "1xxxxxx1000101011xx111",
+  ];
   return (
     <div className="col-start-6 col-span-2 bg-[#263238]">
       <div className="flex flex-wrap w-full p-8 gap-6">
@@ -19,11 +25,11 @@ export default function Output({ bin, mem }) {
             <FiCopy className="w-4 h-4" />
           </button>
           <div className="text-base font-mono">
-            {bin.map((line, id) => (
-              <div key={id}>
-                <span>{line}</span>
+            {bin.map((line) => (
+              <>
+                {line}
                 <br />
-              </div>
+              </>
             ))}
           </div>
         </div>

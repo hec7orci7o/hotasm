@@ -128,30 +128,28 @@ const trInstParam = Symbol("states");
 const trError = Symbol("states");
 
 /**
+ * Modifica la cadena de la instrucción para añadirle el token(binario)
  *
- * @param {*} line
- * @param {*} token
- * @param {*} translator
+ * @param {String} line
+ * @param {String} token
+ * @param {Array} translator
  * @returns
  */
 function inst2Bin(line, token, translator) {
+  let max = Math.max(translator[0], translator[1]);
   let resta = Math.abs(translator[0] - translator[1]);
-  if (translator[0] === 0 || translator[1] === 0) resta += 1;
+
+  if (translator[1] === 0) {
+    resta += 1;
+    max += 1;
+  }
   token = token.padStart(resta, "x");
 
-  console.log("resta: ", resta);
-  console.log("token + x: ", token.length, token);
+  let vLine = line.split("");
+  vLine.splice(line.length - max, resta, ...token.split(""));
+  vLine = vLine.toString().replaceAll(",", "");
 
-  line = line
-    .split("")
-    .splice(
-      line.length - Math.max(translator[0], translator[1]),
-      resta,
-      ...token.split("")
-    )
-    .toString()
-    .replaceAll(",", "");
-  return line;
+  return vLine;
 }
 
 /**
@@ -162,6 +160,7 @@ function inst2Bin(line, token, translator) {
  * @returns
  */
 function trActionInst(kind, translator, word) {
+  console.log("adios");
   switch (kind) {
     case ident:
       try {
@@ -183,8 +182,6 @@ function trActionInst(kind, translator, word) {
       return [sError, word];
   }
 }
-// mov #K rd; 1 22:22 21:16 4:0;
-// add ra rb rd; 1 22:22 15:10 9:5 4:0;
 
 /**
  *
@@ -204,35 +201,11 @@ function trActionParam(kind, token, translator, word, iParam) {
     case number:
       // traduce el parametro a binario
       try {
-        console.log("initial word: ", word.length, word);
-
-        let aux = word.split("");
-        let resta = Math.abs(
-          translator["ranges"][iParam][0] - translator["ranges"][iParam][1]
-        );
-        token = token.padStart(resta, "x");
-
-        console.log("resta: ", resta);
-        console.log("token + x: ", token.length, token);
-
-        aux.splice(
-          word.length -
-            Math.max(
-              translator["ranges"][iParam][0],
-              translator["ranges"][iParam][1]
-            ),
-          resta,
-          ...token.split("")
-        );
-        word = aux.toString().replaceAll(",", "");
-        console.log("final word: ", word.length, word);
+        word = inst2Bin(word, token, translator["ranges"][iParam]);
       } catch (error) {
         console.error(error);
       }
       return [trInstParam, word];
-    case sColon:
-      // guarda la palabra en la lista de binarios
-      return [trInst, word];
     default:
       return [sError, word];
   }
@@ -247,11 +220,11 @@ function trActionParam(kind, token, translator, word, iParam) {
  * @returns
  */
 export function programSintaxReader(tkList, isa, numbits) {
-  numbits = 22; // debug
   let state = trInst;
   let word;
   let iParam = 1;
   let inst;
+  let instList = [];
 
   tkList.forEach((pair) => {
     let [kind, token] = pair;
@@ -261,13 +234,16 @@ export function programSintaxReader(tkList, isa, numbits) {
       [state, word] = trActionInst(kind, isa[token], word);
       iParam = 1;
     } else if (state === trInstParam) {
-      [state, word] = trActionParam(kind, token, isa[inst], word, iParam);
-      iParam += 1;
-    } else {
-      return [word];
+      if (kind !== sColon) {
+        [state, word] = trActionParam(kind, token, isa[inst], word, iParam);
+        iParam += 1;
+      } else {
+        instList.push(word);
+        state = trInst;
+      }
     }
   });
-  return [word];
+  return instList;
 }
 // mov #K rd; 1 22:22 21:16 4:0;
 // add ra rb rd; 1 22:22 15:10 9:5 4:0;
