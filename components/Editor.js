@@ -1,6 +1,3 @@
-import { useState } from "react";
-
-/* https://es.stackoverflow.com/questions/498354/numerar-l%C3%ADneas-en-un-textarea-de-html */
 export default function Editor({ write }) {
   return (
     <textarea

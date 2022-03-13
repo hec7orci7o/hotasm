@@ -153,14 +153,12 @@ function inst2Bin(line, token, translator) {
 }
 
 /**
- *
  * @param {Symbol} kind
  * @param {Object} translator
  * @param {String} word
  * @returns
  */
 function trActionInst(kind, translator, word) {
-  console.log("adios");
   switch (kind) {
     case ident:
       try {
@@ -245,5 +243,3 @@ export function programSintaxReader(tkList, isa, numbits) {
   });
   return instList;
 }
-// mov #K rd; 1 22:22 21:16 4:0;
-// add ra rb rd; 1 22:22 15:10 9:5 4:0;

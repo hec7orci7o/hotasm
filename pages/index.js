@@ -1,19 +1,25 @@
 import Sidebar from "../components/Sidebar";
 import Editor from "../components/Editor";
 import Output from "../components/Output";
-import useEditor from "../hooks/useEditor";
-import useSettings from "../hooks/useSettings";
+import useApp from "../hooks/useApp";
 import Link from "next/link";
 import { FiBook, FiGithub, FiGift } from "react-icons/fi";
 
 export default function Home() {
-  const { isa, nbits, handleLoad, handleUnload } = useSettings();
-  const { binOut, memOut, setCode, updateCode } = useEditor(isa, nbits);
+  const {
+    // modulo configuracion
+    loadFormat,
+    unloadFormat,
+    // modulo editor
+    binary,
+    memory,
+    updateProgram,
+  } = useApp();
 
   return (
     <div className="h-screen grid grid-cols-7 gap-4 overflow-hidden">
       {/* CONFIG */}
-      <Sidebar load={handleLoad} unload={handleUnload} />
+      <Sidebar load={loadFormat} unload={unloadFormat} />
       <div className="flex flex-wrap gap-y-2 col-start-3 col-span-3 py-4 px-8">
         <div className="h-16 flex justify-between items-center w-full border-2 p-4 text-base font-mono">
           <div></div>
@@ -32,11 +38,11 @@ export default function Home() {
           </div>
         </div>
         {/* EDITOR */}
-        <Editor write={setCode} />
+        <Editor write={updateProgram} />
       </div>
 
       {/* OUTPUT */}
-      <Output bin={binOut} mem={memOut} />
+      <Output bin={binary} mem={memory} />
     </div>
   );
 }

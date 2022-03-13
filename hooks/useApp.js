@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { formatParser, assamblyParser } from "../libs/lexico";
-import { sintactico, translate } from "../libs/sintactico";
+import { formatSintaxReader, programSintaxReader } from "../libs/sintactico";
 
 export default function useApp() {
   /* Módulo que permite cargar y procesar los datos para
@@ -15,7 +15,7 @@ export default function useApp() {
 
   useEffect(() => {
     let tokenList = formatParser(formats);
-    setISA(sintactico(tokenList));
+    setISA(formatSintaxReader(tokenList));
   }, [formats, maxBits]);
 
   /**
@@ -51,8 +51,8 @@ export default function useApp() {
   useEffect(() => {
     if (program.length > 0) {
       const tokenList = assamblyParser(program);
-      const bins = translate(tokenList, ISA, maxBits);
-      setBOut(bins);
+      const bins = programSintaxReader(tokenList, ISA, maxBits);
+      setBinary(bins);
     }
   }, [program, ISA, maxBits]);
 
