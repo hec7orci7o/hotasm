@@ -7,8 +7,8 @@ import Link from "next/link";
 import { FiBook, FiGithub, FiGift } from "react-icons/fi";
 
 export default function Home() {
-  const { binOut, memOut, updateCode } = useEditor();
-  const { handleLoad, handleUnload } = useSettings();
+  const { isa, nbits, handleLoad, handleUnload } = useSettings();
+  const { binOut, memOut, setCode, updateCode } = useEditor(isa, nbits);
 
   return (
     <div className="h-screen grid grid-cols-7 gap-4 overflow-hidden">
@@ -32,11 +32,11 @@ export default function Home() {
           </div>
         </div>
         {/* EDITOR */}
-        <Editor write={() => {}} />
+        <Editor write={setCode} />
       </div>
 
       {/* OUTPUT */}
-      <Output bin={["0000000000000", "00000000"]} mem={memOut} />
+      <Output bin={binOut} mem={memOut} />
     </div>
   );
 }

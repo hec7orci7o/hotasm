@@ -3,13 +3,14 @@ import { parse } from "../logic/lexico";
 import { sintactico } from "../logic/sintactico";
 
 export default function useSettings() {
+  const [isa, setIsa] = useState({});
   const [config, setConfig] = useState("");
-  const [nbits, setNbits] = useState(0);
+  const [nbits, setNbits] = useState(32);
 
   useEffect(() => {
     try {
       let tokenList = parse(config);
-      sintactico(tokenList);
+      setIsa(sintactico(tokenList));
     } catch (error) {
       console.log(error);
     }
@@ -26,6 +27,8 @@ export default function useSettings() {
   };
 
   return {
+    isa,
+    nbits,
     handleLoad,
     handleUnload,
   };

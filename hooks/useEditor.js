@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { parseASM } from "../logic/lexico";
+import { translate } from "../logic/sintactico";
 
-export default function useEditor(translator) {
+export default function useEditor(isa, nbits) {
   const [rawCode, setCode] = useState("");
   const [binOut, setBOut] = useState([]);
   const [memOut, setMOut] = useState(<></>);
@@ -9,30 +11,11 @@ export default function useEditor(translator) {
 
   useEffect(() => {
     if (rawCode.length > 0) {
-      let lines = rawCode.split("\n").map((l) => {
-        let x = l.replace(/;.*/, ""); // elimina los comentarios
-        x = x.replace(/[^a-zA-Z0-9 ]*/g, ""); // elimina todos los caracteres que no sean letras o numeros
-        return x;
-      });
-      lines = lines.map((l) => translate(l));
-      setBOut(lines);
+      const tokenList = parseASM(rawCode);
+      let bins = translate(tokenList, isa, nbits);
+      setBOut(bins);
     }
-  }, [rawCode]);
+  }, [rawCode, isa, nbits]);
 
-  const translate = (line) => {
-    const lista = line.split(" ");
-    lista = lista.map((key) => {
-      if (translator[key]) {
-        return translator[key].df.length < translator[key].num
-          ? translator[key].df.padStart(translator[key].num, 0)
-          : translator[key].df;
-      }
-      return Number(key)
-        ? parseInt(key, 10).toString(2).padStart(translator["k"].num, 0)
-        : null;
-    });
-    return lista.join(" ");
-  };
-
-  return { binOut, memOut, updateCode };
+  return { binOut, memOut, setCode, updateCode };
 }

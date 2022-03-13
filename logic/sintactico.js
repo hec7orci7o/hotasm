@@ -30,7 +30,7 @@ function actionInst(kind, token, isa) {
 }
 
 function actionInstParam(kind, token, isa, name) {
-  console.log("actionInstParam", name);
+  console.log("actionInstParam", token);
   switch (kind) {
     case reg:
     case constant:
@@ -111,3 +111,63 @@ export function sintactico(tkList) {
 // mov K rd; 0 22:22 21:16 4:0;
 // add ra rb rd; 1 22:22 15:10 9:5 4:0;
 // mov K rd; 0 22:22 21:16 4:0;
+
+function trActionInst(kind, token, isa, word) {
+  console.log("tractionInst", word);
+  switch (kind) {
+    case ident:
+      const aux2 = { op: null, types: [], ranges: [] };
+      let resta = Math.abs(isa[token][0][0] - isa[token][0][1]);
+      word.splice(
+        word.length - Math.min(isa[token][0][0], isa[token][0][1]),
+        resta,
+        ...nuevo
+      );
+      return [sInstParam, word];
+    default:
+      console.log(">:(", word);
+      return [sError, word];
+  }
+}
+
+function trActionInstParam(kind, token, isa, name, word) {
+  console.log("tractionInstParam", name);
+  switch (kind) {
+    case reg:
+    case constant:
+    case addr:
+      return [sInstParam, word];
+    default:
+      console.log(word);
+      return [sError, word];
+  }
+}
+
+export function translate(tkList, isa, numbits) {
+  let state = sInst;
+  let inst;
+  let word = "0".repeat(numbits);
+
+  tkList.forEach((pair) => {
+    console.log(pair);
+    console.log("State: ", state);
+    let [kind, token] = pair;
+
+    if (state === sInst) {
+      word = "0".repeat(numbits);
+      console.log(word, numbits);
+      [state, word] = trActionInst(kind, token, isa, word);
+      inst = token;
+    } else if (state === sInstParam) {
+      console.log(token);
+      [state, word] = trActionInstParam(kind, token, isa, inst, word);
+    } else {
+      return [word];
+    }
+  });
+  return [word];
+}
+
+// mov #K rd; 0 22:22 21:16 4:0;
+// add ra rb rd; 1 22:22 15:10 9:5 4:0;
+// mov #K rd; 0 22:22 21:16 4:0;

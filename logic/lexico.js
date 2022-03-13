@@ -1,24 +1,34 @@
 export const reg = Symbol("tokens");
 export const constant = Symbol("tokens");
+export const numConstant = Symbol("tokens");
 export const addr = Symbol("tokens");
 export const ident = Symbol("tokens");
 export const comma = Symbol("tokens");
 export const range = Symbol("tokens");
 export const number = Symbol("tokens");
 export const sColon = Symbol("tokens");
+export const comment = Symbol("tokens");
 export const other = Symbol("tokens");
 
 export const pairs = {
+  comment: {
+    regex: /^;(.*)$/,
+    token: comment,
+  },
   reg: {
-    regex: /^(r[a-zA-Z0-9]+)/,
+    regex: /^r([a-zA-Z0-9]+)/,
     token: reg,
   },
   constant: {
-    regex: /^(#[A-Z])/,
+    regex: /^#([A-Z])/,
     token: constant,
   },
+  numConstant: {
+    regex: /^#([0-9]+)/,
+    token: numConstant,
+  },
   addr: {
-    regex: /^(\[r[a-z]\])/,
+    regex: /^\[r([a-zA-Z0-9]+)\]/,
     token: addr,
   },
   ident: {
@@ -30,7 +40,7 @@ export const pairs = {
     token: range,
   },
   number: {
-    regex: /^[0-9]+/,
+    regex: /^([0-9]+)/,
     token: number,
   },
   sColon: {
@@ -58,9 +68,9 @@ export const parse = (str) => {
 
   while (str !== "" && it != 100) {
     // generate token and remove beginning of string
-    if (pairs.reg.regex.test(str))
+    if (pairs.reg.regex.test(str)) {
       [str, kind, token] = readToken(str, pairs.reg);
-    else if (pairs.constant.regex.test(str))
+    } else if (pairs.constant.regex.test(str))
       [str, kind, token] = readToken(str, pairs.constant);
     else if (pairs.addr.regex.test(str))
       [str, kind, token] = readToken(str, pairs.addr);
@@ -73,6 +83,41 @@ export const parse = (str) => {
     else if (pairs.sColon.regex.test(str))
       [str, kind, token] = readToken(str, pairs.sColon);
     else if (pairs.other.regex.test(str))
+      [str, kind, token] = readToken(str, pairs.other);
+    else throw new Error(`Unexpected token (${str[0]})`);
+
+    if (kind !== pairs.other.token) tokenList = [...tokenList, [kind, token]];
+    it++;
+  }
+
+  return tokenList;
+};
+
+export const parseASM = (str) => {
+  let it = 0; // temporal para debug
+  let tokenList = [];
+  let kind;
+  let token;
+
+  while (str !== "" && it != 100) {
+    console.log(kind === pairs.reg);
+    // generate token and remove beginning of string
+    if (pairs.reg.regex.test(str))
+      [str, kind, token] = readToken(str, pairs.reg);
+    else if (pairs.constant.regex.test(str))
+      [str, kind, token] = readToken(str, pairs.constant);
+    else if (pairs.addr.regex.test(str))
+      [str, kind, token] = readToken(str, pairs.addr);
+    else if (pairs.range.regex.test(str))
+      [str, kind, token] = readToken(str, pairs.range);
+    else if (pairs.number.regex.test(str))
+      [str, kind, token] = readToken(str, pairs.number);
+    else if (pairs.ident.regex.test(str))
+      [str, kind, token] = readToken(str, pairs.ident);
+    else if (pairs.sColon.regex.test(str)) {
+      console.log("scolon");
+      [str, kind, token] = readToken(str, pairs.sColon);
+    } else if (pairs.other.regex.test(str))
       [str, kind, token] = readToken(str, pairs.other);
     else throw new Error(`Unexpected token (${str[0]})`);
 
