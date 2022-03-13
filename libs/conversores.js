@@ -9,9 +9,8 @@ const binario = new RegExp("^[01]+$");
 const hexadecimal = new RegExp("^[0-9a-fA-F]+$");
 
 /**
- *
  * @param {String} _n Cadena que representa un número decimal
- * @returns Cadena binaria
+ * @returns {String} Cadena binaria
  */
 export function dec2bin(_n) {
   try {
@@ -23,9 +22,8 @@ export function dec2bin(_n) {
 }
 
 /**
- *
  * @param {String} _n Cadena que representa un número decimal
- * @returns Cadena hexadecimal
+ * @returns {String} Cadena hexadecimal
  */
 export function dec2hex(_n) {
   try {
@@ -35,13 +33,10 @@ export function dec2hex(_n) {
     console.error(e);
   }
 }
-parseInt(hex, BASE_16).toString(BASE_10); // hex -> dec
-parseInt(hex, BASE_16).toString(BASE_2); // hex -> bin
 
 /**
- *
  * @param {String} _n Cadena que representa un número binario
- * @returns Cadena decimal
+ * @returns {String} Cadena decimal
  */
 export function bin2dec(_n) {
   try {
@@ -53,9 +48,8 @@ export function bin2dec(_n) {
 }
 
 /**
- *
  * @param {String} _n Cadena que representa un número binario
- * @returns Cadena hexadecimal
+ * @returns {String} Cadena hexadecimal
  */
 export function bin2hex(_n) {
   try {
@@ -67,9 +61,8 @@ export function bin2hex(_n) {
 }
 
 /**
- *
  * @param {String} _n Cadena que representa un número hexadecimal
- * @returns Cadena decimal
+ * @returns {String} Cadena decimal
  */
 export function hex2dec(_n) {
   try {
@@ -81,9 +74,8 @@ export function hex2dec(_n) {
 }
 
 /**
- *
  * @param {String} _n Cadena que representa un número hexadecimal
- * @returns Cadena binaria
+ * @returns {String} Cadena binaria
  */
 export function hex2bin(_n) {
   try {

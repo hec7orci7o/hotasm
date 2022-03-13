@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { parseASM } from "../libs/lexico";
-import { translate } from "../libs/sintactico";
+import { assamblyParser } from "../libs/lexico";
+import { programSintaxReader } from "../libs/sintactico";
 
 export default function useEditor(isa, nbits) {
   const [rawCode, setCode] = useState("");
@@ -11,8 +11,8 @@ export default function useEditor(isa, nbits) {
 
   useEffect(() => {
     if (rawCode.length > 0) {
-      const tokenList = parseASM(rawCode);
-      let bins = translate(tokenList, isa, nbits);
+      const tokenList = assamblyParser(rawCode);
+      let bins = programSintaxReader(tokenList, isa, nbits);
       setBOut(bins);
     }
   }, [rawCode, isa, nbits]);

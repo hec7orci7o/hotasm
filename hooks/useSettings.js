@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { parse } from "../libs/lexico";
-import { sintactico } from "../libs/sintactico";
+import { formatParser } from "../libs/lexico";
+import { formatSintaxReader } from "../libs/sintactico";
 
 export default function useSettings() {
   const [isa, setIsa] = useState({});
@@ -9,8 +9,8 @@ export default function useSettings() {
 
   useEffect(() => {
     try {
-      let tokenList = parse(config);
-      setIsa(sintactico(tokenList));
+      let tokenList = formatParser(config);
+      setIsa(formatSintaxReader(tokenList));
     } catch (error) {
       console.log(error);
     }

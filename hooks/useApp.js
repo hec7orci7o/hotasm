@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { parse, parseASM } from "../libs/lexico";
+import { formatParser, assamblyParser } from "../libs/lexico";
 import { sintactico, translate } from "../libs/sintactico";
 
 export default function useApp() {
@@ -14,7 +14,7 @@ export default function useApp() {
   const [ISA, setISA] = useState({}); // Instruction Set Architecture
 
   useEffect(() => {
-    let tokenList = parse(formats);
+    let tokenList = formatParser(formats);
     setISA(sintactico(tokenList));
   }, [formats, maxBits]);
 
@@ -50,7 +50,7 @@ export default function useApp() {
 
   useEffect(() => {
     if (program.length > 0) {
-      const tokenList = parseASM(program);
+      const tokenList = assamblyParser(program);
       const bins = translate(tokenList, ISA, maxBits);
       setBOut(bins);
     }

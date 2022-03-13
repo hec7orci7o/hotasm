@@ -1,0 +1,3 @@
+mov k rd
+a bbbbbbbbbbbbbbbb ccccc
+1 0111010100110000 xxx10
