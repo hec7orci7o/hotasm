@@ -1,34 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+ASM editor es un pequeño proyecto que permite en base a una pequeña y simple configuración traducir un conjunto de instrucciones a binario.
 
-## Getting Started
+## Ejemplo
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
+### Datos
+Conjunto de instrucciones con las que queremos trabajar
+```asm=
+mov K rd; SignExt(K) -> BR(rd) K cte de 16 bits
+add ra rb rd; BR(ra) + BR(rb) -> BR(rd)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Configuración
+configuracion de las instrucciones
+```asm=
+mov #K rd; 0 22:22 21:5 4:0;
+add ra rb rd; 1 22:22 15:10 9:5 4:0;
+```
+```
+INST: 22 bits
+```
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### Código
+traduccion de las instrucciones a binario
+```asm=
+mov 30000 r1;
+mov 30000 r2;
+mov 30000 r3;
+mov  8000 r4;
+mov     0 r5;
+mov    90 r6;
+mov     5 r7;
+add r1 r2 r0;
+add r3 r0 r0;
+add r4 r0 r0;
+add r5 r0 r0;
+add r6 r0 r0;
+add r7 r0 r0;
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+### Salida
+traduccion de las instrucciones a binario
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
