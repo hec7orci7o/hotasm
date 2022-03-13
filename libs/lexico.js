@@ -61,13 +61,12 @@ function readToken(str, type) {
 }
 
 export const parse = (str) => {
-  let it = 0; // temporal para debug
+  let it = 0;
   let tokenList = [];
   let kind;
   let token;
 
   while (str !== "" && it != 100) {
-    // generate token and remove beginning of string
     if (pairs.reg.regex.test(str)) {
       [str, kind, token] = readToken(str, pairs.reg);
     } else if (pairs.constant.regex.test(str))
@@ -101,7 +100,6 @@ export const parseASM = (str) => {
 
   while (str !== "" && it != 100) {
     console.log(kind === pairs.reg);
-    // generate token and remove beginning of string
     if (pairs.reg.regex.test(str))
       [str, kind, token] = readToken(str, pairs.reg);
     else if (pairs.constant.regex.test(str))

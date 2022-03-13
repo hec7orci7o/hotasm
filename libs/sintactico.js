@@ -9,7 +9,6 @@ import {
   other,
 } from "./lexico";
 
-// Producciones
 const sInst = Symbol("states");
 const sInstParam = Symbol("states");
 const sOp = Symbol("states");
@@ -54,20 +53,7 @@ function actionOp(kind, token, isa, name) {
       return [sError, isa];
   }
 }
-/*
-// mov r1 r2 r3
-  {
-    'mov' : {
-      'op' : 0,
-      'types' : [ reg, reg, reg ]
-      'ranges' : [(22,22), (15,10), (9:5), (4:0)]
-    }
-    'add' : {
-      'op' : 1
-      'ranges' : [(22,22), (21,16), (4,0)]
-    }
-  }
-*/
+
 function actionRanges(kind, token, isa, name) {
   switch (kind) {
     case range:
@@ -108,10 +94,6 @@ export function sintactico(tkList) {
   return isa;
 }
 
-// mov K rd; 0 22:22 21:16 4:0;
-// add ra rb rd; 1 22:22 15:10 9:5 4:0;
-// mov K rd; 0 22:22 21:16 4:0;
-
 function trActionInst(kind, token, isa, word) {
   console.log("tractionInst", word);
   switch (kind) {
@@ -149,17 +131,11 @@ export function translate(tkList, isa, numbits) {
   let word = "0".repeat(numbits);
 
   tkList.forEach((pair) => {
-    console.log(pair);
-    console.log("State: ", state);
     let [kind, token] = pair;
-
     if (state === sInst) {
-      word = "0".repeat(numbits);
-      console.log(word, numbits);
       [state, word] = trActionInst(kind, token, isa, word);
       inst = token;
     } else if (state === sInstParam) {
-      console.log(token);
       [state, word] = trActionInstParam(kind, token, isa, inst, word);
     } else {
       return [word];

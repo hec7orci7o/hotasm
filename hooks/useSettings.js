@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { parse } from "../logic/lexico";
-import { sintactico } from "../logic/sintactico";
+import { parse } from "../libs/lexico";
+import { sintactico } from "../libs/sintactico";
 
 export default function useSettings() {
   const [isa, setIsa] = useState({});

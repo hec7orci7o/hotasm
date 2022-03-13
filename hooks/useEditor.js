@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { parseASM } from "../logic/lexico";
-import { translate } from "../logic/sintactico";
+import { parseASM } from "../libs/lexico";
+import { translate } from "../libs/sintactico";
 
 export default function useEditor(isa, nbits) {
   const [rawCode, setCode] = useState("");
