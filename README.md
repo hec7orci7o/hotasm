@@ -20,7 +20,7 @@ INST: 22 bits
 ```
 
 ### Código
-traduccion de las instrucciones a binario
+Codigo asm escrito en el editor
 ```asm=
 mov 30000 r1;
 mov 30000 r2;
@@ -38,9 +38,21 @@ add r7 r0 r0;
 ```
 
 ### Salida
-traduccion de las instrucciones a binario
+Traduccion de las instrucciones a binario
 ```
-
+0x111010100110000xxxx1
+0x111010100110000xxx10
+0x111010100110000xxx11
+0xxx1111101000000xx100
+0xxxxxxxxxxxxxxx0xx101
+0xxxxxxxxx1011010xx110
+0xxxxxxxxxxxxx101xx111
+1------xxxx1xxx10xxxx0
+1------xxx11xxxx0xxxx0
+1------xx100xxxx0xxxx0
+1------xx101xxxx0xxxx0
+1------xx110xxxx0xxxx0
+1------xx111xxxx0xxxx0
 ```
 
 

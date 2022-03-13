@@ -136,8 +136,6 @@ const trError = Symbol("states");
  * @returns
  */
 function inst2Bin(line, token, translator) {
-  console.log("translator:", translator);
-
   let max = Math.max(translator[0], translator[1]);
   let fill;
   if (translator[0] < 10) {
@@ -146,17 +144,10 @@ function inst2Bin(line, token, translator) {
   } else {
     fill = translator[0] - translator[1];
   }
-
   token = token.padStart(fill, "x");
-
   let vLine = line.split("");
   vLine.splice(line.length - max, token.length, ...token.split(""));
-
   vLine = vLine.toString().replaceAll(",", "");
-
-  console.log("resta:", fill);
-  console.log("token:", token.length, token);
-  console.log("vLine:", vLine.length, vLine);
   return vLine;
 }
 
@@ -231,7 +222,6 @@ export function programSintaxReader(tkList, isa, numbits) {
   let iParam = 1;
   let inst;
   let instList = [];
-  console.log(isa);
 
   tkList.forEach((pair) => {
     let [kind, token] = pair;
