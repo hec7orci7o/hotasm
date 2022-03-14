@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { formatParser, assamblyParser } from "../libs/lexico";
 import { formatSintaxReader, programSintaxReader } from "../libs/sintactico";
 import { bin2hex } from "../libs/conversores";
+import { memo } from "react/cjs/react.production.min";
 
 export default function useApp() {
   /* Módulo que permite cargar y procesar los datos para
@@ -15,8 +16,9 @@ export default function useApp() {
   const [ISA, setISA] = useState({}); // Instruction Set Architecture
 
   useEffect(() => {
-    let tokenList = formatParser(formats);
-    setISA(formatSintaxReader(tokenList));
+    const { tokens, error } = formatParser(formats);
+    const isaAux = formatSintaxReader(tokens);
+    setISA(isaAux);
   }, [formats, maxBits]);
 
   /**
@@ -46,15 +48,27 @@ export default function useApp() {
    * binario y a memoria con el formato de logisim.
    */
   const [program, setProgram] = useState("");
-  const [binary, setBinary] = useState([]);
-  const [memory, setMemory] = useState(<></>);
+  const [binary, setBinary] = useState([[], []]);
+  const [memory, setMemory] = useState(["", <></>]);
 
   useEffect(() => {
     if (program.length > 0) {
-      const tokenList = assamblyParser(program);
-      const bins = programSintaxReader(tokenList, ISA, maxBits);
-      setBinary(formatBinary(bins));
-      setMemory(formatMemory(bins));
+      try {
+        const { tokens, error } = assamblyParser(program);
+        const bins = programSintaxReader(tokens, ISA, maxBits);
+        const formatedBinary = formatBinary_V2(bins, "0");
+        setBinary([formatedBinary, formatBinary(bins)]);
+        if (/[01]/.test(String(bins).replace(",", ""))) {
+          setMemory([
+            formatMemory_V2(formatedBinary),
+            formatMemory(formatedBinary),
+          ]);
+        } else {
+          setMemory(["", <></>]);
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
   }, [program, ISA, maxBits]);
 
@@ -64,6 +78,9 @@ export default function useApp() {
    */
 
   /**
+   * Formatea la lista de instrucciones binarias para
+   * representarlas en la zona de output
+   *
    * @param {Array} _bin
    * @returns
    */
@@ -88,16 +105,29 @@ export default function useApp() {
   };
 
   /**
+   * Prepara la lista de binarios para ser copia
+   * al portapapeles de forma correcta.
+   * Forma correcta es aquella que solo contiene 1's y 0's
+   *
+   * @param {Array} _bin
+   * @param {String} _x
+   * @returns
+   */
+  const formatBinary_V2 = (_bin, _x) => {
+    const binary = _bin.map((linea) =>
+      linea.replaceAll("-", _x).replaceAll("x", _x)
+    );
+    return binary;
+  };
+
+  /**
+   * Formatea la lista de instrucciones binarias para
+   * representarlas en la zona de output con formato hexadecimal
    *
    * @param {Array} _bin
    */
   const formatMemory = (_bin) => {
-    const hex = _bin.map((e) => {
-      e = e.replaceAll("-", "0").replaceAll("x", "0");
-      e = bin2hex(e);
-      console.log(typeof e);
-      return e;
-    });
+    const hex = _bin.map((e) => bin2hex(e));
     return (
       <>
         <>v2.0 raw</>
@@ -105,6 +135,11 @@ export default function useApp() {
         <>{hex.toString().replaceAll(",", " ")}</>
       </>
     );
+  };
+
+  const formatMemory_V2 = (_bin) => {
+    let memory = _bin.map((e) => bin2hex(e));
+    return "v2.0 raw\n" + String(memory).replaceAll(",", " ");
   };
 
   return {

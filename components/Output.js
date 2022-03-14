@@ -9,7 +9,7 @@ export default function Output({ bin, mem }) {
         <div className="w-full p-4 bg-[#222D32] text-white relative z-0 min-h-[20rem]">
           <button
             onClick={() =>
-              copy(String(bin).replace(/,/g, "\n"), {
+              copy(String(bin[0]).replace(/,/g, "\n"), {
                 debug: false,
                 format: "text/plain",
               })
@@ -19,7 +19,7 @@ export default function Output({ bin, mem }) {
             <FiCopy className="w-4 h-4" />
           </button>
           <div className="text-base font-mono">
-            {bin.map((line) => (
+            {bin[1].map((line) => (
               <>{line}</>
             ))}
           </div>
@@ -28,7 +28,7 @@ export default function Output({ bin, mem }) {
         <div className="w-full p-4 bg-[#222D32] text-white relative z-0 min-h-[10rem]">
           <button
             onClick={() =>
-              copy(String(mem.props.children).replace(/,(.*), /g, "\n"), {
+              copy(mem[0], {
                 debug: false,
                 format: "text/plain",
               })
@@ -38,7 +38,7 @@ export default function Output({ bin, mem }) {
             <FiCopy className="w-4 h-4" />
           </button>
           <div className="text-base font-mono">
-            <span>{mem}</span>
+            <span>{mem[1]}</span>
           </div>
         </div>
       </div>

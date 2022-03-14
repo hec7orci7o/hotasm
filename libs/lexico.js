@@ -1,55 +1,56 @@
-export const reg = Symbol("tokens");
-export const constant = Symbol("tokens");
-export const numConstant = Symbol("tokens");
-export const addr = Symbol("tokens");
-export const ident = Symbol("tokens");
-export const comma = Symbol("tokens");
-export const range = Symbol("tokens");
-export const number = Symbol("tokens");
-export const sColon = Symbol("tokens");
-export const comment = Symbol("tokens");
-export const other = Symbol("tokens");
+export const TOKEN = {
+  instruction: "instruction",
+  register: "register",
+  registerN: "registerN",
+  address: "address",
+  constant: "constant",
+  constantN: "constantN",
+  semiColon: "semiColon",
+  number: "number",
+  range: "range",
+  ignore: "ignore",
+};
 
-export const pairs = {
-  comment: {
-    regex: /^;(.*)$/,
-    token: comment,
+const pairs = {
+  instruction: {
+    regex: /^([a-z0-9]+)/i,
+    token: TOKEN["instruction"],
   },
-  reg: {
-    regex: /^r([a-zA-Z0-9]+)/,
-    token: reg,
+  register: {
+    regex: /^r([a-zA-Z]+)/,
+    token: TOKEN["register"],
+  },
+  registerN: {
+    regex: /^r([0-9]+)/,
+    token: TOKEN["registerN"],
+  },
+  address: {
+    regex: /^\[r([a-zA-Z0-9]+)\]/, // bug
+    token: TOKEN["address"],
   },
   constant: {
-    regex: /^#([A-Z])/,
-    token: constant,
+    regex: /^#([a-z])/i,
+    token: TOKEN["constant"],
   },
-  numConstant: {
+  constantN: {
     regex: /^#([0-9]+)/,
-    token: numConstant,
+    token: TOKEN["constantN"],
   },
-  addr: {
-    regex: /^\[r([a-zA-Z0-9]+)\]/,
-    token: addr,
-  },
-  ident: {
-    regex: /^([a-zA-Z0-9]+)/,
-    token: ident,
-  },
-  range: {
-    regex: /^([0-9]+:[0-9]+)/,
-    token: range,
+  semiColon: {
+    regex: /^;/,
+    token: TOKEN["semiColon"],
   },
   number: {
     regex: /^([0-9]+)/,
-    token: number,
+    token: TOKEN["number"],
   },
-  sColon: {
-    regex: /^;/,
-    token: sColon,
+  range: {
+    regex: /^([0-9]+\:[0-9]+)/,
+    token: TOKEN["range"],
   },
-  other: {
-    regex: /^[\r\n\t ]/,
-    token: other,
+  ignore: {
+    regex: /^[\r\n\t, ]/,
+    token: TOKEN["ignore"],
   },
 };
 
@@ -70,41 +71,53 @@ function leerToken(str, type) {
  * @returns {Array<Array<Symbol,String>>} [[2]..N], [[kind(Symbol)][token(String)]]
  */
 export const formatParser = (str) => {
+  const CHECK = /[a-z]+/i;
   let tokenList = [];
   let kind;
   let token;
 
   while (str !== "") {
     // es un registro?
-    if (pairs.reg.regex.test(str))
-      [str, kind, token] = leerToken(str, pairs.reg);
-    // es una constante?
+    if (pairs.register.regex.test(str))
+      [str, kind, token] = leerToken(str, pairs.register);
+    // es una dirección?
+    // else if (pairs.address.regex.test(str))
+    //   [str, kind, token] = leerToken(str, pairs.address);
+    // es la declaración de una constante?
     else if (pairs.constant.regex.test(str))
       [str, kind, token] = leerToken(str, pairs.constant);
-    // es una dirección?
-    else if (pairs.addr.regex.test(str))
-      [str, kind, token] = leerToken(str, pairs.addr);
+    // es el identificador de una instruccion?
+    else if (
+      pairs.instruction.regex.test(str) &&
+      CHECK.test(str.match(pairs.instruction.regex)[0])
+    )
+      [str, kind, token] = leerToken(str, pairs.instruction);
+    // es un punto y coma?
+    else if (pairs.semiColon.regex.test(str))
+      [str, kind, token] = leerToken(str, pairs.semiColon);
     // es un rango?
     else if (pairs.range.regex.test(str))
       [str, kind, token] = leerToken(str, pairs.range);
-    // es un número?
+    // es un numero?
     else if (pairs.number.regex.test(str))
       [str, kind, token] = leerToken(str, pairs.number);
-    // es un identificador?
-    else if (pairs.ident.regex.test(str))
-      [str, kind, token] = leerToken(str, pairs.ident);
-    // es un punto y coma?
-    else if (pairs.sColon.regex.test(str))
-      [str, kind, token] = leerToken(str, pairs.sColon);
-    // no es ninguno de los anteriores?
-    else if (pairs.other.regex.test(str))
-      [str, kind, token] = leerToken(str, pairs.other);
+    // caracteres a ignorar? <- no se añadiran a la lista de tokens
+    else if (pairs.ignore.regex.test(str))
+      [str, kind, token] = leerToken(str, pairs.ignore);
     // Token no esperado?
-    else throw new Error(`Unexpected token (${str[0]})`);
+    else
+      return {
+        tokens: tokenList,
+        error: `Unexpected token (${str[0]})`,
+      };
 
-    if (kind !== pairs.other.token) tokenList = [...tokenList, [kind, token]];
+    if (kind !== pairs.ignore.token) tokenList = [...tokenList, [kind, token]];
   }
-  return tokenList;
+
+  return {
+    tokens: tokenList,
+    error: null,
+  };
 };
 
 /**
@@ -112,39 +125,44 @@ export const formatParser = (str) => {
  * @returns {Array<Array<Symbol,String>>} [[2]..N], [[kind(Symbol)][token(String)]]
  */
 export const assamblyParser = (str) => {
+  const CHECK = /[a-z]+/i;
   let tokenList = [];
   let kind;
   let token;
 
   while (str !== "") {
     // es un registro?
-    if (pairs.reg.regex.test(str))
-      [str, kind, token] = leerToken(str, pairs.reg);
+    if (pairs.registerN.regex.test(str))
+      [str, kind, token] = leerToken(str, pairs.registerN);
     // es una constante numérica?
-    else if (pairs.numConstant.regex.test(str))
-      [str, kind, token] = leerToken(str, pairs.numConstant);
+    else if (pairs.constantN.regex.test(str))
+      [str, kind, token] = leerToken(str, pairs.constantN);
     // es una dirección?
-    else if (pairs.addr.regex.test(str))
-      [str, kind, token] = leerToken(str, pairs.addr);
-    // es un rango?
-    else if (pairs.range.regex.test(str))
-      [str, kind, token] = leerToken(str, pairs.range);
-    // es un número?
-    else if (pairs.number.regex.test(str))
-      [str, kind, token] = leerToken(str, pairs.number);
-    // es un identificador?
-    else if (pairs.ident.regex.test(str))
-      [str, kind, token] = leerToken(str, pairs.ident);
+    // else if (pairs.address.regex.test(str))
+    //   [str, kind, token] = leerToken(str, pairs.address);
     // es un punto y coma?
-    else if (pairs.sColon.regex.test(str))
-      [str, kind, token] = leerToken(str, pairs.sColon);
+    // es el identificador de una instruccion?
+    else if (pairs.instruction.regex.test(str)) {
+      [str, kind, token] = leerToken(str, pairs.instruction);
+    }
+    // es un punto y coma?
+    else if (pairs.semiColon.regex.test(str))
+      [str, kind, token] = leerToken(str, pairs.semiColon);
     // no es ninguno de los anteriores?
-    else if (pairs.other.regex.test(str))
-      [str, kind, token] = leerToken(str, pairs.other);
+    else if (pairs.ignore.regex.test(str))
+      [str, kind, token] = leerToken(str, pairs.ignore);
     // Token no esperado?
-    else throw new Error(`Unexpected token (${str[0]})`);
+    else
+      return {
+        tokens: tokenList,
+        error: `Unexpected token (${str[0]})`,
+      };
 
-    if (kind !== pairs.other.token) tokenList = [...tokenList, [kind, token]];
+    if (kind !== pairs.ignore.token) tokenList = [...tokenList, [kind, token]];
   }
-  return tokenList;
+
+  return {
+    tokens: tokenList,
+    error: null,
+  };
 };
