@@ -20,10 +20,7 @@ export default function Output({ bin, mem }) {
           </button>
           <div className="text-base font-mono">
             {bin.map((line) => (
-              <>
-                {line}
-                <br />
-              </>
+              <>{line}</>
             ))}
           </div>
         </div>

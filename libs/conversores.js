@@ -53,7 +53,7 @@ export function bin2dec(_n) {
  */
 export function bin2hex(_n) {
   try {
-    if (binario.test(_n)) throw Error;
+    // if (binario.test(_n)) throw Error;
     return parseInt(_n, BASE_2).toString(BASE_16);
   } catch (e) {
     console.error(e);
