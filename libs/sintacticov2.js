@@ -1,16 +1,4 @@
-import {
-  reg,
-  constant,
-  numConstant,
-  addr,
-  ident,
-  comma,
-  range,
-  number,
-  sColon,
-  comment,
-  other,
-} from "./lexico";
+import { TOKEN } from "./lexicov2";
 import { dec2bin } from "./conversores";
 
 // Estados de la gramática 1
@@ -21,14 +9,14 @@ const sRanges = Symbol("states");
 const sError = Symbol("states");
 
 /**
- * @param {Symbol} kind
+ * @param {String} kind
  * @param {String} token
  * @param {Object} isa
  * @returns
  */
 function actionInst(kind, token, isa) {
   switch (kind) {
-    case ident:
+    case TOKEN["instruction"]:
       isa[token] = { op: null, types: [], ranges: [] };
       return [sInstParam, isa];
     default:
@@ -45,12 +33,12 @@ function actionInst(kind, token, isa) {
  */
 function actionParam(kind, token, isa, name) {
   switch (kind) {
-    case reg:
-    case constant:
-    case addr:
+    case TOKEN["register"]:
+    case TOKEN["constant"]:
+    case TOKEN["address"]:
       isa[name]["types"].push(kind);
       return [sInstParam, isa];
-    case sColon:
+    case TOKEN["semiColon"]:
       return [sOp, isa];
     default:
       return [sError, isa];
@@ -58,7 +46,7 @@ function actionParam(kind, token, isa, name) {
 }
 
 /**
- * @param {Symbol} kind
+ * @param {String} kind
  * @param {String} token
  * @param {Object} isa
  * @param {String} name
@@ -66,7 +54,7 @@ function actionParam(kind, token, isa, name) {
  */
 function actionOp(kind, token, isa, name) {
   switch (kind) {
-    case number:
+    case TOKEN["number"]:
       isa[name]["op"] = token;
       return [sRanges, isa];
     default:
@@ -75,7 +63,7 @@ function actionOp(kind, token, isa, name) {
 }
 
 /**
- * @param {Symbol} kind
+ * @param {String} kind
  * @param {String} token
  * @param {Object} isa
  * @param {String} name
@@ -83,11 +71,11 @@ function actionOp(kind, token, isa, name) {
  */
 function actionRanges(kind, token, isa, name) {
   switch (kind) {
-    case range:
+    case TOKEN["range"]:
       const [start, end] = token.split(":");
       isa[name]["ranges"].push([Number(start), Number(end)]);
       return [sRanges, isa];
-    case sColon:
+    case TOKEN["semiColon"]:
       return [sInst, isa];
     default:
       return [sError, isa];
@@ -98,14 +86,13 @@ function actionRanges(kind, token, isa, name) {
  * @param {Array} tkList [[2]..N], [[kind(Symbol)][token(String)]]
  * @returns
  */
-export function formatSintaxReader(tkList) {
+export function formatSintaxReaderv2(tkList) {
   let state = sInst;
   let inst;
   let isa = {};
 
   tkList.forEach((pair) => {
     let [kind, token] = pair;
-
     if (state === sInst) {
       [state, isa] = actionInst(kind, token, isa);
       inst = token;
@@ -119,6 +106,7 @@ export function formatSintaxReader(tkList) {
       return null;
     }
   });
+
   return isa;
 }
 
@@ -152,14 +140,14 @@ function inst2Bin(line, token, translator) {
 }
 
 /**
- * @param {Symbol} kind
+ * @param {String} kind
  * @param {Object} translator
  * @param {String} word
  * @returns
  */
 function trActionInst(kind, translator, word) {
   switch (kind) {
-    case ident:
+    case TOKEN["instruction"]:
       try {
         let aux = word.split("");
         let resta =
@@ -182,7 +170,7 @@ function trActionInst(kind, translator, word) {
 
 /**
  *
- * @param {Symbol} kind
+ * @param {String} kind
  * @param {String} token
  * @param {Object} translator
  * @param {String} word
@@ -191,11 +179,13 @@ function trActionInst(kind, translator, word) {
  */
 function trActionParam(kind, token, translator, word, iParam) {
   // casos que tratará: reg, number, addr
-  if (kind === reg) token = token.substring(1, token.length);
+  if (kind === TOKEN["registerN"] || kind === TOKEN["constantN"])
+    token = token.substring(1, token.length);
   token = dec2bin(token);
+
   switch (kind) {
-    case reg:
-    case number:
+    case TOKEN["registerN"]:
+    case TOKEN["constantN"]:
       // traduce el parametro a binario
       try {
         word = inst2Bin(word, token, translator["ranges"][iParam]);
@@ -216,7 +206,7 @@ function trActionParam(kind, token, translator, word, iParam) {
  * @param {Number} numbits
  * @returns
  */
-export function programSintaxReader(tkList, isa, numbits) {
+export function programSintaxReaderv2(tkList, isa, numbits) {
   let state = trInst;
   let word;
   let iParam = 1;
@@ -231,7 +221,7 @@ export function programSintaxReader(tkList, isa, numbits) {
       [state, word] = trActionInst(kind, isa[token], word);
       iParam = 1;
     } else if (state === trInstParam) {
-      if (kind !== sColon) {
+      if (kind !== TOKEN["semiColon"]) {
         [state, word] = trActionParam(kind, token, isa[inst], word, iParam);
         iParam += 1;
       } else {

@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
-import { formatParser, assamblyParser } from "../libs/lexico";
-import { formatSintaxReader, programSintaxReader } from "../libs/sintactico";
+import { formatParserv2, assamblyParserv2 } from "../libs/lexicov2";
+import {
+  formatSintaxReaderv2,
+  programSintaxReaderv2,
+} from "../libs/sintacticov2";
+// import { formatParser, assamblyParser } from "../libs/lexico";
+// import { formatSintaxReader, programSintaxReaderv2 } from "../libs/sintactico";
 import { bin2hex } from "../libs/conversores";
 
 export default function useApp() {
@@ -15,8 +20,9 @@ export default function useApp() {
   const [ISA, setISA] = useState({}); // Instruction Set Architecture
 
   useEffect(() => {
-    let tokenList = formatParser(formats);
-    setISA(formatSintaxReader(tokenList));
+    const { tokens, error } = formatParserv2(formats);
+    const isaAux = formatSintaxReaderv2(tokens);
+    setISA(isaAux);
   }, [formats, maxBits]);
 
   /**
@@ -51,10 +57,14 @@ export default function useApp() {
 
   useEffect(() => {
     if (program.length > 0) {
-      const tokenList = assamblyParser(program);
-      const bins = programSintaxReader(tokenList, ISA, maxBits);
-      setBinary(formatBinary(bins));
-      setMemory(formatMemory(bins));
+      try {
+        const { tokens, error } = assamblyParserv2(program);
+        const bins = programSintaxReaderv2(tokens, ISA, maxBits);
+        setBinary(formatBinary(bins));
+        setMemory(formatMemory(bins));
+      } catch (error) {
+        console.error(error);
+      }
     }
   }, [program, ISA, maxBits]);
 
@@ -95,7 +105,6 @@ export default function useApp() {
     const hex = _bin.map((e) => {
       e = e.replaceAll("-", "0").replaceAll("x", "0");
       e = bin2hex(e);
-      console.log(typeof e);
       return e;
     });
     return (
