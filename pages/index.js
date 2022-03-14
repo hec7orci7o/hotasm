@@ -27,11 +27,11 @@ export default function Home() {
             <a href="https://www.buymeacoffee.com/hec7orci7o">
               <FiGift className="w-5 h-5 opacity-80 hover:brightness-150 hover:opacity-100" />
             </a>
-            <a href="https://github.com/hec7orci7o/cuddly-adventure">
+            <a href="https://github.com/hec7orci7o/asm-editor">
               <FiGithub className="w-5 h-5 opacity-80 hover:brightness-150 hover:opacity-100" />
             </a>
             <Link href="/docs">
-              <a>
+              <a href="https://github.com/hec7orci7o/asm-editor">
                 <FiBook className="w-5 h-5 opacity-80 hover:brightness-150 hover:opacity-100" />
               </a>
             </Link>
