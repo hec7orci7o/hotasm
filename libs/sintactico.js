@@ -1,4 +1,4 @@
-import { TOKEN } from "./lexicov2";
+import { TOKEN } from "./lexico";
 import { dec2bin } from "./conversores";
 
 // Estados de la gramática 1
@@ -86,7 +86,7 @@ function actionRanges(kind, token, isa, name) {
  * @param {Array} tkList [[2]..N], [[kind(Symbol)][token(String)]]
  * @returns
  */
-export function formatSintaxReaderv2(tkList) {
+export function formatSintaxReader(tkList) {
   let state = sInst;
   let inst;
   let isa = {};
@@ -206,7 +206,7 @@ function trActionParam(kind, token, translator, word, iParam) {
  * @param {Number} numbits
  * @returns
  */
-export function programSintaxReaderv2(tkList, isa, numbits) {
+export function programSintaxReader(tkList, isa, numbits) {
   let state = trInst;
   let word;
   let iParam = 1;

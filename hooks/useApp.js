@@ -1,11 +1,6 @@
 import { useState, useEffect } from "react";
-import { formatParserv2, assamblyParserv2 } from "../libs/lexicov2";
-import {
-  formatSintaxReaderv2,
-  programSintaxReaderv2,
-} from "../libs/sintacticov2";
-// import { formatParser, assamblyParser } from "../libs/lexico";
-// import { formatSintaxReader, programSintaxReaderv2 } from "../libs/sintactico";
+import { formatParser, assamblyParser } from "../libs/lexico";
+import { formatSintaxReader, programSintaxReaderv2 } from "../libs/sintactico";
 import { bin2hex } from "../libs/conversores";
 
 export default function useApp() {
@@ -20,8 +15,8 @@ export default function useApp() {
   const [ISA, setISA] = useState({}); // Instruction Set Architecture
 
   useEffect(() => {
-    const { tokens, error } = formatParserv2(formats);
-    const isaAux = formatSintaxReaderv2(tokens);
+    const { tokens, error } = formatParser(formats);
+    const isaAux = formatSintaxReader(tokens);
     setISA(isaAux);
   }, [formats, maxBits]);
 
@@ -52,16 +47,16 @@ export default function useApp() {
    * binario y a memoria con el formato de logisim.
    */
   const [program, setProgram] = useState("");
-  const [binary, setBinary] = useState([]);
-  const [memory, setMemory] = useState(<></>);
+  const [binary, setBinary] = useState([[], []]);
+  const [memory, setMemory] = useState();
 
   useEffect(() => {
     if (program.length > 0) {
       try {
-        const { tokens, error } = assamblyParserv2(program);
-        const bins = programSintaxReaderv2(tokens, ISA, maxBits);
-        setBinary(formatBinary(bins));
-        setMemory(formatMemory(bins));
+        const { tokens, error } = assamblyParser(program);
+        const bins = programSintaxReader(tokens, ISA, maxBits);
+        setBinary([bins, formatBinary(bins)]);
+        setMemory([, formatMemory(bins)]);
       } catch (error) {
         console.error(error);
       }

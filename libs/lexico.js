@@ -11,7 +11,7 @@ export const TOKEN = {
   ignore: "ignore",
 };
 
-export const pairs = {
+const pairs = {
   instruction: {
     regex: /^([a-z0-9]+)/i,
     token: TOKEN["instruction"],
@@ -70,7 +70,7 @@ function leerToken(str, type) {
  * @param {String} str String que contiene el formato de las instrucciones
  * @returns {Array<Array<Symbol,String>>} [[2]..N], [[kind(Symbol)][token(String)]]
  */
-export const formatParserv2 = (str) => {
+export const formatParser = (str) => {
   const CHECK = /[a-z]+/i;
   let tokenList = [];
   let kind;
@@ -124,7 +124,7 @@ export const formatParserv2 = (str) => {
  * @param {String} str String que contiene el codigo ensamblador a analizar
  * @returns {Array<Array<Symbol,String>>} [[2]..N], [[kind(Symbol)][token(String)]]
  */
-export const assamblyParserv2 = (str) => {
+export const assamblyParser = (str) => {
   const CHECK = /[a-z]+/i;
   let tokenList = [];
   let kind;

@@ -22,13 +22,13 @@ INST: 22 bits
 ### Código
 Codigo asm escrito en el editor
 ```asm=
-mov 30000 r1;
-mov 30000 r2;
-mov 30000 r3;
-mov  8000 r4;
-mov     0 r5;
-mov    90 r6;
-mov     5 r7;
+mov #30000 r1;
+mov #30000 r2;
+mov #30000 r3;
+mov  #8000 r4;
+mov     #0 r5;
+mov    #90 r6;
+mov     #5 r7;
 add r1 r2 r0;
 add r3 r0 r0;
 add r4 r0 r0;
