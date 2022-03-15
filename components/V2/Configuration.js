@@ -1,3 +1,39 @@
-export default function Editor() {
-  return;
+import { FiUpload, FiTrash } from "react-icons/fi";
+import { useState } from "react";
+
+export default function Configuracion({ loadFormat, unloadFormat }) {
+  const [format, setFormat] = useState();
+  const [nBits, setBits] = useState();
+
+  return (
+    <div className="flex-1 flex flex-col divide-y divide-gray-700 bg-dark overflow-hidden text-base">
+      <div className="flex items-center justify-between gap-6 px-6 h-10">
+        <div>
+          <span className="text-sm font-bold opacity-50 capitalize">
+            configuration
+          </span>
+          <input
+            maxLength={2}
+            className="font-mono caret-white ml-4 w-8 h-8 bg-transparent rounded-lg border-2 text-sm border-white border-opacity-20 p-1 focus:outline-none"
+            onChange={(e) => setBits(Number(e.target.value))}
+          />
+          <span id="inst" name="inst" className="ml-2 font-mono">
+            bits
+          </span>
+        </div>
+        <div className="flex items-center gap-6">
+          <button onClick={() => loadFormat(format, nBits)}>
+            <FiUpload className="text-lg stroke-1 hover:text-green-300" />
+          </button>
+          <button onClick={() => unloadFormat}>
+            <FiTrash className="text-lg stroke-1 hover:text-red-300" />
+          </button>
+        </div>
+      </div>
+      <textarea
+        onChange={(e) => setFormat(e.target.value)}
+        className="flex-1 flex p-6 bg-transparent resize-none focus:outline-none text-base font-mono"
+      />
+    </div>
+  );
 }
