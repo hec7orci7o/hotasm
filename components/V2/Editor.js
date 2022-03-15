@@ -22,7 +22,7 @@ export default function Editor({ updateProgram }) {
   };
 
   return (
-    <div className="flex-1 flex flex-col divide-y divide-gray-700 bg-dark overflow-hidden text-base">
+    <>
       <div className="flex items-center justify-between gap-6 px-6 h-10">
         <span className="text-sm font-bold opacity-50 capitalize">code</span>
         <div className="flex items-center gap-6">
@@ -67,6 +67,6 @@ export default function Editor({ updateProgram }) {
         }}
         className="flex-1 flex p-6 bg-transparent resize-none focus:outline-none text-base font-mono"
       />
-    </div>
+    </>
   );
 }

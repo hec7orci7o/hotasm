@@ -4,7 +4,9 @@ import Configuracion from "../components/V2/Configuration";
 import SidebarD from "../components/V2/SidebarD";
 import Split from "react-split";
 import useApp from "../hooks/useApp";
-import { memo } from "react/cjs/react.production.min";
+import { getPost } from "../libs/mdxUtils";
+import { serialize } from "next-mdx-remote/serialize";
+import { useScreen } from "../context/ScreenContext";
 
 export default function V2() {
   const {
@@ -16,34 +18,78 @@ export default function V2() {
     memory,
     updateProgram,
   } = useApp();
+  const { hLayout, rightSidebar } = useScreen();
 
   return (
-    <div className="flex-1 h-full bg-gray-500 text-white overflow-hidden">
+    <div className="flex-auto h-full bg-gray-500 text-white overflow-hidden">
       <Split
         className="flex h-full"
         sizes={[75, 25]}
         minSize={[0, 350]}
         maxSize={[Infinity, 500]}
-        gutterSize={4}
+        gutterSize={!rightSidebar ? 4 : 0}
         gutterAlign="center"
       >
-        <Split
-          className="flex-auto bg-gray-500"
-          direction="vertical"
-          minSize={[0, 0]}
-          maxSize={[Infinity, Infinity]}
-          gutterSize={4}
-          gutterAlign="center"
-        >
-          <Editor updateProgram={updateProgram} />
-          <Configuracion loadFormat={loadFormat} unloadFormat={unloadFormat} />
-        </Split>
-        <SidebarD binary={binary} memory={memory} />
+        {/* Futura implementacion <- actualemte bug */}
+        {hLayout && false ? (
+          <Split
+            className="flex"
+            sizes={[50, 50]}
+            minSize={[0, 0]}
+            maxSize={[Infinity, Infinity]}
+            gutterSize={4}
+            gutterAlign="center"
+          >
+            <div className="bg-red-500">
+              {/* <Editor updateProgram={updateProgram} /> */}
+            </div>
+            <div className="bg-red-500">
+              {/* <Configuracion
+                loadFormat={loadFormat}
+                unloadFormat={unloadFormat}
+              /> */}
+            </div>
+          </Split>
+        ) : (
+          <Split
+            className=""
+            sizes={[50, 50]}
+            minSize={[0, 0]}
+            maxSize={[Infinity, Infinity]}
+            direction="vertical"
+            gutterSize={4}
+            gutterAlign="center"
+          >
+            <div className="flex-1 flex flex-col divide-y divide-gray-700 bg-dark overflow-hidden text-base">
+              <Editor updateProgram={updateProgram} />
+            </div>
+            <div className="flex-1 flex flex-col divide-y divide-gray-700 bg-dark overflow-hidden text-base">
+              <Configuracion
+                loadFormat={loadFormat}
+                unloadFormat={unloadFormat}
+              />
+            </div>
+          </Split>
+        )}
+        {!rightSidebar && <SidebarD binary={binary} memory={memory} />}
       </Split>
     </div>
   );
 }
 
 V2.getLayout = function getLayout(page) {
-  return <Layout>{page}</Layout>;
+  const docs = page.props;
+  return <Layout docs={docs}>{page}</Layout>;
+};
+
+export const getStaticProps = async () => {
+  const { content, data } = getPost("docs");
+  const mdxSource = await serialize(content, { scope: data });
+
+  return {
+    props: {
+      source: mdxSource,
+      frontMatter: data,
+    },
+  };
 };

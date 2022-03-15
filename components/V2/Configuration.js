@@ -1,15 +1,17 @@
 import { FiUpload, FiTrash } from "react-icons/fi";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 import Tippy from "@tippyjs/react";
 
 export default function Configuracion({ loadFormat, unloadFormat }) {
   const [format, setFormat] = useState();
   const [nBits, setBits] = useState();
+  const { status } = useSession();
 
   return (
-    <div className="flex-1 flex flex-col divide-y divide-gray-700 bg-dark overflow-hidden text-base">
+    <>
       <div className="flex items-center justify-between gap-6 px-6 h-10">
-        <div>
+        <div className="flex flex-nowrap items-center">
           <span className="text-sm font-bold opacity-50 capitalize">
             configuration
           </span>
@@ -31,7 +33,13 @@ export default function Configuracion({ loadFormat, unloadFormat }) {
               </span>
             }
           >
-            <button onClick={() => loadFormat(format, nBits)}>
+            <button
+              onClick={() => {
+                if (status === "authenticated") {
+                  loadFormat(format, nBits);
+                }
+              }}
+            >
               <FiUpload className="text-lg stroke-1 hover:text-green-300" />
             </button>
           </Tippy>
@@ -43,7 +51,7 @@ export default function Configuracion({ loadFormat, unloadFormat }) {
               </span>
             }
           >
-            <button onClick={() => unloadFormat}>
+            <button onClick={() => unloadFormat()}>
               <FiTrash className="text-lg stroke-1 hover:text-red-300" />
             </button>
           </Tippy>
@@ -53,6 +61,6 @@ export default function Configuracion({ loadFormat, unloadFormat }) {
         onChange={(e) => setFormat(e.target.value)}
         className="flex-1 flex p-6 bg-transparent resize-none focus:outline-none text-base font-mono"
       />
-    </div>
+    </>
   );
 }

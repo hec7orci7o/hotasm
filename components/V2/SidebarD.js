@@ -33,7 +33,7 @@ export default function SidebarD({ binary, memory }) {
   };
   useEffect(() => {
     makeTextFile(String(binary[0]).replaceAll(",", "\n"), memory[0]);
-  });
+  }, [binary, memory]);
 
   const {
     dec,
@@ -69,7 +69,7 @@ export default function SidebarD({ binary, memory }) {
   };
 
   return (
-    <div className="flex-auto flex divide-x divide-gray-500 bg-dark overflow-hidden text-base">
+    <div className="flex divide-x divide-gray-500 bg-dark overflow-hidden text-base">
       <div className="flex flex-col items-center gap-6 h-full p-3">
         <Tippy
           arrow={false}
@@ -190,14 +190,14 @@ export default function SidebarD({ binary, memory }) {
           </div>
         )}
         {state === estados["binario"] && (
-          <code className="h-full flex-1 p-6">
+          <code className="h-full flex-1 font-mono p-6">
             {binary[1].map((line) => (
               <>{line}</>
             ))}
           </code>
         )}
         {state === estados["memoria"] && (
-          <div className="text-base font-mono">
+          <div className="h-full flex-1 text-base font-mono p-6">
             <span>{memory[1]}</span>
           </div>
         )}
