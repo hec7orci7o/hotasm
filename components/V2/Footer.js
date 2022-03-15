@@ -6,6 +6,7 @@ import {
   FiShare2,
 } from "react-icons/fi";
 import Tippy from "@tippyjs/react";
+import copy from "copy-to-clipboard";
 
 export default function Footer() {
   return (
@@ -45,7 +46,14 @@ export default function Footer() {
             </span>
           }
         >
-          <button>
+          <button
+            onClick={() =>
+              copy("https://asm-editor.vercel.app/pro", {
+                debug: false,
+                format: "text/plain",
+              })
+            }
+          >
             <FiShare2 className="text-lg cursor-pointer stroke-1" />
           </button>
         </Tippy>

@@ -6,10 +6,47 @@ import {
   FiLayers,
 } from "react-icons/fi";
 import copy from "copy-to-clipboard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Tippy from "@tippyjs/react";
+import Field from "./Field";
+import useCalc from "../../hooks/useCalc";
 
 export default function SidebarD({ binary, memory }) {
+  const [downloadBinary, setDownloadBinary] = useState("");
+  const [downloadMemory, setDownloadMemory] = useState("");
+
+  // function for generating file and set download link
+  const makeTextFile = (_var1, _var2) => {
+    try {
+      // This creates the file.
+      const dataBin = new Blob([_var1], { type: "text/plain" });
+      const dataMem = new Blob([_var2], { type: "text/plain" });
+      // this part avoids memory leaks
+      if (downloadBinary !== "") window.URL.revokeObjectURL(downloadBinary);
+      if (downloadMemory !== "") window.URL.revokeObjectURL(downloadMemory);
+      // update the download link state
+      setDownloadBinary(window.URL.createObjectURL(dataBin));
+      setDownloadMemory(window.URL.createObjectURL(dataMem));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    makeTextFile(String(binary[0]).replaceAll(",", "\n"), memory[0]);
+  });
+
+  const {
+    dec,
+    bin,
+    hex,
+    updateDecimal,
+    updateBinario,
+    updateHexadecimal,
+    setDecimal,
+    setBinario,
+    setHexadecimal,
+  } = useCalc();
+
   const estados = {
     conversor: "conversor",
     binario: "binary",
@@ -30,6 +67,7 @@ export default function SidebarD({ binary, memory }) {
       });
     }
   };
+
   return (
     <div className="flex-auto flex divide-x divide-gray-500 bg-dark overflow-hidden text-base">
       <div className="flex flex-col items-center gap-6 h-full p-3">
@@ -98,9 +136,18 @@ export default function SidebarD({ binary, memory }) {
                   </span>
                 }
               >
-                <button onClick={() => {}}>
+                <a
+                  href={
+                    state === estados["binario"]
+                      ? downloadBinary
+                      : downloadMemory
+                  }
+                  download={
+                    state === estados["binario"] ? "binary.txt" : "memory.txt"
+                  }
+                >
                   <FiDownload className="text-lg stroke-1 hover:text-green-300" />
-                </button>
+                </a>
               </Tippy>
               <Tippy
                 arrow={false}
@@ -118,7 +165,30 @@ export default function SidebarD({ binary, memory }) {
             </div>
           )}
         </div>
-        {state === estados["conversor"] && <div></div>}
+        {state === estados["conversor"] && (
+          <div className="flex w-full p-8">
+            <div className="flex flex-wrap gap-2">
+              <Field
+                name="Dec"
+                value={dec}
+                update={updateDecimal}
+                select={setDecimal}
+              />
+              <Field
+                name="Bin"
+                value={bin}
+                update={updateBinario}
+                select={setBinario}
+              />
+              <Field
+                name="Hex"
+                value={hex}
+                update={updateHexadecimal}
+                select={setHexadecimal}
+              />
+            </div>
+          </div>
+        )}
         {state === estados["binario"] && (
           <code className="h-full flex-1 p-6">
             {binary[1].map((line) => (

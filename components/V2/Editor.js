@@ -1,10 +1,25 @@
 import { FiDownload, FiCopy } from "react-icons/fi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import copy from "copy-to-clipboard";
 import Tippy from "@tippyjs/react";
 
 export default function Editor({ updateProgram }) {
   const [program, setProgram] = useState();
+  const [downloadLink, setDownloadLink] = useState("");
+
+  // function for generating file and set download link
+  const makeTextFile = (_var) => {
+    try {
+      // This creates the file.
+      const data = new Blob([_var], { type: "text/plain" });
+      // this part avoids memory leaks
+      if (downloadLink !== "") window.URL.revokeObjectURL(downloadLink);
+      // update the download link state
+      setDownloadLink(window.URL.createObjectURL(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="flex-1 flex flex-col divide-y divide-gray-700 bg-dark overflow-hidden text-base">
@@ -19,9 +34,9 @@ export default function Editor({ updateProgram }) {
               </span>
             }
           >
-            <button onClick={() => {}}>
+            <a href={downloadLink} download="code.txt">
               <FiDownload className="text-lg stroke-1 hover:text-green-300" />
-            </button>
+            </a>
           </Tippy>
           <Tippy
             arrow={false}
@@ -48,6 +63,7 @@ export default function Editor({ updateProgram }) {
         onChange={(e) => {
           updateProgram(e.target.value);
           setProgram(e.target.value);
+          makeTextFile(program);
         }}
         className="flex-1 flex p-6 bg-transparent resize-none focus:outline-none text-base font-mono"
       />
