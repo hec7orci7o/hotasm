@@ -1,6 +1,6 @@
-import Sidebar from "../components/Sidebar";
-import Editor from "../components/Editor";
-import Output from "../components/Output";
+import Sidebar from "../components/V1/Sidebar";
+import Editor from "../components/V1/Editor";
+import Output from "../components/V1/Output";
 import useApp from "../hooks/useApp";
 import Link from "next/link";
 import { FiBook, FiGithub, FiGift } from "react-icons/fi";

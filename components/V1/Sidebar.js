@@ -1,4 +1,4 @@
-import useCalc from "../hooks/useCalc";
+import useCalc from "../../hooks/useCalc";
 import { useState } from "react";
 import Field from "./Field";
 

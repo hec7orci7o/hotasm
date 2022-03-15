@@ -5,7 +5,11 @@ module.exports = {
     "./hooks/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        dark: "#171717",
+      },
+    },
   },
   plugins: [],
 };
