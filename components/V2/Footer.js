@@ -44,9 +44,12 @@ export default function Footer() {
         </Tippy>
       </div>
       <div className="flex gap-4 px-2">
-        <button className="flex items-center opacity-70 hover:opacity-100">
+        <button
+          className="flex items-center opacity-70 hover:opacity-100 cursor-not-allowed"
+          disabled={true}
+        >
           <FiHelpCircle className="text-lg cursor-pointer stroke-1 text-white" />
-          <span className="tracking-tight text-sm py-0.5 px-1.5 rounded-md  font-sans">
+          <span className="tracking-tight text-sm py-0.5 px-1.5 rounded-md font-sans">
             Help & feedback
           </span>
         </button>

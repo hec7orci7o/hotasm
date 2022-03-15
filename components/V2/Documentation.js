@@ -18,7 +18,7 @@ export default function Documentation({ source, frontMatter }) {
             <FiX className="text-xl cursor-pointer" />
           </button>
         </div>
-        <article className="prose mx-auto text-justify z-50 p-6">
+        <article className="prose mx-auto text-justify z-50 p-6 overflow-auto">
           <MDXRemote {...source} />
         </article>
       </div>
