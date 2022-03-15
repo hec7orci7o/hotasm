@@ -69,7 +69,7 @@ export default function SidebarD({ binary, memory }) {
   };
 
   return (
-    <div className="flex-auto flex divide-x divide-gray-500 bg-dark overflow-hidden text-base">
+    <div className="flex divide-x divide-gray-500 bg-dark overflow-hidden text-base">
       <div className="flex flex-col items-center gap-6 h-full p-3">
         <Tippy
           arrow={false}

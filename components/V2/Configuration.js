@@ -7,9 +7,9 @@ export default function Configuracion({ loadFormat, unloadFormat }) {
   const [nBits, setBits] = useState();
 
   return (
-    <div className="flex-1 flex flex-col divide-y divide-gray-700 bg-dark overflow-hidden text-base">
+    <>
       <div className="flex items-center justify-between gap-6 px-6 h-10">
-        <div>
+        <div className="flex flex-nowrap items-center">
           <span className="text-sm font-bold opacity-50 capitalize">
             configuration
           </span>
@@ -53,6 +53,6 @@ export default function Configuracion({ loadFormat, unloadFormat }) {
         onChange={(e) => setFormat(e.target.value)}
         className="flex-1 flex p-6 bg-transparent resize-none focus:outline-none text-base font-mono"
       />
-    </div>
+    </>
   );
 }
