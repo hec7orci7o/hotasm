@@ -7,6 +7,7 @@ import {
 } from "react-icons/fi";
 import copy from "copy-to-clipboard";
 import { useState } from "react";
+import Tippy from "@tippyjs/react";
 
 export default function SidebarD({ binary, memory }) {
   const estados = {
@@ -32,24 +33,54 @@ export default function SidebarD({ binary, memory }) {
   return (
     <div className="flex-auto flex divide-x divide-gray-500 bg-dark overflow-hidden text-base">
       <div className="flex flex-col items-center gap-6 h-full p-3">
-        <button onClick={() => setState(estados["conversor"])}>
-          <FiSmartphone
-            className={`text-lg stroke-1 
+        <Tippy
+          arrow={false}
+          placement="left"
+          content={
+            <span className="bg-gray-200 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
+              Converter
+            </span>
+          }
+        >
+          <button onClick={() => setState(estados["conversor"])}>
+            <FiSmartphone
+              className={`text-lg stroke-1 
             ${state === estados["conversor"] ? "text-indigo-400" : ""}`}
-          />
-        </button>
-        <button onClick={() => setState(estados["binario"])}>
-          <FiFolder
-            className={`text-lg stroke-1 
+            />
+          </button>
+        </Tippy>
+        <Tippy
+          arrow={false}
+          placement="left"
+          content={
+            <span className="bg-gray-200 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
+              Binary output
+            </span>
+          }
+        >
+          <button onClick={() => setState(estados["binario"])}>
+            <FiFolder
+              className={`text-lg stroke-1 
             ${state === estados["binario"] ? "text-indigo-400" : ""}`}
-          />
-        </button>
-        <button onClick={() => setState(estados["memoria"])}>
-          <FiLayers
-            className={`text-lg stroke-1 
+            />
+          </button>
+        </Tippy>
+        <Tippy
+          arrow={false}
+          placement="left"
+          content={
+            <span className="bg-gray-200 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
+              Memory output
+            </span>
+          }
+        >
+          <button onClick={() => setState(estados["memoria"])}>
+            <FiLayers
+              className={`text-lg stroke-1 
             ${state === estados["memoria"] ? "text-indigo-400" : ""}`}
-          />
-        </button>
+            />
+          </button>
+        </Tippy>
       </div>
       <div className="flex-1 flex flex-col divide-y divide-gray-700 bg-dark overflow-hidden text-base">
         <div className="flex items-center justify-between gap-6 px-6 h-10">
@@ -58,12 +89,32 @@ export default function SidebarD({ binary, memory }) {
           </span>
           {state !== estados["conversor"] && (
             <div className="flex items-center gap-6">
-              <button onClick={() => {}}>
-                <FiDownload className="text-lg stroke-1 hover:text-green-300" />
-              </button>
-              <button onClick={handleCopy}>
-                <FiCopy className="text-lg stroke-1 hover:text-green-300" />
-              </button>
+              <Tippy
+                arrow={false}
+                placement="top"
+                content={
+                  <span className="bg-gray-200 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
+                    Download output
+                  </span>
+                }
+              >
+                <button onClick={() => {}}>
+                  <FiDownload className="text-lg stroke-1 hover:text-green-300" />
+                </button>
+              </Tippy>
+              <Tippy
+                arrow={false}
+                placement="top"
+                content={
+                  <span className="bg-gray-200 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
+                    Copy output
+                  </span>
+                }
+              >
+                <button onClick={handleCopy}>
+                  <FiCopy className="text-lg stroke-1 hover:text-green-300" />
+                </button>
+              </Tippy>
             </div>
           )}
         </div>

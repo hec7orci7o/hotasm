@@ -1,5 +1,6 @@
 import { FiUpload, FiTrash } from "react-icons/fi";
 import { useState } from "react";
+import Tippy from "@tippyjs/react";
 
 export default function Configuracion({ loadFormat, unloadFormat }) {
   const [format, setFormat] = useState();
@@ -22,12 +23,30 @@ export default function Configuracion({ loadFormat, unloadFormat }) {
           </span>
         </div>
         <div className="flex items-center gap-6">
-          <button onClick={() => loadFormat(format, nBits)}>
-            <FiUpload className="text-lg stroke-1 hover:text-green-300" />
-          </button>
-          <button onClick={() => unloadFormat}>
-            <FiTrash className="text-lg stroke-1 hover:text-red-300" />
-          </button>
+          <Tippy
+            arrow={false}
+            content={
+              <span className="bg-gray-200 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
+                Load configuration
+              </span>
+            }
+          >
+            <button onClick={() => loadFormat(format, nBits)}>
+              <FiUpload className="text-lg stroke-1 hover:text-green-300" />
+            </button>
+          </Tippy>
+          <Tippy
+            arrow={false}
+            content={
+              <span className="bg-gray-200 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
+                Delete configuration
+              </span>
+            }
+          >
+            <button onClick={() => unloadFormat}>
+              <FiTrash className="text-lg stroke-1 hover:text-red-300" />
+            </button>
+          </Tippy>
         </div>
       </div>
       <textarea
