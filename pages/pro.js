@@ -18,8 +18,7 @@ export default function V2() {
     memory,
     updateProgram,
   } = useApp();
-
-  const { hLayout, rightSidebar, handleLayout, handleSr } = useScreen();
+  const { hLayout, rightSidebar } = useScreen();
 
   return (
     <div className="flex-auto h-full bg-gray-500 text-white overflow-hidden">
@@ -28,24 +27,32 @@ export default function V2() {
         sizes={[75, 25]}
         minSize={[0, 350]}
         maxSize={[Infinity, 500]}
-        gutterSize={4}
+        gutterSize={!rightSidebar ? 4 : 0}
         gutterAlign="center"
       >
-        {hLayout ? (
-          <Split className="flex" gutterSize={4} gutterAlign="center">
-            <div className="flex-1 flex flex-col divide-y divide-gray-700 bg-dark overflow-hidden text-base">
-              <Editor updateProgram={updateProgram} />
+        {/* Futura implementacion <- actualemte bug */}
+        {hLayout && false ? (
+          <Split
+            className="flex"
+            sizes={[50, 50]}
+            minSize={[0, 0]}
+            maxSize={[Infinity, Infinity]}
+            gutterSize={4}
+            gutterAlign="center"
+          >
+            <div className="bg-red-500">
+              {/* <Editor updateProgram={updateProgram} /> */}
             </div>
-            <div className="flex-1 flex-s flex flex-col divide-y divide-gray-700 bg-dark overflow-hidden text-base">
-              <Configuracion
+            <div className="bg-red-500">
+              {/* <Configuracion
                 loadFormat={loadFormat}
                 unloadFormat={unloadFormat}
-              />
+              /> */}
             </div>
           </Split>
         ) : (
           <Split
-            className="flex-auto"
+            className=""
             sizes={[50, 50]}
             minSize={[0, 0]}
             maxSize={[Infinity, Infinity]}
@@ -64,7 +71,7 @@ export default function V2() {
             </div>
           </Split>
         )}
-        <SidebarD binary={binary} memory={memory} />
+        {!rightSidebar && <SidebarD binary={binary} memory={memory} />}
       </Split>
     </div>
   );

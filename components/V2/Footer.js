@@ -97,8 +97,9 @@ export default function Footer() {
           <button
             onClick={handleLayout}
             className="opacity-70 hover:opacity-100"
+            disabled={true}
           >
-            <FiColumns className="text-lg cursor-pointer stroke-1 text-white" />
+            <FiColumns className="text-lg cursor-not-allowed stroke-1 text-white" />
           </button>
         </Tippy>
         <Tippy
@@ -109,8 +110,12 @@ export default function Footer() {
             </span>
           }
         >
-          <button onClick={handleSr} className="opacity-70 hover:opacity-100">
-            <FiSidebar className="text-lg cursor-pointer stroke-1 rotate-180 text-white" />
+          <button
+            onClick={handleSr}
+            className="opacity-70 hover:opacity-100"
+            disabled={true}
+          >
+            <FiSidebar className="text-lg cursor-not-allowed stroke-1 rotate-180 text-white" />
           </button>
         </Tippy>
       </div>

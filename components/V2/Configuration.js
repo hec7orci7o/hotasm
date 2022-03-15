@@ -1,10 +1,12 @@
 import { FiUpload, FiTrash } from "react-icons/fi";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 import Tippy from "@tippyjs/react";
 
 export default function Configuracion({ loadFormat, unloadFormat }) {
   const [format, setFormat] = useState();
   const [nBits, setBits] = useState();
+  const { status } = useSession();
 
   return (
     <>
@@ -31,7 +33,13 @@ export default function Configuracion({ loadFormat, unloadFormat }) {
               </span>
             }
           >
-            <button onClick={() => loadFormat(format, nBits)}>
+            <button
+              onClick={() => {
+                if (status === "authenticated") {
+                  loadFormat(format, nBits);
+                }
+              }}
+            >
               <FiUpload className="text-lg stroke-1 hover:text-green-300" />
             </button>
           </Tippy>
@@ -43,7 +51,7 @@ export default function Configuracion({ loadFormat, unloadFormat }) {
               </span>
             }
           >
-            <button onClick={() => unloadFormat}>
+            <button onClick={() => unloadFormat()}>
               <FiTrash className="text-lg stroke-1 hover:text-red-300" />
             </button>
           </Tippy>
