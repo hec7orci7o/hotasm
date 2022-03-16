@@ -2,6 +2,10 @@
   "name": "cuddly-adventure",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">= 16.14.0",
+    "npm": ">= 8.3.1"
+},
   "scripts": {
     "dev": "next dev",
     "build": "next build",
