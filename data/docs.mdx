@@ -1,47 +1,116 @@
 ---
-thumbnail: "https://images.unsplash.com/photo-1647034821236-a542962eaadc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=765&q=80"
-title: "Nam nec enim efficitur, eleifend."
-description: "Praesent porttitor augue nec felis semper blandit. Phasellus auctor nulla eu mauris varius, in dapibus tellus ultricies. Etiam faucibus dolor a lectus porttitor, sit amet semper dui tincidunt. Phasellus sit amet sem efficitur, molestie diam id, suscipit augue. Maecenas nibh quam, pellentesque eu molestie a, dictum a lorem. "
-date: "Feb 26, 2022"
+title: "Documentation"
+description: "Documentation of the assambly editor"
+date: "Mar 16, 2022"
 ---
+## Quick Start
+## Usage
+1. Login into your github account.
+2. Set up your configuration & upload it to the system.
+	- bits / inst
+	- inst format
+3. write your asm code in the editor.
+4. Select the output format you prefer: [`binary`, `memory`]
 
-# Aliquam tristique nibh.
+## Formats
+#### INST Rules
+`Rules` defines when an instruction if following a valid configuration format.
+A `valid configuration format` is one that matches one of the following patterns.
 
-Donec varius nisi eget condimentum vehicula. Cras lobortis dolor in tempus condimentum. Donec dapibus condimentum condimentum. Vivamus ut mi eget felis eleifend consequat. Aliquam dignissim tortor tincidunt eros rhoncus scelerisque. Vivamus eget tempor quam. Maecenas pharetra libero vel porttitor imperdiet. Vestibulum vulputate feugiat nisi ut porttitor. 
+|Pattern|Regex|State|
+|------|-----|------|
+|\*instruction| `/^([a-z0-9]+)/i` |active|
+|\*constant| `/^#([a-z])/i` |active|
+|\*register| `/^r([a-zA-Z]+)/` |active|
+|\*address| `/^\[r([a-zA-Z0-9]+)\]/` |disabled|
+|\_number| `/^([0-9]+)/` |active|
+|\_range| `/^([0-9]+\:[0-9]+)/` |active|
+|\^semicolon| `/^;/` |active|
 
-Fusce vulputate, nibh vel dapibus congue, neque turpis posuere magna, vehicula eleifend urna tortor sed mi. Cras egestas id est in pretium. Quisque auctor vehicula dui, et convallis turpis efficitur ac. Mauris sed venenatis lorem, sit amet dapibus ligula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
+`*` <- Identifies valid patterns for the pattern section.
+`_` <- Identifies valid patterns for the range section.
+`^` <- identifies the valid pattern for separating fields or instructions.
 
-## Mauris vitae aliquet lacus. Nulla.
+If you think that a pattern does not work correctly try to validate it in [regex101](https://regex101.com/), if you see that the pattern is not being detected there leave an issue explaining the problem detailing the steps followed and data provided.
 
-Donec nisi turpis, faucibus at libero vitae, luctus aliquet tellus. Nam tempus metus vitae quam aliquet, nec finibus turpis iaculis. Suspendisse varius nunc et varius congue.
-
-```go
-package main
-
-import "fmt"
-
-// The entry point of the programs
-func main() {
-    fmt.Println("Hello world!")
-    say("Hello Go!")
-}
-
-func say(message string) {
-    fmt.Println("You said: ", message)
-}
+#### INST Format
+The instruction format consists mainly of 2 parts: `[pattern];[ranges];`
+`Patterns:` Defines the valid language for writing the instructions.
+```
+mov #K rd;		-- [inst] [cte] [reg]
+add ra rb rd;	-- [inst] [reg] [reg] [reg]
 ```
 
-## Curabitur feugiat lorem eu felis.
-Nunc ante eros, vestibulum nec purus vitae, laoreet iaculis quam. Mauris diam lorem, mollis quis tincidunt nec, rutrum ut mi. Etiam sed ipsum quis leo commodo malesuada. Aenean id posuere dolor. Phasellus feugiat laoreet ante at auctor. Suspendisse lacinia sagittis ullamcorper. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque convallis eleifend erat. 
-```go
-s1 := "Hello" + "World"
-
-s2 := `A "raw" string literal
-can include line breaks.`
-
-// Outputs: 11
-fmt.Println(len(s1))
-
-// Outputs: Hello
-fmt.Println(string(s1[0:5]))
+`Ranges:` Defines the position where the field of the pattern read will be written.
 ```
+0 32:32 20:5 4:0;		-- [co] [r_co] [r_k] [r_rd]
+1 32:32 14:10 9:5 4:0;  -- [co] [r_co] [r_ra] [r_rb] [r_rd]
+```
+
+##### Complete INTS format
+```
+mov #K rd; 0 32:32 20:5 4:0;
+```
+
+## Example
+##### Code
+```
+mov #30000 r1;
+mov #30000 r2;
+mov #30000 r3;
+mov  #8000 r4;
+mov     #0 r5;
+mov    #90 r6;
+mov     #5 r7;
+add r1 r2 r0;
+add r3 r0 r0;
+add r4 r0 r0;
+add r5 r0 r0;
+add r6 r0 r0;
+add r7 r0 r0;
+```
+
+##### Configuration
+```
+mov #K rd; 0 22:22 21:5 4:0;
+add ra rb rd; 1 22:22 15:10 9:5 4:0;
+```
+```
+INST: 22 bits
+```
+
+##### Binary output
+```
+0011101010011000000001
+0011101010011000000010
+0011101010011000000011
+0000111110100000000100
+0000000000000000000101
+0000000000101101000110
+0000000000000010100111
+1000000000010001000000
+1000000000110000000000
+1000000001000000000000
+1000000001010000000000
+1000000001100000000000
+1000000001110000000000
+```
+
+##### Memory output
+```
+v2.0 raw
+ea601 ea602 ea603 3e804 5 b46 a7 200440
+200c00 201000 201400 201800 201c00
+```
+
+## Bugs Detected
+- [ ] **v0.1.0** - Example of unresolved error
+	`Description:` Maecenas laoreet volutpat interdum. Integer non lacinia leo. Etiam eget aliquam lectus. Vivamus luctus maximus accumsan. Sed at consectetur sapien.
+- [x] **v0.1.0** - Example of unresolved error
+	`Description:` Pellentesque hendrerit turpis non commodo sollicitudin. Mauris nec auctor enim. Morbi erat felis, sollicitudin nec orci quis, rutrum tincidunt felis.
+
+## Contributing
+If you have any ideas on how the tool could be improved, please contact the project administrator to make an approach/analysis of the idea for a possible future implementation.
+
+## Acknowledgement
+[ZenithGD](https://github.com/ZenithGD)
