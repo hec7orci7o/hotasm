@@ -10,50 +10,45 @@ date: "Mar 16, 2022"
 	- bits / inst
 	- inst format
 3. write your asm code in the editor.
-4. Select the output format you prefer: [`binary`, `memory`]
+4. Select the output format you prefer: [**binary**, **memory**]
 
 ## Formats
 #### INST Rules
-`Rules` defines when an instruction if following a valid configuration format.
-A `valid configuration format` is one that matches one of the following patterns.
+**Rules** defines when an instruction if following a valid configuration format.
+A **valid configuration format** is one that matches one of the following patterns.
 
-|Pattern|Regex|State|
-|------|-----|------|
-|\*instruction| `/^([a-z0-9]+)/i` |active|
-|\*constant| `/^#([a-z])/i` |active|
-|\*register| `/^r([a-zA-Z]+)/` |active|
-|\*address| `/^\[r([a-zA-Z0-9]+)\]/` |disabled|
-|\_number| `/^([0-9]+)/` |active|
-|\_range| `/^([0-9]+\:[0-9]+)/` |active|
-|\^semicolon| `/^;/` |active|
+**Instruction**: /^([a-z0-9]+)/i<br/>
+**Constant**: /^#([a-z])/i<br/>
+**Register**: /^r([a-zA-Z]+)/<br/>
+**Address**: /^\[r([a-zA-Z0-9]+)\]/<br/>
+**Number**: /^([0-9]+)/<br/>
+**Range**: /^([0-9]+\:[0-9]+)/<br/>
+**Semicolon**: /^;/<br/>
 
-`*` <- Identifies valid patterns for the pattern section.
-`_` <- Identifies valid patterns for the range section.
-`^` <- identifies the valid pattern for separating fields or instructions.
 
 If you think that a pattern does not work correctly try to validate it in [regex101](https://regex101.com/), if you see that the pattern is not being detected there leave an issue explaining the problem detailing the steps followed and data provided.
 
 #### INST Format
-The instruction format consists mainly of 2 parts: `[pattern];[ranges];`
-`Patterns:` Defines the valid language for writing the instructions.
+The instruction format consists mainly of 2 parts: **[pattern];[ranges];**
+**Patterns:** Defines the valid language for writing the instructions.
 ```
 mov #K rd;		-- [inst] [cte] [reg]
 add ra rb rd;	-- [inst] [reg] [reg] [reg]
 ```
 
-`Ranges:` Defines the position where the field of the pattern read will be written.
+**Ranges:** Defines the position where the field of the pattern read will be written.
 ```
 0 32:32 20:5 4:0;		-- [co] [r_co] [r_k] [r_rd]
 1 32:32 14:10 9:5 4:0;  -- [co] [r_co] [r_ra] [r_rb] [r_rd]
 ```
 
-##### Complete INTS format
+#### Complete INTS format
 ```
 mov #K rd; 0 32:32 20:5 4:0;
 ```
 
 ## Example
-##### Code
+#### Code
 ```
 mov #30000 r1;
 mov #30000 r2;
@@ -70,7 +65,7 @@ add r6 r0 r0;
 add r7 r0 r0;
 ```
 
-##### Configuration
+#### Configuration
 ```
 mov #K rd; 0 22:22 21:5 4:0;
 add ra rb rd; 1 22:22 15:10 9:5 4:0;
@@ -79,7 +74,7 @@ add ra rb rd; 1 22:22 15:10 9:5 4:0;
 INST: 22 bits
 ```
 
-##### Binary output
+#### Binary output
 ```
 0011101010011000000001
 0011101010011000000010
@@ -96,7 +91,7 @@ INST: 22 bits
 1000000001110000000000
 ```
 
-##### Memory output
+#### Memory output
 ```
 v2.0 raw
 ea601 ea602 ea603 3e804 5 b46 a7 200440
@@ -105,9 +100,9 @@ ea601 ea602 ea603 3e804 5 b46 a7 200440
 
 ## Bugs Detected
 - [ ] **v0.1.0** - Example of unresolved error
-	`Description:` Maecenas laoreet volutpat interdum. Integer non lacinia leo. Etiam eget aliquam lectus. Vivamus luctus maximus accumsan. Sed at consectetur sapien.
-- [x] **v0.1.0** - Example of unresolved error
-	`Description:` Pellentesque hendrerit turpis non commodo sollicitudin. Mauris nec auctor enim. Morbi erat felis, sollicitudin nec orci quis, rutrum tincidunt felis.
+	**Description:** Maecenas laoreet volutpat interdum. Integer non lacinia leo. Etiam eget aliquam lectus. Vivamus luctus maximus accumsan. Sed at consectetur sapien.
+- [X] **v0.1.0** - Example of unresolved error
+	**Description:** Pellentesque hendrerit turpis non commodo sollicitudin. Mauris nec auctor enim. Morbi erat felis, sollicitudin nec orci quis, rutrum tincidunt felis.
 
 ## Contributing
 If you have any ideas on how the tool could be improved, please contact the project administrator to make an approach/analysis of the idea for a possible future implementation.
