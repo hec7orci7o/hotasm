@@ -38,7 +38,7 @@ export default function Navbar() {
       <Link href="/">
         <a className="px-4 py-2 rounded hover:bg-gray-900">
           <span className="text-white uppercase font-medium tracking-wide">
-            Assambly
+            hotasm
           </span>
         </a>
       </Link>
@@ -48,7 +48,7 @@ export default function Navbar() {
           <div className="flex items-center gap-4">
             <button
               onClick={() =>
-                copy("https://asm-editor.vercel.app/pro", {
+                copy("https://asm-editor.vercel.app/", {
                   debug: false,
                   format: "text/plain",
                 })

@@ -5,7 +5,7 @@
   "engines": {
     "node": "14.x",
     "npm": ">= 8.3.1"
-},
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -20,6 +20,7 @@
     "next": "12.1.0",
     "next-auth": "^4.2.1",
     "next-mdx-remote": "^4.0.0",
+    "next-pwa": "^5.4.6",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-icons": "^4.3.1",
