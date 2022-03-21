@@ -12,8 +12,8 @@ add ra rb rd; BR(ra) + BR(rb) -> BR(rd)
 ### Configuración
 configuracion de las instrucciones
 ```asm=
-mov #K rd; 0 22:22 21:5 4:0;
-add ra rb rd; 1 22:22 15:10 9:5 4:0;
+mov #K rd; 0 21:21 20:5 4:0;
+add ra rb rd; 1 21:21 14:10 9:5 4:0;
 ```
 ```
 INST: 22 bits
@@ -55,4 +55,10 @@ Traduccion de las instrucciones a binario
 1000000001110000000000
 ```
 
+Traduccion de las instrucciones a formato memoria
+```
+v2.0 raw
+ea601 ea602 ea603 3e804 5 b46 a7 200440
+200c00 201000 201400 201800 201c00
+```
 

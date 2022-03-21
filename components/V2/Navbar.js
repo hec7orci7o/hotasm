@@ -14,7 +14,6 @@ export default function Navbar() {
   const handleMenu = () => setMenu(!menu);
   let user;
   if (status === "authenticated") {
-    console.log(session.user);
     user = session.user;
   }
 

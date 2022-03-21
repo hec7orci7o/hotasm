@@ -124,17 +124,12 @@ const trError = Symbol("states");
  * @returns
  */
 function inst2Bin(line, token, translator) {
+  let fill = Math.abs(translator[0] - translator[1]) + 1;
   let max = Math.max(translator[0], translator[1]);
-  let fill;
-  if (translator[0] < 10) {
-    fill = translator[0] - translator[1] + 1;
-    max += 1;
-  } else {
-    fill = translator[0] - translator[1];
-  }
+
   token = token.padStart(fill, "x");
   let vLine = line.split("");
-  vLine.splice(line.length - max, token.length, ...token.split(""));
+  vLine.splice(line.length - max - 1, token.length, ...token.split(""));
   vLine = vLine.toString().replaceAll(",", "");
   return vLine;
 }
@@ -149,16 +144,7 @@ function trActionInst(kind, translator, word) {
   switch (kind) {
     case TOKEN["instruction"]:
       try {
-        let aux = word.split("");
-        let resta =
-          Math.abs(translator["ranges"][0][0] - translator["ranges"][0][1]) + 1;
-        aux.splice(
-          word.length -
-            Math.max(translator["ranges"][0][0], translator["ranges"][0][1]),
-          resta,
-          ...translator["op"].split("")
-        );
-        word = aux.toString().replaceAll(",", "");
+        word = inst2Bin(word, translator["op"], translator["ranges"][0]);
       } catch (error) {
         console.error(error);
       }

@@ -38,13 +38,13 @@ add ra rb rd;	-- [inst] [reg] [reg] [reg]
 
 **Ranges:** Defines the position where the field of the pattern read will be written.
 ```
-0 32:32 20:5 4:0;		-- [co] [r_co] [r_k] [r_rd]
-1 32:32 14:10 9:5 4:0;  -- [co] [r_co] [r_ra] [r_rb] [r_rd]
+0 21:21 20:5 4:0;		-- [co] [r_co] [r_k] [r_rd]
+1 21:21 14:10 9:5 4:0;  -- [co] [r_co] [r_ra] [r_rb] [r_rd]
 ```
 
 #### Complete INTS format
 ```
-mov #K rd; 0 32:32 20:5 4:0;
+mov #K rd; 0 21:21 20:5 4:0;
 ```
 
 ## Example
@@ -67,8 +67,8 @@ add r7 r0 r0;
 
 #### Configuration
 ```
-mov #K rd; 0 22:22 21:5 4:0;
-add ra rb rd; 1 22:22 15:10 9:5 4:0;
+mov #K rd; 0 21:21 21:5 4:0;
+add ra rb rd; 1 21:21 15:10 9:5 4:0;
 ```
 ```
 INST: 22 bits
@@ -99,10 +99,9 @@ ea601 ea602 ea603 3e804 5 b46 a7 200440
 ```
 
 ## Bugs Detected
-- [ ] **v0.1.0** - Example of unresolved error
-	**Description:** Maecenas laoreet volutpat interdum. Integer non lacinia leo. Etiam eget aliquam lectus. Vivamus luctus maximus accumsan. Sed at consectetur sapien.
-- [X] **v0.1.0** - Example of unresolved error
-	**Description:** Pellentesque hendrerit turpis non commodo sollicitudin. Mauris nec auctor enim. Morbi erat felis, sollicitudin nec orci quis, rutrum tincidunt felis.
+- [X] **v0.1.0** - Bit range error
+	**Description:** If the maximum number of bits is 22, the bits should go from 0-21 and they go from 0-22.
+	**Discover by:** [XLXXLXTX](https://github.com/XLXXLXTX)
 
 ## Contributing
 If you have any ideas on how the tool could be improved, please contact the project administrator to make an approach/analysis of the idea for a possible future implementation.
