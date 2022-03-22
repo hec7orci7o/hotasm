@@ -79,7 +79,7 @@ export default function Footer() {
         >
           <button
             onClick={() =>
-              copy("https://asm-editor.vercel.app/", {
+              copy("https://hotasm.vercel.app/", {
                 debug: false,
                 format: "text/plain",
               })
