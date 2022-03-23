@@ -12,8 +12,15 @@ import copy from "copy-to-clipboard";
 import { useScreen } from "../../context/ScreenContext";
 
 export default function Footer() {
-  const { handleDocs, handleMode, handleLayout, handleSl, handleSr } =
-    useScreen();
+  const {
+    leftSidebar,
+    mzLayout,
+    handleDocs,
+    handleMode,
+    handleLayout,
+    handleSl,
+    handleSr,
+  } = useScreen();
 
   return (
     <div className="flex justify-between items-center h-8 w-full bg-dark text-white">
@@ -27,7 +34,10 @@ export default function Footer() {
           }
         >
           <button onClick={handleSl} className="opacity-70 hover:opacity-100">
-            <FiSidebar className="text-lg cursor-pointer stroke-1 text-white" />
+            <FiSidebar
+              className={`text-lg cursor-pointer stroke-1 text-white duration-150
+               ${leftSidebar ? "rotate-180" : ""}`}
+            />
           </button>
         </Tippy>
         <Tippy
@@ -39,12 +49,16 @@ export default function Footer() {
           }
         >
           <button onClick={handleMode} className="opacity-70 hover:opacity-100">
-            <FiMaximize className="text-lg cursor-pointer stroke-1 text-white" />
+            {mzLayout ? (
+              <FiMinimize className="text-lg cursor-pointer stroke-1 text-white" />
+            ) : (
+              <FiMaximize className="text-lg cursor-pointer stroke-1 text-white" />
+            )}
           </button>
         </Tippy>
       </div>
       <div className="flex gap-4 px-2">
-        <button
+        {/* <button
           className="flex items-center opacity-70 hover:opacity-100 cursor-not-allowed"
           disabled={true}
         >
@@ -52,7 +66,7 @@ export default function Footer() {
           <span className="tracking-tight text-sm py-0.5 px-1.5 rounded-md font-sans">
             Help & feedback
           </span>
-        </button>
+        </button> */}
         <Tippy
           arrow={false}
           content={
@@ -68,7 +82,6 @@ export default function Footer() {
             <FiBook className="text-lg cursor-pointer stroke-1 text-white" />
           </button>
         </Tippy>
-
         <Tippy
           arrow={false}
           content={
@@ -89,7 +102,7 @@ export default function Footer() {
             <FiShare2 className="text-lg cursor-pointer stroke-1 text-white" />
           </button>
         </Tippy>
-        <Tippy
+        {/* <Tippy
           arrow={false}
           content={
             <span className="bg-gray-200 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
@@ -104,8 +117,8 @@ export default function Footer() {
           >
             <FiColumns className="text-lg cursor-not-allowed stroke-1 text-white" />
           </button>
-        </Tippy>
-        <Tippy
+        </Tippy> */}
+        {/* <Tippy
           arrow={false}
           content={
             <span className="bg-gray-200 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
@@ -120,7 +133,7 @@ export default function Footer() {
           >
             <FiSidebar className="text-lg cursor-not-allowed stroke-1 rotate-180 text-white" />
           </button>
-        </Tippy>
+        </Tippy> */}
       </div>
     </div>
   );
