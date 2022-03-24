@@ -25,7 +25,8 @@
     "react-dom": "17.0.2",
     "react-icons": "^4.3.1",
     "react-split": "^2.0.14",
-    "minimist": ">=1.2.6"
+    "minimist": ">=1.2.6",
+    "ajv": ">=6.12.3"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.2",
@@ -33,6 +34,7 @@
     "eslint-config-next": "12.1.0",
     "postcss": "^8.4.7",
     "tailwindcss": "^3.0.23",
-    "minimist": ">=1.2.6"
+    "minimist": ">=1.2.6",
+    "ajv": ">=6.12.3"
   }
 }
