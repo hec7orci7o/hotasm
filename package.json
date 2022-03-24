@@ -24,13 +24,15 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-icons": "^4.3.1",
-    "react-split": "^2.0.14"
+    "react-split": "^2.0.14",
+    "minimist": ">=1.2.6"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.2",
     "eslint": "8.10.0",
     "eslint-config-next": "12.1.0",
     "postcss": "^8.4.7",
-    "tailwindcss": "^3.0.23"
+    "tailwindcss": "^3.0.23",
+    "minimist": ">=1.2.6"
   }
 }
