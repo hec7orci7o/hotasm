@@ -3,103 +3,79 @@ title: "Documentation"
 description: "Documentation of the assambly editor"
 date: "Mar 16, 2022"
 ---
+
 ## Quick Start
 ## Usage
 1. Login into your github account.
 2. Set up your configuration & upload it to the system.
-	- bits / inst
-	- inst format
+ - bits / inst
+ - inst format
 3. write your asm code in the editor.
 4. Select the output format you prefer: [**binary**, **memory**]
 
-## Formats
-#### INST Rules
-**Rules** defines when an instruction if following a valid configuration format.
-A **valid configuration format** is one that matches one of the following patterns.
-
-**Instruction**: /^([a-z0-9]+)/i<br/>
-**Constant**: /^#([a-z])/i<br/>
-**Register**: /^r([a-zA-Z]+)/<br/>
-**Address**: /^\[r([a-zA-Z0-9]+)\]/<br/>
-**Number**: /^([0-9]+)/<br/>
-**Range**: /^([0-9]+\:[0-9]+)/<br/>
-**Semicolon**: /^;/<br/>
-
-
-If you think that a pattern does not work correctly try to validate it in [regex101](https://regex101.com/), if you see that the pattern is not being detected there leave an issue explaining the problem detailing the steps followed and data provided.
-
-#### INST Format
-The instruction format consists mainly of 2 parts: **[pattern];[ranges];**
-**Patterns:** Defines the valid language for writing the instructions.
-```
-mov #K rd;		-- [inst] [cte] [reg]
-add ra rb rd;	-- [inst] [reg] [reg] [reg]
-```
-
-**Ranges:** Defines the position where the field of the pattern read will be written.
-```
-0 21:21 20:5 4:0;		-- [co] [r_co] [r_k] [r_rd]
-1 21:21 14:10 9:5 4:0;  -- [co] [r_co] [r_ra] [r_rb] [r_rd]
-```
-
-#### Complete INTS format
-```
-mov #K rd; 0 21:21 20:5 4:0;
-```
-
 ## Example
-#### Code
+We will start from an initial state in which we will have defined the instructions that we want to be able to program.
 ```
-mov #30000 r1;
-mov #30000 r2;
-mov #30000 r3;
-mov  #8000 r4;
-mov     #0 r5;
-mov    #90 r6;
-mov     #5 r7;
-add r1 r2 r0;
-add r3 r0 r0;
-add r4 r0 r0;
-add r5 r0 r0;
-add r6 r0 r0;
-add r7 r0 r0;
+mov K, rb 		; SignExt(K) → BR(rb) 					K cte de 16 bits 
+add ra, rb, rd 	; BR(ra) + BR(rb) → BR(rd) 
+ld (ra), rb 	; MEM(BR(ra)15-0) → BR(rb) 
+st rb, (ra) 	; BR(rb) → MEM(BR(ra)15-0) 
+beq ra, rb, K 	; si BR(ra)==BR(rb) salta a @ K 
+nop 			; no realiza ninguna acción
 ```
 
-#### Configuration
+To begin with, we will define in which bits the parameters of our instructions will be placed as follows:
 ```
-mov #K rd; 0 21:21 20:5 4:0;
-add ra rb rd; 1 21:21 15:10 9:5 4:0;
-```
-```
-INST: 22 bits
-```
-
-#### Binary output
-```
-0011101010011000000001
-0011101010011000000010
-0011101010011000000011
-0000111110100000000100
-0000000000000000000101
-0000000000101101000110
-0000000000000010100111
-1000000000010001000000
-1000000000110000000000
-1000000001000000000000
-1000000001010000000000
-1000000001100000000000
-1000000001110000000000
+31           <-- inst -->             0
+000- ---- ---- ---- ---- ---- ---- ----	;    nop
+001A AAAA BBBB BKKKK KKKK KKKK KKK K--- ;    beq
+010- ---- BBBB BKKKK KKKK KKKK KKK K---	;    mov
+011A AAAA BBBB BDDD DD-- ---- ---- ----	;    add
+100A AAAA BBBB BKKKK KKKK KKKK KKK K---	;    ld
+101A AAAA BBBB BKKKK KKKK KKKK KKK K---	;    st
 ```
 
-#### Memory output
+Now that we know how we want to organize our instructions, we can start with the configuration.
 ```
-v2.0 raw
-ea601 ea602 ea603 3e804 5 b46 a7 200440
-200c00 201000 201400 201800 201c00
+INST: 32 bits
 ```
+
+```
+nop; 000 31:29;
+beq ra rb #K; 001 31:29 28:24 23:19 18:3;
+mov #K rb; 010 31:29 18:3 23:19;
+add ra rb rd; 011 31:29 28:24 23:19 18:14;
+ld ra rb; 100 31:29 28:24 23:19 18:3;
+st rb ra; 101 31:29 28:24 23:19 18:3;
+```
+
+As you can see in the configuration above, you can see that there are two clearly different parts, separated by the ";" character. The left part indicates the instruction and its parameters and the right part how these are translated.
+
+We have 3 types of arguments or parameters that are part of the left part: instructions, registers and constants.
+The instructions are defined by the following regular expression: /^([a-z0-9]+)/i <br/>
+The registers by: /^r([a-zA-Z]+)/<br/>
+Constants by: /^#([a-z])/i
+
+On the right side we find the translation bits of the instruction and its range (Indicates the positions that will be occupied by that argument/parameter).
+The argument of type range has the following syntax: \<start\>:\<end\> being \<start\> greater than \<end\> and being separated by the ":" character.
+
+Now that we have the configuration, we can proceed to make the assembly code.
+For practical purposes we will simply place the instructions in order to be translated and we will obviate the possible dependencies between the different parameters used in the instructions as this could be different for different ISAs.
+```
+nop;
+beq r1 r2 #5;
+mov #15000 r2;
+add r1 r2 r3;
+ld r1 r2;
+st r2 r1;
+```
+
+As a final note, if you want to perform a jump operation to a specific address of the program to perform some kind of loop, you could use an instruction like the one proposed above so-called beq, specifying its constant as the @ to which you want to jump, as for example, if 
+we want to jump to the initial position of the program we will write something like: beq r1 r1 #0
 
 ## Bugs Detected
-- [X] **v0.1.0** - Bit range error
+- **v0.1.0** - Bit range error
+	**status:** Fixed
 	**Description:** If the maximum number of bits is 22, the bits should go from 0-21 and they go from 0-22.
 	**Discover by:** [XLXXLXTX](https://github.com/XLXXLXTX)
 
@@ -107,4 +83,5 @@ ea601 ea602 ea603 3e804 5 b46 a7 200440
 If you have any ideas on how the tool could be improved, please contact the project administrator to make an approach/analysis of the idea for a possible future implementation.
 
 ## Acknowledgement
+
 [ZenithGD](https://github.com/ZenithGD)

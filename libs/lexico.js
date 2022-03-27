@@ -75,6 +75,7 @@ export const formatParser = (str) => {
     // es un registro?
     if (pairs.register.regex.test(str))
       [str, kind, token] = leerToken(str, pairs.register);
+    // es la declaración de una constante?
     else if (pairs.constant.regex.test(str))
       [str, kind, token] = leerToken(str, pairs.constant);
     // es el identificador de una instruccion?
@@ -128,6 +129,7 @@ export const assamblyParser = (str) => {
     // es una constante numérica?
     else if (pairs.constantN.regex.test(str))
       [str, kind, token] = leerToken(str, pairs.constantN);
+    // es el identificador de una instruccion?
     else if (pairs.instruction.regex.test(str)) {
       [str, kind, token] = leerToken(str, pairs.instruction);
     }

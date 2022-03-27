@@ -52,7 +52,7 @@ export default function Navbar() {
                   format: "text/plain",
                 })
               }
-              className="flex items-center text-green-300 gap-2 bg-green-500 px-4 py-1.5 bg-opacity-10 rounded"
+              className="flex items-center text-green-300 gap-2 bg-green-500 px-4 py-1.5 bg-opacity-10 rounded hover:bg-green-600 focus:ring-offset-2 focus:ring"
             >
               <FiUserPlus className="text-lg" />
               <span className="text-base">Invite</span>

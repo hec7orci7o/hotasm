@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { formatParser, assamblyParser } from "../libs/lexico";
 import { formatSintaxReader, programSintaxReader } from "../libs/sintactico";
 import { bin2hex } from "../libs/conversores";
-import { memo } from "react/cjs/react.production.min";
 
 export default function useApp() {
   /* Módulo que permite cargar y procesar los datos para
@@ -18,6 +17,7 @@ export default function useApp() {
   useEffect(() => {
     const { tokens, error } = formatParser(formats);
     const isaAux = formatSintaxReader(tokens);
+    console.log(isaAux);
     setISA(isaAux);
   }, [formats, maxBits]);
 
