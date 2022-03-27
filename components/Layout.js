@@ -2,7 +2,7 @@ import Navbar from "./Navbar";
 import Sidebar from "./SidebarI";
 import Footer from "./Footer";
 import Documentation from "./Documentation";
-import { ScreenProvider } from "../../context/ScreenContext";
+import { ScreenProvider } from "../context/ScreenContext";
 
 export default function Layout({ children, docs }) {
   return (

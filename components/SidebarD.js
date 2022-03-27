@@ -9,7 +9,7 @@ import copy from "copy-to-clipboard";
 import { useState, useEffect } from "react";
 import Tippy from "@tippyjs/react";
 import Field from "./Field";
-import useCalc from "../../hooks/useCalc";
+import useCalc from "../hooks/useCalc";
 
 export default function SidebarD({ binary, memory }) {
   const [downloadBinary, setDownloadBinary] = useState("");

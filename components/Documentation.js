@@ -1,6 +1,6 @@
 import { MDXRemote } from "next-mdx-remote";
 import { FiX } from "react-icons/fi";
-import { useScreen } from "../../context/ScreenContext";
+import { useScreen } from "../context/ScreenContext";
 
 export default function Documentation({ source, frontMatter }) {
   const { docsActive, handleDocs } = useScreen();

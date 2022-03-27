@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { FiTerminal, FiBookOpen, FiGithub, FiSettings } from "react-icons/fi";
-import { useScreen } from "../../context/ScreenContext";
+import { useScreen } from "../context/ScreenContext";
 
 export default function Sidebar() {
   const { leftSidebar, handleDocs } = useScreen();

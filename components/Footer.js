@@ -9,7 +9,7 @@ import {
 } from "react-icons/fi";
 import Tippy from "@tippyjs/react";
 import copy from "copy-to-clipboard";
-import { useScreen } from "../../context/ScreenContext";
+import { useScreen } from "../context/ScreenContext";
 
 export default function Footer() {
   const {

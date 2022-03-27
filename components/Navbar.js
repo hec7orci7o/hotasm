@@ -1,4 +1,4 @@
-import { useScreen } from "../../context/ScreenContext";
+import { useScreen } from "../context/ScreenContext";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Tippy from "@tippyjs/react";
 import Link from "next/link";
@@ -52,7 +52,7 @@ export default function Navbar() {
                   format: "text/plain",
                 })
               }
-              className="flex items-center text-green-300 gap-2 bg-green-500 px-4 py-1.5 bg-opacity-10 rounded hover:bg-green-600 focus:ring-offset-2 focus:ring"
+              className="flex items-center text-green-300 gap-2 bg-green-500 px-4 py-1.5 bg-opacity-10 hover:bg-opacity-10 rounded hover:bg-green-600 focus:ring-green-500 focus:ring-2 focus:ring-opacity-75"
             >
               <FiUserPlus className="text-lg" />
               <span className="text-base">Invite</span>
