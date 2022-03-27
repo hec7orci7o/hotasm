@@ -28,7 +28,7 @@ export default function SidebarD({ binary, memory }) {
       setDownloadBinary(window.URL.createObjectURL(dataBin));
       setDownloadMemory(window.URL.createObjectURL(dataMem));
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
   useEffect(() => {

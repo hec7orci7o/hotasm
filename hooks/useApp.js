@@ -67,7 +67,7 @@ export default function useApp() {
           setMemory(["", <></>]);
         }
       } catch (error) {
-        console.error(error);
+        // console.error(error);
       }
     }
   }, [program, ISA, maxBits]);

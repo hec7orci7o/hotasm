@@ -17,7 +17,7 @@ export default function Editor({ updateProgram }) {
       // update the download link state
       setDownloadLink(window.URL.createObjectURL(data));
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 

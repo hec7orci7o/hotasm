@@ -17,7 +17,7 @@ export function dec2bin(_n) {
     if (decimal.test(_n)) throw Error;
     return parseInt(_n, BASE_10).toString(BASE_2);
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   }
 }
 
@@ -30,7 +30,7 @@ export function dec2hex(_n) {
     if (decimal.test(_n)) throw Error;
     return parseInt(_n, BASE_10).toString(BASE_16);
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   }
 }
 
@@ -43,7 +43,7 @@ export function bin2dec(_n) {
     if (binario.test(_n)) throw Error;
     return parseInt(_n, BASE_2).toString(BASE_10);
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   }
 }
 
@@ -56,7 +56,7 @@ export function bin2hex(_n) {
     // if (binario.test(_n)) throw Error;
     return parseInt(_n, BASE_2).toString(BASE_16);
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   }
 }
 
@@ -69,7 +69,7 @@ export function hex2dec(_n) {
     if (hexadecimal.test(_n)) throw Error;
     return parseInt(_n, BASE_16).toString(BASE_10);
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   }
 }
 
@@ -82,6 +82,6 @@ export function hex2bin(_n) {
     if (hexadecimal.test(_n)) throw Error;
     return parseInt(_n, BASE_16).toString(BASE_2);
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   }
 }

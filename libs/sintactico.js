@@ -35,7 +35,6 @@ function actionParam(kind, token, isa, name) {
   switch (kind) {
     case TOKEN["register"]:
     case TOKEN["constant"]:
-    case TOKEN["address"]:
       isa[name]["types"].push(kind);
       return [sInstParam, isa];
     case TOKEN["semiColon"]:
@@ -146,7 +145,7 @@ function trActionInst(kind, translator, word) {
       try {
         word = inst2Bin(word, translator["op"], translator["ranges"][0]);
       } catch (error) {
-        console.error(error);
+        // console.error(error);
       }
       return [trInstParam, word];
     default:
@@ -176,7 +175,7 @@ function trActionParam(kind, token, translator, word, iParam) {
       try {
         word = inst2Bin(word, token, translator["ranges"][iParam]);
       } catch (error) {
-        console.error(error);
+        // console.error(error);
       }
       return [trInstParam, word];
     default:
