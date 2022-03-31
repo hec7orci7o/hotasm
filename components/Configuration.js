@@ -37,10 +37,8 @@ export default function Configuracion({ loadFormat, unloadFormat }) {
               onClick={() => {
                 if (status === "authenticated") {
                   loadFormat(format, nBits);
-                  console.log("hola");
                 } else if (process.env.NODE_ENV === "development") {
                   loadFormat(format, nBits);
-                  console.log("hola2");
                 }
               }}
             >
