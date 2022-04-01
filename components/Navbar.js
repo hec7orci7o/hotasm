@@ -47,7 +47,7 @@ export default function Navbar() {
           <div className="flex items-center gap-4">
             <button
               onClick={() =>
-                copy("https://asm-editor.vercel.app/", {
+                copy("https://hotasm.vercel.app/", {
                   debug: false,
                   format: "text/plain",
                 })
