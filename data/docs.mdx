@@ -46,7 +46,7 @@ beq ra rb #K; 001 31:29 28:24 23:19 18:3;
 mov #K rb; 010 31:29 18:3 23:19;
 add ra rb rd; 011 31:29 28:24 23:19 18:14;
 ld ra rb; 100 31:29 28:24 23:19 18:3;
-st rb ra; 101 31:29 28:24 23:19 18:3;
+st rb ra; 101 31:29 23:19 28:24 18:3;
 ```
 
 As you can see in the configuration above, you can see that there are two clearly different parts, separated by the ";" character. The left part indicates the instruction and its parameters and the right part how these are translated.
