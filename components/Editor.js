@@ -23,7 +23,7 @@ export default function Editor({ updateProgram }) {
 
   return (
     <>
-      <div className="flex items-center justify-between gap-6 px-6 h-10">
+      <div className="flex items-center justify-between gap-6 px-6 h-10 min-h-10">
         <span className="text-sm font-bold opacity-50 capitalize">code</span>
         <div className="flex items-center gap-6">
           <Tippy

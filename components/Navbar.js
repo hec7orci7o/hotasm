@@ -12,6 +12,7 @@ export default function Navbar() {
   const { mzLayout } = useScreen();
   const [menu, setMenu] = useState(false);
   const handleMenu = () => setMenu(!menu);
+  
   let user;
   if (status === "authenticated") {
     user = session.user;
@@ -83,7 +84,7 @@ export default function Navbar() {
                 </button>
               </Tippy>
               {menu && (
-                <div className="w-40 flex flex-col gap-3 divide-y divide-gray-500 bg-dark shadow-md bg-blend-hard-light px-2 py-1 absolute top-0 right-0 mt-10">
+                <div className="w-40 flex flex-col gap-3 divide-y divide-gray-500 bg-dark shadow-md bg-blend-hard-light px-2 py-1 absolute top-0 right-0 mt-10 truncate">
                   <div className="flex flex-col text-white opacity-60">
                     <span className="text-sm">{user.name}</span>
                     <span className="text-xs">{user.email}</span>

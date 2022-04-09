@@ -11,7 +11,10 @@ export default function Layout({ children, docs }) {
         <div className="h-screen flex flex-col divide-y divide-gray-500 overflow-hidden">
           <Documentation source={docs.source} frontMatter={docs.frontMatter} />
           <Navbar />
-          <div className="flex divide-x divide-gray-500 w-full flex-1">
+          <div 
+            className="flex divide-x divide-gray-500 w-full"
+            style={{height: "calc(100vh - 6rem)"}}
+          >
             <Sidebar />
             {children}
           </div>
