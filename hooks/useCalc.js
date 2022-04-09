@@ -5,9 +5,9 @@ export default function useCalc() {
   const BASE_10 = 10;
   const BASE_16 = 16;
   const [caso, setCaso] = useState("");
-  const [dec, setDec] = useState(0);
-  const [bin, setBin] = useState(0);
-  const [hex, setHex] = useState(0);
+  const [dec, setDec] = useState();
+  const [bin, setBin] = useState();
+  const [hex, setHex] = useState();
 
   const updateDecimal = (_n) => {
     setDec(_n === "" ? 0 : _n);

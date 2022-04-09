@@ -4,7 +4,7 @@ import copy from "copy-to-clipboard";
 export default function Field({ name, value, update, select }) {
   return (
     <div className="h-10 flex flex-nowrap justify-between items-center gap-x-4 w-full bg-gray-800 bg-opacity-20">
-      <div className="flex justify-center items-center w-20 h-full border-r-2 border-gray-800 border-opacity-40 px-3">
+      <div className="flex justify-center items-center w-20 min-w-[2rem] h-full border-r-2 border-gray-800 border-opacity-40 px-3">
         <span className="font-sans font-medium text-base opacity-80 text-left w-full select-none">
           {name}
         </span>

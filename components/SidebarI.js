@@ -7,7 +7,7 @@ export default function Sidebar() {
   return (
     <div className="flex flex-col items-center bg-dark text-white">
       <Link href="/">
-        <a className="flex flex-col justify-center items-center gap-2 py-4 tracking-normal w-full hover:bg-gray-800 cursor-pointer">
+        <a className="flex flex-col justify-center items-center gap-2 py-4 tracking-normal w-24 hover:bg-white hover:bg-opacity-10 cursor-pointer">
           <span className="px-3">
             <FiTerminal className="text-xl stroke-1" />
           </span>
@@ -18,7 +18,7 @@ export default function Sidebar() {
       </Link>
       <button
         onClick={handleDocs}
-        className="flex flex-col justify-center items-center gap-2 py-4 tracking-normal w-full hover:bg-gray-800 cursor-pointer"
+        className="flex flex-col justify-center items-center gap-2 py-4 tracking-normal w-24 hover:bg-white hover:bg-opacity-10 cursor-pointer"
       >
         <span className="px-3">
           <FiBookOpen className="text-lg stroke-1" />
@@ -28,7 +28,7 @@ export default function Sidebar() {
         )}
       </button>
       <Link href="https://github.com/hec7orci7o/asm-editor">
-        <a className="flex flex-col justify-center items-center gap-2 py-4 tracking-normal w-full hover:bg-gray-800 cursor-pointer">
+        <a className="flex flex-col justify-center items-center gap-2 py-4 tracking-normal w-24 hover:bg-white hover:bg-opacity-10 cursor-pointer">
           <span className="px-3">
             <FiGithub className="text-lg stroke-1" />
           </span>
@@ -38,7 +38,7 @@ export default function Sidebar() {
         </a>
       </Link>
       {/* <Link href="#">
-        <a className="flex flex-col justify-center items-center gap-2 py-4 tracking-normal w-full hover:bg-gray-800 cursor-not-allowed">
+        <a className="flex flex-col justify-center items-center gap-2 py-4 tracking-normal w-24 hover:bg-white hover:bg-opacity-10 cursor-not-allowed">
           <span className="px-3">
             <FiSettings className="text-lg stroke-1" />
           </span>

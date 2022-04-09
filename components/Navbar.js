@@ -36,7 +36,7 @@ export default function Navbar() {
       ${!mzLayout ? "flex" : "hidden"}`}
     >
       <Link href="/">
-        <a className="px-4 py-2 rounded hover:bg-gray-900">
+        <a className="px-4 py-1.5 rounded hover:bg-white hover:bg-opacity-10">
           <span className="text-white uppercase font-medium tracking-wide">
             hotasm
           </span>
