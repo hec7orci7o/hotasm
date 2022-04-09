@@ -29,4 +29,4 @@ body {
   cursor: row-resize;
 }
 
-/* ::-webkit-scrollbar { width: 0 !important } */
+::-webkit-scrollbar { width: 0 !important }

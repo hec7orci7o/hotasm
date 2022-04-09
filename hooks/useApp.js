@@ -2,22 +2,25 @@ import { useState, useEffect } from "react";
 import { formatParser, assamblyParser } from "../libs/lexico";
 import { formatSintaxReader, programSintaxReader } from "../libs/sintactico";
 import { bin2hex } from "../libs/conversores";
+import { useSession } from "next-auth/react";
 
 export default function useApp() {
+  const { status } = useSession();
+
   /* Módulo que permite cargar y procesar los datos para
    * establecer la configuración del editor de ensamblador
    * en base a las necesidades del usuario.
    * Resumen: Establece una configuracion de traducción
    * para entender el ensamblador del editor.
    */
+  const [formatError, setError] = useState(null)
   const [formats, setFormats] = useState("");
-  const [maxBits, setMBits] = useState(32);
+  const [maxBits, setMBits] = useState(0);
   const [ISA, setISA] = useState({}); // Instruction Set Architecture
 
   useEffect(() => {
     const { tokens, error } = formatParser(formats);
     const isaAux = formatSintaxReader(tokens);
-    console.log(isaAux);
     setISA(isaAux);
   }, [formats, maxBits]);
 
@@ -28,8 +31,22 @@ export default function useApp() {
    * @param {Number} _n // Número máximo de bits de una instrucción.
    */
   const loadFormat = (_f, _n) => {
-    setFormats(_f);
-    setMBits(_n);
+    if (status === "authenticated" || process.env.NODE_ENV === "development") {
+      console.log(_f, _n)
+      if (_f !== undefined && _f !== "" && _n !== undefined && _n !== 0) {
+        setFormats(_f);
+        setMBits(_n);
+        setError(null); // sin errores
+      } else {
+        if ((_f === undefined || _f === "") && (_n === undefined || _n === 0)) {
+          setError(1); // error en la configuracion
+        } else if (_f === undefined || _f === "") {
+          setError(2); // error en los patrones
+        } else {
+          setError(3); // error en el numero de bits
+        }
+      }
+    }
   };
 
   /**
@@ -38,6 +55,7 @@ export default function useApp() {
   const unloadFormat = () => {
     setFormats("");
     setMBits(0);
+    setError(null); // sin errores
   };
 
   /* Módulo que se encarga de generar el resultado
@@ -143,6 +161,8 @@ export default function useApp() {
   };
 
   return {
+    // error
+    formatError,
     // modulo configuracion
     formats,
     maxBits,

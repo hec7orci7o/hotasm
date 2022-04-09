@@ -10,6 +10,7 @@ import { useScreen } from "../context/ScreenContext";
 
 export default function Home() {
   const {
+    formatError,
     // modulo configuracion
     loadFormat,
     unloadFormat,
@@ -65,6 +66,7 @@ export default function Home() {
             </div>
             <div className="flex-1 flex flex-col divide-y divide-gray-700 bg-dark overflow-hidden text-base">
               <Configuracion
+                error={formatError}
                 loadFormat={loadFormat}
                 unloadFormat={unloadFormat}
               />
