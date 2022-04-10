@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       router.events.off('routeChangeComplete', handleRouteChange)
     }
   }, [router.events])
-
+  
   const getLayout = Component.getLayout || ((page) => page);
 
   return (
@@ -34,6 +34,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
+
             gtag('config', '${gtag.GA_TRACKING_ID}', {
               page_path: window.location.pathname,
             });
