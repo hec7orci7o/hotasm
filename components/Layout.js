@@ -12,7 +12,7 @@ export default function Layout({ children, docs }) {
           <Documentation source={docs.source} frontMatter={docs.frontMatter} />
           <Navbar />
           <div 
-            className="flex divide-x divide-gray-500 w-full"
+            className="flex divide-x divide-gray-500 w-full flex-1"
             style={{height: "calc(100vh - 6rem)"}}
           >
             <Sidebar />
