@@ -10,12 +10,12 @@
 ## Example
 We will start from an initial state in which we will have defined the instructions that we want to be able to program.
 ```
-mov K, rb 		; SignExt(K) → BR(rb) 					K cte de 16 bits 
+mov K, rb       ; SignExt(K) → BR(rb)                K cte de 16 bits 
 add ra, rb, rd 	; BR(ra) + BR(rb) → BR(rd) 
 ld (ra), rb 	; MEM(BR(ra)15-0) → BR(rb) 
 st rb, (ra) 	; BR(rb) → MEM(BR(ra)15-0) 
 beq ra, rb, K 	; si BR(ra)==BR(rb) salta a @ K 
-nop 			; no realiza ninguna acción
+nop             ; no realiza ninguna acción
 ```
 
 To begin with, we will define in which bits the parameters of our instructions will be placed as follows:
@@ -25,8 +25,8 @@ To begin with, we will define in which bits the parameters of our instructions w
 001A AAAA BBBB BKKKK KKKK KKKK KKK K--- ;    beq
 010- ---- BBBB BKKKK KKKK KKKK KKK K---	;    mov
 011A AAAA BBBB BDDD DD-- ---- ---- ----	;    add
-100A AAAA BBBB BKKKK KKKK KKKK KKK K---	;    ld
-101A AAAA BBBB BKKKK KKKK KKKK KKK K---	;    st
+100A AAAA BBBB B--- ---- ---- ---- ----	;    ld
+101A AAAA BBBB B--- ---- ---- ---- ----	;    st
 ```
 
 Now that we know how we want to organize our instructions, we can start with the configuration.
@@ -40,7 +40,7 @@ beq ra rb #K; 001 31:29 28:24 23:19 18:3;
 mov #K rb; 010 31:29 18:3 23:19;
 add ra rb rd; 011 31:29 28:24 23:19 18:14;
 ld ra rb; 100 31:29 28:24 23:19 18:3;
-st rb ra; 101 31:29 28:24 23:19 18:3;
+st rb ra; 101 31:29 23:19 28:24 18:3;
 ```
 
 As you can see in the configuration above, you can see that there are two clearly different parts, separated by the ";" character. The left part indicates the instruction and its parameters and the right part how these are translated.
