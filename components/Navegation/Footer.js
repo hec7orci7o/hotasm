@@ -11,6 +11,7 @@ import {
   FiUserPlus,
   FiBook,
 } from "react-icons/fi";
+import Link from 'next/link'
 import Tippy from "@tippyjs/react";
 import copy from "copy-to-clipboard";
 import { useScreen } from "../../context/ScreenContext";
@@ -97,10 +98,12 @@ export default function Footer() {
                   <FiActivity className='w-4 h-4'/>
                   <p className='text-xs font-medium'>Status</p>
                 </a>
-                <a href='/tos' className='w-full py-2.5 px-2 flex gap-3 items-center justify-start  cursor-pointer opacity-60 hover:opacity-100 hover:bg-gray-100 hover:bg-opacity-5 rounded-md'>
-                  <FiLock className='w-4 h-4'/>
-                  <p className='text-xs font-medium'>Terms and Privacy</p>
-                </a>
+                <Link href='/tos'>
+                  <a  className='w-full py-2.5 px-2 flex gap-3 items-center justify-start  cursor-pointer opacity-60 hover:opacity-100 hover:bg-gray-100 hover:bg-opacity-5 rounded-md'>
+                    <FiLock className='w-4 h-4'/>
+                    <p className='text-xs font-medium'>Terms and Privacy</p>
+                  </a>
+                </Link>
                 <div className='flex gap-3 items-start justify-start mt-2'>
                   <p className='text-xs font-medium opacity-40'>HOTASM v1.0.0</p>
                 </div>
