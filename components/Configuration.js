@@ -1,6 +1,7 @@
 import { FiUpload, FiTrash } from "react-icons/fi";
 import { useState } from "react";
 import Tippy from "@tippyjs/react";
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Configuracion({ error, loadFormat, unloadFormat }) {
   const [format, setFormat] = useState();
@@ -9,6 +10,7 @@ export default function Configuracion({ error, loadFormat, unloadFormat }) {
   return (
     <>
       <div className="flex items-center justify-between gap-6 px-6 h-10 min-h-10">
+        <Toaster position="top-center" reverseOrder={false} />
         <div className="flex flex-nowrap items-center">
           <span className="text-sm font-bold opacity-50 capitalize">
             configuration
@@ -34,7 +36,10 @@ export default function Configuracion({ error, loadFormat, unloadFormat }) {
             }
           >
             <button
-              onClick={() => loadFormat(format, nBits)}
+              onClick={() => {
+                loadFormat(format, nBits)
+                toast.success('configuration loaded.')
+              }}
             >
               <FiUpload className="text-lg stroke-1 hover:text-green-300" />
             </button>
@@ -47,7 +52,11 @@ export default function Configuracion({ error, loadFormat, unloadFormat }) {
               </span>
             }
           >
-            <button onClick={() => unloadFormat()}>
+            <button onClick={() => {
+                unloadFormat()
+                toast.success('configuration deleted.')
+              }}
+            >
               <FiTrash className="text-lg stroke-1 hover:text-red-300" />
             </button>
           </Tippy>

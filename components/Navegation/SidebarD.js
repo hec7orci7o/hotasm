@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import Tippy from "@tippyjs/react";
 import Field from "../Field";
 import useCalc from "../../hooks/useCalc";
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function SidebarD({ binary, memory }) {
   const [downloadBinary, setDownloadBinary] = useState("");
@@ -66,10 +67,12 @@ export default function SidebarD({ binary, memory }) {
         format: "text/plain",
       });
     }
+    toast.success('content copied to clipboard.')
   };
 
   return (
     <div className="flex divide-x divide-gray-500 bg-dark text-base">
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="flex flex-col items-center gap-6 h-full p-3">
         <Tippy
           arrow={false}

@@ -2,6 +2,7 @@ import { FiDownload, FiCopy } from "react-icons/fi";
 import { useState, useEffect } from "react";
 import copy from "copy-to-clipboard";
 import Tippy from "@tippyjs/react";
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Editor({ updateProgram }) {
   const [program, setProgram] = useState();
@@ -24,6 +25,7 @@ export default function Editor({ updateProgram }) {
   return (
     <>
       <div className="flex items-center justify-between gap-6 px-6 h-10 min-h-10">
+        <Toaster position="top-center" reverseOrder={false} />
         <span className="text-sm font-bold opacity-50 capitalize">code</span>
         <div className="flex items-center gap-6">
           <Tippy
@@ -48,11 +50,12 @@ export default function Editor({ updateProgram }) {
           >
             <button
               onClick={() =>
-                copy(program, {
+                {copy(program, {
                   debug: false,
                   format: "text/plain",
                 })
-              }
+                toast.success('content copied to clipboard.')
+              }}
             >
               <FiCopy className="text-lg stroke-1 hover:text-green-300" />
             </button>

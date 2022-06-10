@@ -16,6 +16,7 @@ import Tippy from "@tippyjs/react";
 import copy from "copy-to-clipboard";
 import { useScreen } from "../../context/ScreenContext";
 import { useShare } from '../../context/ShareContext'
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Footer() {
   const {
@@ -31,6 +32,7 @@ export default function Footer() {
 
   return (
     <div className="flex justify-between items-center h-8 w-full bg-dark text-white">
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="flex gap-4 px-2 relative">
         <Tippy
           arrow={false}
@@ -144,11 +146,13 @@ export default function Footer() {
         >
           <button
             onClick={() =>
-              copy("https://hotasm.vercel.app/", {
+              {
+                copy("https://hotasm.vercel.app/", {
                 debug: false,
                 format: "text/plain",
               })
-            }
+              toast.success('URL copied to clipboard.')
+            }}
             className="opacity-70 hover:opacity-100"
           >
             <FiShare2 className="text-lg cursor-pointer stroke-1 text-white" />
