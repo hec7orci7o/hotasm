@@ -1,4 +1,4 @@
-import { useScreen } from "../context/ScreenContext";
+import { useScreen } from "../../context/ScreenContext";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Tippy from "@tippyjs/react";
 import Link from "next/link";

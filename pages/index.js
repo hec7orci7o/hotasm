@@ -1,7 +1,7 @@
-import Layout from "../components/Layout";
+import Layout from "../components/Layout/Layout";
 import Editor from "../components/Editor";
 import Configuracion from "../components/Configuration";
-import SidebarD from "../components/SidebarD";
+import SidebarD from "../components/Navegation/SidebarD";
 import Split from "react-split";
 import useApp from "../hooks/useApp";
 import { getPost } from "../libs/mdxUtils";
