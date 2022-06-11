@@ -38,11 +38,11 @@ export default function Layout({ children, docs }) {
             <CookieConsent
               buttonText="Accept All"
               declineButtonText="Reject All"
-              cookieName="vitop-cookie-consent"
+              cookieName="hotasm-cookie-consent"
               onAccept={() => {}}
               onDecline={() => {}}
               expires={30}
-              extraCookieOptions={{ domain: 'vitop.xyz' }}
+              extraCookieOptions={{ domain: 'hotasm.vercel.app' }}
               enableDeclineButton
               flipButtons
               overlay
