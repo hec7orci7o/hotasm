@@ -74,7 +74,7 @@ export default function Navbar() {
                   }}
                   className="flex items-center"
                 >
-                  <div className="w-8 h-8 relative bg-dark rounded-full">
+                  <div className="w-8 h-8 relative bg-color-5 rounded-full">
                     <Image
                       src={user.image}
                       alt="Picture of the author"
@@ -85,7 +85,7 @@ export default function Navbar() {
                 </button>
               </Tippy>
               {menu && (
-                <div className="w-40 flex flex-col gap-3 divide-y divide-neutral-gray-2 bg-dark shadow-md bg-blend-hard-light px-2 py-1 absolute top-0 right-0 mt-10 truncate">
+                <div className="w-40 flex flex-col gap-3 divide-y divide-neutral-gray-2 bg-color-5 shadow-md bg-blend-hard-light px-2 py-1 absolute top-0 right-0 mt-10 truncate">
                   <div className="flex flex-col text-white opacity-60">
                     <span className="text-sm">{user.name}</span>
                     <span className="text-xs">{user.email}</span>
