@@ -6,7 +6,7 @@ export default function Theme() {
   const colorTheme = theme === 'dark' ? 'light' : 'dark';
 
   useEffect(() => {
-    setTheme(localStorage.theme || 'light');
+    setTheme(localStorage.ASMtheme || 'light');
   }, []);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export default function Theme() {
 
     root.classList.remove(colorTheme);
     root.classList.add(theme);
-    localStorage.setItem('theme', theme);
+    localStorage.setItem('ASMtheme', theme);
   }, [theme, colorTheme]);
 
 
