@@ -6,7 +6,7 @@ import Image from 'next/image';
 import {FiUserPlus, FiLogOut} from 'react-icons/fi';
 import {useState, useEffect} from 'react';
 import {useShare} from '@/context/ShareContext';
-import Theme from '@/Theme';
+import Theme from '@/components/Theme';
 
 
 export default function Navbar() {
