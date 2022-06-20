@@ -94,23 +94,23 @@ export default function Navbar() {
                     <span className="text-sm">{user.name}</span>
                     <span className="text-xs">{user.email}</span>
                   </div>
-                  <div className="flex flex-col">
-                    <div className="mt-2 py-2 text-white opacity-60 hover:opacity-100 hover:bg-neutral-gray-2 hover:bg-opacity-10 rounded px-3 duration-300">
-                      <button
-                        onClick={() => {
-                          if (process.env.NODE_ENV === 'development') {
-                            setStatus('unauthenticated');
-                            return;
-                          }
-                          signOut();
-                        }}
-                        className="flex items-center gap-2"
-                      >
+                  <button
+                    onClick={() => {
+                      if (process.env.NODE_ENV === 'development') {
+                        setStatus('unauthenticated');
+                        return;
+                      }
+                      signOut();
+                    }}
+                    className="flex flex-col"
+                  >
+                    <div className="w-full mt-2 py-2 text-white opacity-60 hover:opacity-100 hover:bg-neutral-gray-2 hover:bg-opacity-10 rounded px-3 duration-300">
+                      <div className="w-full flex items-center gap-2">
                         <FiLogOut className="text-sm" />
                         <span className="text-sm">Logout</span>
-                      </button>
+                      </div>
                     </div>
-                  </div>
+                  </button>
                 </div>
               )}
             </div>
@@ -125,7 +125,7 @@ export default function Navbar() {
                 }
                 signIn('github');
               }}
-              className="flex items-center px-3.5 py-1.5 rounded-lg bg-neutral-blue-2 hover:bg-neutral-blue-3 duration-300"
+              className="flex items-center px-3.5 py-1.5 rounded-lg bg-neutral-blue-2 hover:bg-neutral-blue-3 duration-300 motion-safe:animate-pulse"
             >
               <span className="text-white text-sm capitalize font-medium tracking-wide">
                 Login
