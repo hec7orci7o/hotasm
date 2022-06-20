@@ -10,7 +10,7 @@ export default function Share() {
   return (
     <div className={`h-full absolute top-0 left-0 w-full z-50 flex justify-center ${popUp ? '' : 'hidden'}`}>
       <div className='h-full w-full absolute bg-black opacity-60'/>
-      <div className='mt-32 h-fit max-w-lg bg-gray-800 text-white p-6 rounded-lg flex flex-col gap-2 relative'>
+      <div className='mt-32 h-fit max-w-lg bg-color-5 text-white p-6 rounded-lg flex flex-col gap-2 relative'>
         <h2 className='text-xl font-bold opacity-95'>
           Invite your friends
         </h2>

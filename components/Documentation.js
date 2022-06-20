@@ -12,7 +12,7 @@ export default function Documentation({source, frontMatter}) {
     >
       <div
         onClick={handleDocs}
-        className="h-full flex-auto bg-dark opacity-95"
+        className="h-full flex-auto bg-black opacity-40"
       />
       <div className="flex-1 flex flex-col divide-y  h-full absolute right-0 bg-white z-50 overflow-auto opacity-100">
         <div className="flex  items-center justify-between h-16 w-full p-6">

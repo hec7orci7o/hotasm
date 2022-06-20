@@ -12,13 +12,13 @@ export default function Configuracion({error, loadFormat, unloadFormat}) {
       <div className="flex items-center justify-between gap-6 px-6 h-10 min-h-10">
         <Toaster position="top-center" reverseOrder={false} />
         <div className="flex flex-nowrap items-center">
-          <span className="text-sm font-bold opacity-50 capitalize">
+          <span className="text-sm font-bold opacity-80 capitalize">
             configuration
           </span>
           <input
             maxLength={2}
             className={`font-mono caret-white ml-4 w-8 h-8 bg-transparent rounded-lg border-2 text-sm p-1 focus:outline-none
-                      ${error === null || error === 2 ? 'border-white border-opacity-20' : 'border-red-400 border-opacity-100 animate-[pulse_4s_ease-in-out_infinite]'}`}
+                      ${error === null || error === 2 ? 'border-white border-opacity-20' : 'border-light-red-2 border-opacity-100 animate-[pulse_4s_ease-in-out_infinite]'}`}
             onChange={(e) => setBits(Number(e.target.value))}
             required
           />
@@ -30,7 +30,7 @@ export default function Configuracion({error, loadFormat, unloadFormat}) {
           <Tippy
             arrow={false}
             content={
-              <span className="bg-gray-200 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
+              <span className="bg-neutral-gray-2 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
                 Load configuration
               </span>
             }
@@ -41,13 +41,13 @@ export default function Configuracion({error, loadFormat, unloadFormat}) {
                 toast.success('configuration loaded.');
               }}
             >
-              <FiUpload className="text-lg stroke-1 hover:text-green-300" />
+              <FiUpload className="text-lg stroke-1 hover:text-neutral-green-2" />
             </button>
           </Tippy>
           <Tippy
             arrow={false}
             content={
-              <span className="bg-gray-200 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
+              <span className="bg-neutral-gray-2 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
                 Delete configuration
               </span>
             }
@@ -57,7 +57,7 @@ export default function Configuracion({error, loadFormat, unloadFormat}) {
               toast.success('configuration deleted.');
             }}
             >
-              <FiTrash className="text-lg stroke-1 hover:text-red-300" />
+              <FiTrash className="text-lg stroke-1 hover:text-light-red-2" />
             </button>
           </Tippy>
         </div>
@@ -65,7 +65,7 @@ export default function Configuracion({error, loadFormat, unloadFormat}) {
       <textarea
         onChange={(e) => setFormat(e.target.value)}
         className={`flex-1 flex p-6  resize-none focus:outline-none text-base font-mono 
-                  ${error === null || error === 3 ? 'bg-transparent' : 'bg-red-400 bg-opacity-10 animate-[pulse_4s_ease-in-out_infinite]'}`}
+                  ${error === null || error === 3 ? 'bg-transparent' : 'bg-light-red-2 bg-opacity-10 animate-[pulse_4s_ease-in-out_infinite]'}`}
       />
     </>
   );

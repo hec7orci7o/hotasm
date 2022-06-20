@@ -22,7 +22,7 @@ export default function Home() {
   const {hLayout, rightSidebar} = useScreen();
 
   return (
-    <div className="flex-auto h-full bg-gray-500 text-white overflow-hidden">
+    <div className="flex-auto h-full bg-neutral-gray-2 text-white overflow-hidden">
       <Split
         className="flex h-full"
         sizes={[75, 25]}
@@ -61,10 +61,10 @@ export default function Home() {
             gutterSize={4}
             gutterAlign="center"
           >
-            <div className="flex-1 flex flex-col divide-y divide-gray-700 bg-dark overflow-hidden text-base">
+            <div className="flex-1 flex flex-col divide-y divide-neutral-gray-2 bg-color-5 overflow-hidden text-base">
               <Editor updateProgram={updateProgram} />
             </div>
-            <div className="flex-1 flex flex-col divide-y divide-gray-700 bg-dark overflow-hidden text-base">
+            <div className="flex-1 flex flex-col divide-y divide-neutral-gray-2 bg-color-5 overflow-hidden text-base">
               <Configuracion
                 error={formatError}
                 loadFormat={loadFormat}

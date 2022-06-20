@@ -26,24 +26,24 @@ export default function Editor({updateProgram}) {
     <>
       <div className="flex items-center justify-between gap-6 px-6 h-10 min-h-10">
         <Toaster position="top-center" reverseOrder={false} />
-        <span className="text-sm font-bold opacity-50 capitalize">code</span>
+        <span className="text-sm font-bold opacity-80 capitalize">code</span>
         <div className="flex items-center gap-6">
           <Tippy
             arrow={false}
             content={
-              <span className="bg-gray-200 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
+              <span className="bg-neutral-gray-2 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
                 Download code
               </span>
             }
           >
             <a href={downloadLink} download="code.txt">
-              <FiDownload className="text-lg stroke-1 hover:text-green-300" />
+              <FiDownload className="text-lg stroke-1 hover:text-neutral-green-2" />
             </a>
           </Tippy>
           <Tippy
             arrow={false}
             content={
-              <span className="bg-gray-200 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
+              <span className="bg-neutral-gray-2 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
                 Copy code
               </span>
             }

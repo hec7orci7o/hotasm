@@ -108,7 +108,7 @@ export default function useApp() {
       [...linea.matchAll(regexp)].map((element) => {
         if (element[0].includes('-')) {
           binary.push(
-              <span className="text-red-500">
+              <span className="text-neutral-red-2">
                 {element[0].replaceAll('-', '0')}
               </span>,
           );

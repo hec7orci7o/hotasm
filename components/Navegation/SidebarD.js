@@ -71,14 +71,14 @@ export default function SidebarD({binary, memory}) {
   };
 
   return (
-    <div className="flex divide-x divide-gray-500 bg-dark text-base">
+    <div className="flex divide-x divide-neutral-gray-2 bg-dark text-base">
       <Toaster position="top-center" reverseOrder={false} />
       <div className="flex flex-col items-center gap-6 h-full p-3">
         <Tippy
           arrow={false}
           placement="left"
           content={
-            <span className="bg-gray-200 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
+            <span className="bg-neutral-gray-2 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
               Converter
             </span>
           }
@@ -94,7 +94,7 @@ export default function SidebarD({binary, memory}) {
           arrow={false}
           placement="left"
           content={
-            <span className="bg-gray-200 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
+            <span className="bg-neutral-gray-2 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
               Binary output
             </span>
           }
@@ -110,7 +110,7 @@ export default function SidebarD({binary, memory}) {
           arrow={false}
           placement="left"
           content={
-            <span className="bg-gray-200 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
+            <span className="bg-neutral-gray-2 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
               Memory output
             </span>
           }
@@ -123,9 +123,9 @@ export default function SidebarD({binary, memory}) {
           </button>
         </Tippy>
       </div>
-      <div className="flex-1 flex flex-col divide-y divide-gray-700 bg-dark overflow-hidden text-base">
+      <div className="flex-1 flex flex-col divide-y divide-neutral-gray-2 bg-dark overflow-hidden text-base">
         <div className="flex items-center justify-between gap-6 px-6 h-10">
-          <span className="text-sm font-bold opacity-50 capitalize">
+          <span className="text-sm font-bold opacity-80 capitalize">
             output
           </span>
           {state !== estados['conversor'] && (
@@ -134,7 +134,7 @@ export default function SidebarD({binary, memory}) {
                 arrow={false}
                 placement="top"
                 content={
-                  <span className="bg-gray-200 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
+                  <span className="bg-neutral-gray-2 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
                     Download output
                   </span>
                 }
@@ -149,20 +149,20 @@ export default function SidebarD({binary, memory}) {
                     state === estados['binario'] ? 'binary.txt' : 'memory.txt'
                   }
                 >
-                  <FiDownload className="text-lg stroke-1 hover:text-green-300" />
+                  <FiDownload className="text-lg stroke-1 hover:text-neutral-green-2" />
                 </a>
               </Tippy>
               <Tippy
                 arrow={false}
                 placement="top"
                 content={
-                  <span className="bg-gray-200 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
+                  <span className="bg-neutral-gray-2 tracking-tight font-medium text-xs py-0.5 px-1.5 rounded-md">
                     Copy output
                   </span>
                 }
               >
                 <button onClick={handleCopy}>
-                  <FiCopy className="text-lg stroke-1 hover:text-green-300" />
+                  <FiCopy className="text-lg stroke-1 hover:text-neutral-green-2" />
                 </button>
               </Tippy>
             </div>
