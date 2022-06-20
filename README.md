@@ -1,39 +1,49 @@
-## Quick Start
-## Usage
-1. Login into your github account.
-2. Set up your configuration & upload it to the system.
- - bits / inst
- - inst format
-3. write your asm code in the editor.
-4. Select the output format you prefer: [**binary**, **memory**]
+# HOT ASM 
 
-## Example
-We will start from an initial state in which we will have defined the instructions that we want to be able to program.
-```
-mov K, rb       ; SignExt(K) → BR(rb)                K cte de 16 bits 
-add ra, rb, rd 	; BR(ra) + BR(rb) → BR(rd) 
-ld (ra), rb 	; MEM(BR(ra)15-0) → BR(rb) 
-st rb, (ra) 	; BR(rb) → MEM(BR(ra)15-0) 
-beq ra, rb, K 	; si BR(ra)==BR(rb) salta a @ K 
-nop             ; no realiza ninguna acción
-```
+## Configuración
 
-To begin with, we will define in which bits the parameters of our instructions will be placed as follows:
+**`REQUISITOS`**
+ - npm >= 8.3.1
+ - node >= v16.14.0
+
+<br>
+
+Clona el repositorio.
 ```
-31           <-- inst -->             0
-000- ---- ---- ---- ---- ---- ---- ----	;    nop
-001A AAAA BBBB BKKKK KKKK KKKK KKK K--- ;    beq
-010- ---- BBBB BKKKK KKKK KKKK KKK K---	;    mov
-011A AAAA BBBB BDDD DD-- ---- ---- ----	;    add
-100A AAAA BBBB B--- ---- ---- ---- ----	;    ld
-101A AAAA BBBB B--- ---- ---- ---- ----	;    st
+git clone https://github.com/hec7orci7o/asm-editor.git
+```
+Instala las dependencias y lanza el servidor de desarrollo.
+```
+npm i | npm run dev
 ```
 
-Now that we know how we want to organize our instructions, we can start with the configuration.
-```
-INST: 32 bits
-```
+## Acuerdos para desarrollo
 
+A la hora de subir una nueva 'feature' asegurate de seguir la guía de estilos definida con `eslint` usando `npm run lint`, si te sale algún aviso o error arreglalo antes de subir los cambios para intentar mantener el codigo dentro de un orden.
+De esto por lo general se encargará el paquete de npm `husky`
+
+## Como funciona
+
+## Como usarlo
+
+Como se ve en la imagen a continuación, la aplicacion consta de 3 partes principales.
+ - `Code` - Area de código
+ - `Configuration` - Area de configuración
+ - `Output` - Area para ver los resultados [binario, hex]
+
+ <!-- insertar imagen -->
+ <!-- fin imagen -->
+
+ Para comenzar con el uso de la app deberemos seguir los siguientes pasos:
+  1. **Iniciar sesión** en **GitHub**.
+  2. Establecer una configuración valida.
+  3. Escribir nuestro codigo ASM.
+
+### Configuración 
+
+```
+32
+```
 ```
 nop; 000 31:29;
 beq ra rb #K; 001 31:29 28:24 23:19 18:3;
@@ -42,40 +52,3 @@ add ra rb rd; 011 31:29 28:24 23:19 18:14;
 ld ra rb; 100 31:29 28:24 23:19 18:3;
 st rb ra; 101 31:29 23:19 28:24 18:3;
 ```
-
-As you can see in the configuration above, you can see that there are two clearly different parts, separated by the ";" character. The left part indicates the instruction and its parameters and the right part how these are translated.
-
-We have 3 types of arguments or parameters that are part of the left part: instructions, registers and constants.
-The instructions are defined by the following regular expression: /^([a-z0-9]+)/i <br/>
-The registers by: /^r([a-zA-Z]+)/<br/>
-Constants by: /^#([a-z])/i
-
-On the right side we find the translation bits of the instruction and its range (Indicates the positions that will be occupied by that argument/parameter).
-The argument of type range has the following syntax: \<start\>:\<end\> being \<start\> greater than \<end\> and being separated by the ":" character.
-
-Now that we have the configuration, we can proceed to make the assembly code.
-For practical purposes we will simply place the instructions in order to be translated and we will obviate the possible dependencies between the different parameters used in the instructions as this could be different for different ISAs.
-```
-nop;
-beq r1 r2 #5;
-mov #15000 r2;
-add r1 r2 r3;
-ld r1 r2;
-st r2 r1;
-```
-
-As a final note, if you want to perform a jump operation to a specific address of the program to perform some kind of loop, you could use an instruction like the one proposed above so-called beq, specifying its constant as the @ to which you want to jump, as for example, if 
-we want to jump to the initial position of the program we will write something like: beq r1 r1 #0
-
-## Bugs Detected
-- **v0.1.0** - Bit range error
-	**status:** Fixed
-	**Description:** If the maximum number of bits is 22, the bits should go from 0-21 and they go from 0-22.
-	**Discover by:** [XLXXLXTX](https://github.com/XLXXLXTX)
-
-## Contributing
-If you have any ideas on how the tool could be improved, please contact the project administrator to make an approach/analysis of the idea for a possible future implementation.
-
-## Acknowledgement
-
-[ZenithGD](https://github.com/ZenithGD)
