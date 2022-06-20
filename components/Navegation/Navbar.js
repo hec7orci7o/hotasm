@@ -6,7 +6,7 @@ import Image from 'next/image';
 import {FiUserPlus, FiLogOut} from 'react-icons/fi';
 import {useState, useEffect} from 'react';
 import {useShare} from '@/context/ShareContext';
-import Theme from '@/components/Theme';
+// import Theme from '@/components/Theme';
 
 
 export default function Navbar() {
@@ -55,7 +55,7 @@ export default function Navbar() {
       </Link>
 
       <div className='flex gap-x-4'>
-        <Theme />
+        {/* <Theme /> */}
         {status === 'authenticated' ? (
           <div className="flex items-center gap-4">
             <button
