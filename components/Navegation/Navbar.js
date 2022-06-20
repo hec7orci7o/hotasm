@@ -5,10 +5,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {FiUserPlus, FiLogOut} from 'react-icons/fi';
 import {useState, useEffect} from 'react';
-import copy from 'copy-to-clipboard';
+import {useShare} from '@/context/ShareContext';
+
 
 export default function Navbar() {
   const {mzLayout} = useScreen();
+  const {handleOpen} = useShare();
+
   const [menu, setMenu] = useState(false);
   const [status, setStatus] = useState('unauthenticated');
   const [user, setUser] = useState({
@@ -54,12 +57,7 @@ export default function Navbar() {
         {status === 'authenticated' ? (
           <div className="flex items-center gap-4">
             <button
-              onClick={() =>
-                copy('https://hotasm.vercel.app/', {
-                  debug: false,
-                  format: 'text/plain',
-                })
-              }
+              onClick={handleOpen}
               className="flex items-center text-light-green-2 gap-2 bg-neutral-green-1 px-4 py-1.5 bg-opacity-10 hover:bg-opacity-10 rounded hover:bg-neutral-green-3 focus:ring-neutral-green duration-300"
             >
               <FiUserPlus className="text-lg" />

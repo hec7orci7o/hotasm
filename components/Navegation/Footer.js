@@ -115,7 +115,6 @@ export default function Footer() {
           }
         >
           <button
-            onClick={() => {}}
             className='flex items-center gap-2 font-bold text-xs opacity-90 hover:opacity-100 text-white select-none relative'
           >
             <FiHelpCircle className='w-4 h-4 cursor-pointer stroke-2 text-white select-none'/>
