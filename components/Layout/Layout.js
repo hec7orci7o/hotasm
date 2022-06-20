@@ -24,8 +24,10 @@ export default function Layout({children, docs}) {
         <ShareProvider>
           <Meta/>
           <div className="h-screen flex flex-col divide-y divide-dark-gray-1 overflow-hidden">
-            <Documentation source={docs.source} frontMatter={docs.frontMatter} />
-            <Navbar />
+            <div>
+              <Documentation source={docs.source} frontMatter={docs.frontMatter} />
+              <Navbar />
+            </div>
             <main
               className="flex divide-x divide-dark-gray-1 w-full flex-1"
               style={{height: 'calc(100vh - 6rem)'}}
@@ -35,6 +37,7 @@ export default function Layout({children, docs}) {
             </main>
             <Footer />
             <Share/>
+
             <CookieConsent
               buttonText="Accept All"
               declineButtonText="Reject All"

@@ -7,7 +7,7 @@ export default function Documentation({source, frontMatter}) {
 
   return (
     <div
-      className={`fixed right-0  flex-nowrap h-screen w-full z-50 
+      className={`fixed right-0  flex-nowrap h-screen w-full z-50
       ${docsActive ? 'flex' : 'hidden'}`}
     >
       <div

@@ -71,7 +71,7 @@ export default function SidebarD({binary, memory}) {
   };
 
   return (
-    <div className="flex divide-x divide-neutral-gray-2 bg-dark text-base">
+    <div className="flex divide-x divide-neutral-gray-2 bg-color-5 text-base">
       <Toaster position="top-center" reverseOrder={false} />
       <div className="flex flex-col items-center gap-6 h-full p-3">
         <Tippy
