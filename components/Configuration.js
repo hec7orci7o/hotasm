@@ -1,9 +1,9 @@
-import { FiUpload, FiTrash } from "react-icons/fi";
-import { useState } from "react";
-import Tippy from "@tippyjs/react";
-import toast, { Toaster } from 'react-hot-toast';
+import {FiUpload, FiTrash} from 'react-icons/fi';
+import {useState} from 'react';
+import Tippy from '@tippyjs/react';
+import toast, {Toaster} from 'react-hot-toast';
 
-export default function Configuracion({ error, loadFormat, unloadFormat }) {
+export default function Configuracion({error, loadFormat, unloadFormat}) {
   const [format, setFormat] = useState();
   const [nBits, setBits] = useState();
 
@@ -18,7 +18,7 @@ export default function Configuracion({ error, loadFormat, unloadFormat }) {
           <input
             maxLength={2}
             className={`font-mono caret-white ml-4 w-8 h-8 bg-transparent rounded-lg border-2 text-sm p-1 focus:outline-none
-                      ${error === null || error === 2 ? "border-white border-opacity-20" : "border-red-400 border-opacity-100 animate-[pulse_4s_ease-in-out_infinite]"}`}
+                      ${error === null || error === 2 ? 'border-white border-opacity-20' : 'border-red-400 border-opacity-100 animate-[pulse_4s_ease-in-out_infinite]'}`}
             onChange={(e) => setBits(Number(e.target.value))}
             required
           />
@@ -37,8 +37,8 @@ export default function Configuracion({ error, loadFormat, unloadFormat }) {
           >
             <button
               onClick={() => {
-                loadFormat(format, nBits)
-                toast.success('configuration loaded.')
+                loadFormat(format, nBits);
+                toast.success('configuration loaded.');
               }}
             >
               <FiUpload className="text-lg stroke-1 hover:text-green-300" />
@@ -53,9 +53,9 @@ export default function Configuracion({ error, loadFormat, unloadFormat }) {
             }
           >
             <button onClick={() => {
-                unloadFormat()
-                toast.success('configuration deleted.')
-              }}
+              unloadFormat();
+              toast.success('configuration deleted.');
+            }}
             >
               <FiTrash className="text-lg stroke-1 hover:text-red-300" />
             </button>
@@ -65,7 +65,7 @@ export default function Configuracion({ error, loadFormat, unloadFormat }) {
       <textarea
         onChange={(e) => setFormat(e.target.value)}
         className={`flex-1 flex p-6  resize-none focus:outline-none text-base font-mono 
-                  ${error === null || error === 3 ? "bg-transparent" : "bg-red-400 bg-opacity-10 animate-[pulse_4s_ease-in-out_infinite]"}`}
+                  ${error === null || error === 3 ? 'bg-transparent' : 'bg-red-400 bg-opacity-10 animate-[pulse_4s_ease-in-out_infinite]'}`}
       />
     </>
   );

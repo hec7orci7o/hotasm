@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, {useState, useContext} from 'react';
 
 const ScreenContext = React.createContext();
 
@@ -6,7 +6,7 @@ export function useScreen() {
   return useContext(ScreenContext);
 }
 
-export function ScreenProvider({ children }) {
+export function ScreenProvider({children}) {
   const [docsActive, toggleDocs] = useState(false);
   const [mzLayout, toggleMZ] = useState(false);
   const [hLayout, toggleLY] = useState(false); // pendiente

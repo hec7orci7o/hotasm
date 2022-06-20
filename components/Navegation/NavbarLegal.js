@@ -1,8 +1,6 @@
-import { useSession } from 'next-auth/react'
-import Link from 'next/link'
+import Link from 'next/link';
 
-export default function Navbar () {
-  const { data: session } = useSession()
+export default function Navbar() {
   return (
     <div className="sticky top-0 h-16 w-full flex items-center tracking-wide z-40 bg-gray-900 bg-opacity-80">
       <div className="flex justify-center items-center container mx-auto relative">
@@ -25,5 +23,5 @@ export default function Navbar () {
         </div>
       </div>
     </div>
-  )
+  );
 }

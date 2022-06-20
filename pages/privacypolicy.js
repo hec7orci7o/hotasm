@@ -1,4 +1,4 @@
-import Layout from "../components/Layout/Legal";
+import Layout from '../components/Layout/Legal';
 
 export default function PrivacyPolicy() {
   return (
@@ -159,6 +159,6 @@ export default function PrivacyPolicy() {
 }
 
 PrivacyPolicy.getLayout = function getLayout(page) {
-    const docs = page.props;
-    return <Layout docs={docs}>{page}</Layout>;
+  const docs = page.props;
+  return <Layout docs={docs}>{page}</Layout>;
 };

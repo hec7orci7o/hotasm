@@ -1,9 +1,9 @@
-import Link from "next/link";
-import { FiTerminal, FiBookOpen, FiGithub, FiSettings } from "react-icons/fi";
-import { useScreen } from "../../context/ScreenContext";
+import Link from 'next/link';
+import {FiTerminal, FiBookOpen, FiGithub} from 'react-icons/fi';
+import {useScreen} from '../../context/ScreenContext';
 
 export default function Sidebar() {
-  const { leftSidebar, handleDocs } = useScreen();
+  const {leftSidebar, handleDocs} = useScreen();
   return (
     <div className="flex flex-col items-center bg-dark text-white">
       <Link href="/">

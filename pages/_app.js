@@ -1,22 +1,22 @@
-import "../styles/globals.css";
-import { SessionProvider } from "next-auth/react";
-import { useEffect } from 'react'
-import Script from 'next/script'
-import { useRouter } from 'next/router'
-import * as gtag from '../libs/gtag'
+import '../styles/globals.css';
+import {SessionProvider} from 'next-auth/react';
+import {useEffect} from 'react';
+import Script from 'next/script';
+import {useRouter} from 'next/router';
+import * as gtag from '../libs/gtag';
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }) {
-  const router = useRouter()
+function MyApp({Component, pageProps: {session, ...pageProps}}) {
+  const router = useRouter();
   useEffect(() => {
     const handleRouteChange = (url) => {
-      gtag.pageview(url)
-    }
-    router.events.on('routeChangeComplete', handleRouteChange)
+      gtag.pageview(url);
+    };
+    router.events.on('routeChangeComplete', handleRouteChange);
     return () => {
-      router.events.off('routeChangeComplete', handleRouteChange)
-    }
-  }, [router.events])
-  
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
+
   const getLayout = Component.getLayout || ((page) => page);
 
   return (

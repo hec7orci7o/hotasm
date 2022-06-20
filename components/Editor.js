@@ -1,20 +1,20 @@
-import { FiDownload, FiCopy } from "react-icons/fi";
-import { useState, useEffect } from "react";
-import copy from "copy-to-clipboard";
-import Tippy from "@tippyjs/react";
-import toast, { Toaster } from 'react-hot-toast';
+import {FiDownload, FiCopy} from 'react-icons/fi';
+import {useState} from 'react';
+import copy from 'copy-to-clipboard';
+import Tippy from '@tippyjs/react';
+import toast, {Toaster} from 'react-hot-toast';
 
-export default function Editor({ updateProgram }) {
+export default function Editor({updateProgram}) {
   const [program, setProgram] = useState();
-  const [downloadLink, setDownloadLink] = useState("");
+  const [downloadLink, setDownloadLink] = useState('');
 
   // function for generating file and set download link
   const makeTextFile = (_var) => {
     try {
       // This creates the file.
-      const data = new Blob([_var], { type: "text/plain" });
+      const data = new Blob([_var], {type: 'text/plain'});
       // this part avoids memory leaks
-      if (downloadLink !== "") window.URL.revokeObjectURL(downloadLink);
+      if (downloadLink !== '') window.URL.revokeObjectURL(downloadLink);
       // update the download link state
       setDownloadLink(window.URL.createObjectURL(data));
     } catch (error) {
@@ -49,12 +49,12 @@ export default function Editor({ updateProgram }) {
             }
           >
             <button
-              onClick={() =>
-                {copy(program, {
+              onClick={() => {
+                copy(program, {
                   debug: false,
-                  format: "text/plain",
-                })
-                toast.success('content copied to clipboard.')
+                  format: 'text/plain',
+                });
+                toast.success('content copied to clipboard.');
               }}
             >
               <FiCopy className="text-lg stroke-1 hover:text-green-300" />

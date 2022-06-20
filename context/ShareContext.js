@@ -1,31 +1,31 @@
-import React, { useState, useContext } from 'react'
+import React, {useState, useContext} from 'react';
 
-const ShareContext = React.createContext()
+const ShareContext = React.createContext();
 
-export function useShare () {
-  return useContext(ShareContext)
+export function useShare() {
+  return useContext(ShareContext);
 }
 
-export function ShareProvider ({ children }) {
-  const [popUp, setPopUp] = useState(false)
+export function ShareProvider({children}) {
+  const [popUp, setPopUp] = useState(false);
 
   const handleOpen = () => {
-    setPopUp(true)
-  }
+    setPopUp(true);
+  };
 
   const handleClose = () => {
-    setPopUp(false)
-  }
+    setPopUp(false);
+  };
 
   return (
     <ShareContext.Provider
       value={{
         popUp,
         handleOpen,
-        handleClose
+        handleClose,
       }}
     >
       {children}
     </ShareContext.Provider>
-  )
+  );
 }

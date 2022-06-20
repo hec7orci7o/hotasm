@@ -1,12 +1,12 @@
-import Layout from "../components/Layout/Layout";
-import Editor from "../components/Editor";
-import Configuracion from "../components/Configuration";
-import SidebarD from "../components/Navegation/SidebarD";
-import Split from "react-split";
-import useApp from "../hooks/useApp";
-import { getPost } from "../libs/mdxUtils";
-import { serialize } from "next-mdx-remote/serialize";
-import { useScreen } from "../context/ScreenContext";
+import Layout from '../components/Layout/Layout';
+import Editor from '../components/Editor';
+import Configuracion from '../components/Configuration';
+import SidebarD from '../components/Navegation/SidebarD';
+import Split from 'react-split';
+import useApp from '../hooks/useApp';
+import {getPost} from '../libs/mdxUtils';
+import {serialize} from 'next-mdx-remote/serialize';
+import {useScreen} from '../context/ScreenContext';
 
 export default function Home() {
   const {
@@ -19,7 +19,7 @@ export default function Home() {
     memory,
     updateProgram,
   } = useApp();
-  const { hLayout, rightSidebar } = useScreen();
+  const {hLayout, rightSidebar} = useScreen();
 
   return (
     <div className="flex-auto h-full bg-gray-500 text-white overflow-hidden">
@@ -85,8 +85,8 @@ Home.getLayout = function getLayout(page) {
 };
 
 export const getStaticProps = async () => {
-  const { content, data } = getPost("docs");
-  const mdxSource = await serialize(content, { scope: data });
+  const {content, data} = getPost('docs');
+  const mdxSource = await serialize(content, {scope: data});
 
   return {
     props: {

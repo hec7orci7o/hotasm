@@ -1,39 +1,39 @@
 // utils/mdxUtils.ts
-import fs from "fs";
-import { join } from "path";
-import matter from "gray-matter";
+import fs from 'fs';
+import {join} from 'path';
+import matter from 'gray-matter';
 
-const POSTS_PATH = join(process.cwd(), "data");
+const POSTS_PATH = join(process.cwd(), 'data');
 
 function getPostFilePaths() {
   return (
     fs
-      .readdirSync(POSTS_PATH)
-      // Only include md(x) files
-      .filter((path) => /\.mdx?$/.test(path))
+        .readdirSync(POSTS_PATH)
+    // Only include md(x) files
+        .filter((path) => /\.mdx?$/.test(path))
   );
 }
 
 export function getPost(slug) {
   const fullPath = join(POSTS_PATH, `${slug}.mdx`);
-  const fileContents = fs.readFileSync(fullPath, "utf8");
-  const { data, content } = matter(fileContents);
+  const fileContents = fs.readFileSync(fullPath, 'utf8');
+  const {data, content} = matter(fileContents);
 
-  return { data, content };
+  return {data, content};
 }
 
 export function getPostItems(filePath, fields = []) {
-  const slug = filePath.replace(/\.mdx?$/, "");
-  const { data, content } = getPost(slug);
+  const slug = filePath.replace(/\.mdx?$/, '');
+  const {data, content} = getPost(slug);
 
   const items = {};
 
   // Ensure only the minimal needed data is exposed
   fields.forEach((field) => {
-    if (field === "slug") {
+    if (field === 'slug') {
       items[field] = slug;
     }
-    if (field === "content") {
+    if (field === 'content') {
       items[field] = content;
     }
 
@@ -48,8 +48,8 @@ export function getPostItems(filePath, fields = []) {
 export function getAllPosts(fields = []) {
   const filePaths = getPostFilePaths();
   const posts = filePaths
-    .map((filePath) => getPostItems(filePath, fields))
-    // sort posts by date in descending order
-    .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
+      .map((filePath) => getPostItems(filePath, fields))
+  // sort posts by date in descending order
+      .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
   return posts;
 }

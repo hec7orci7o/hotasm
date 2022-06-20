@@ -10,13 +10,13 @@ import {
   FiActivity,
   FiUserPlus,
   FiBook,
-} from "react-icons/fi";
-import Link from 'next/link'
-import Tippy from "@tippyjs/react";
-import copy from "copy-to-clipboard";
-import { useScreen } from "../../context/ScreenContext";
-import { useShare } from '../../context/ShareContext'
-import toast, { Toaster } from 'react-hot-toast';
+} from 'react-icons/fi';
+import Link from 'next/link';
+import Tippy from '@tippyjs/react';
+import copy from 'copy-to-clipboard';
+import {useScreen} from '../../context/ScreenContext';
+import {useShare} from '../../context/ShareContext';
+import toast, {Toaster} from 'react-hot-toast';
 
 export default function Footer() {
   const {
@@ -24,11 +24,9 @@ export default function Footer() {
     mzLayout,
     handleDocs,
     handleMode,
-    handleLayout,
     handleSl,
-    handleSr,
   } = useScreen();
-  const { handleOpen } = useShare()
+  const {handleOpen} = useShare();
 
   return (
     <div className="flex justify-between items-center h-8 w-full bg-dark text-white">
@@ -45,7 +43,7 @@ export default function Footer() {
           <button onClick={handleSl} className="opacity-70 hover:opacity-100">
             <FiSidebar
               className={`text-lg cursor-pointer stroke-1 text-white duration-150
-               ${leftSidebar ? "rotate-180" : ""}`}
+               ${leftSidebar ? 'rotate-180' : ''}`}
             />
           </button>
         </Tippy>
@@ -67,7 +65,7 @@ export default function Footer() {
         </Tippy>
       </div>
       <div className="flex gap-4 px-2">
-      <Tippy
+        <Tippy
           arrow={false}
           trigger={'click'}
           interactive={true}
@@ -77,12 +75,12 @@ export default function Footer() {
               <a
                 href='mailto:contact@hec7or.me'
                 className='w-full py-1.5 px-2 flex gap-3 items-center mb-2 cursor-pointer justify-between opacity-60 hover:opacity-100 hover:bg-gray-100 hover:bg-opacity-5 rounded-md'
-                >
-                  <div className='flex gap-2'>
-                    <FiMessageCircle className='w-4 h-4'/>
-                    <p className='text-xs font-medium'>Talk to us</p>
-                  </div>
-                  <span className='block text-xs font-medium bg-black bg-opacity-40 py-1 px-2 rounded-lg'>Q</span>
+              >
+                <div className='flex gap-2'>
+                  <FiMessageCircle className='w-4 h-4'/>
+                  <p className='text-xs font-medium'>Talk to us</p>
+                </div>
+                <span className='block text-xs font-medium bg-black bg-opacity-40 py-1 px-2 rounded-lg'>Q</span>
               </a>
               <div className='w-full flex flex-col items-start'>
                 <a href='https://github.com/hec7orci7o/asm-editor' className='w-full mt-2 py-2.5 px-2 flex gap-3 items-center justify-start cursor-pointer opacity-60 hover:opacity-100 hover:bg-gray-100 hover:bg-opacity-5 rounded-md'>
@@ -101,7 +99,7 @@ export default function Footer() {
                   <p className='text-xs font-medium'>Status</p>
                 </a>
                 <Link href='/tos'>
-                  <a  className='w-full py-2.5 px-2 flex gap-3 items-center justify-start  cursor-pointer opacity-60 hover:opacity-100 hover:bg-gray-100 hover:bg-opacity-5 rounded-md'>
+                  <a className='w-full py-2.5 px-2 flex gap-3 items-center justify-start  cursor-pointer opacity-60 hover:opacity-100 hover:bg-gray-100 hover:bg-opacity-5 rounded-md'>
                     <FiLock className='w-4 h-4'/>
                     <p className='text-xs font-medium'>Terms and Privacy</p>
                   </a>
@@ -145,13 +143,12 @@ export default function Footer() {
           }
         >
           <button
-            onClick={() =>
-              {
-                copy("https://hotasm.vercel.app/", {
+            onClick={() => {
+              copy('https://hotasm.vercel.app/', {
                 debug: false,
-                format: "text/plain",
-              })
-              toast.success('URL copied to clipboard.')
+                format: 'text/plain',
+              });
+              toast.success('URL copied to clipboard.');
             }}
             className="opacity-70 hover:opacity-100"
           >

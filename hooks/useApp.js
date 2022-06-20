@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
-import { formatParser, assamblyParser } from "../libs/lexico";
-import { formatSintaxReader, programSintaxReader } from "../libs/sintactico";
-import { bin2hex } from "../libs/conversores";
-import { useSession } from "next-auth/react";
+import {useState, useEffect} from 'react';
+import {formatParser, assamblyParser} from '../libs/lexico';
+import {formatSintaxReader, programSintaxReader} from '../libs/sintactico';
+import {bin2hex} from '../libs/conversores';
+import {useSession} from 'next-auth/react';
 
 export default function useApp() {
-  const { status } = useSession();
+  const {status} = useSession();
 
   /* Módulo que permite cargar y procesar los datos para
    * establecer la configuración del editor de ensamblador
@@ -13,13 +13,13 @@ export default function useApp() {
    * Resumen: Establece una configuracion de traducción
    * para entender el ensamblador del editor.
    */
-  const [formatError, setError] = useState(null)
-  const [formats, setFormats] = useState("");
+  const [formatError, setError] = useState(null);
+  const [formats, setFormats] = useState('');
   const [maxBits, setMBits] = useState(0);
   const [ISA, setISA] = useState({}); // Instruction Set Architecture
 
   useEffect(() => {
-    const { tokens, error } = formatParser(formats);
+    const {tokens} = formatParser(formats);
     const isaAux = formatSintaxReader(tokens);
     setISA(isaAux);
   }, [formats, maxBits]);
@@ -31,16 +31,16 @@ export default function useApp() {
    * @param {Number} _n // Número máximo de bits de una instrucción.
    */
   const loadFormat = (_f, _n) => {
-    if (status === "authenticated" || process.env.NODE_ENV === "development") {
-      console.log(_f, _n)
-      if (_f !== undefined && _f !== "" && _n !== undefined && _n !== 0) {
+    if (status === 'authenticated' || process.env.NODE_ENV === 'development') {
+      console.log(_f, _n);
+      if (_f !== undefined && _f !== '' && _n !== undefined && _n !== 0) {
         setFormats(_f);
         setMBits(_n);
         setError(null); // sin errores
       } else {
-        if ((_f === undefined || _f === "") && (_n === undefined || _n === 0)) {
+        if ((_f === undefined || _f === '') && (_n === undefined || _n === 0)) {
           setError(1); // error en la configuracion
-        } else if (_f === undefined || _f === "") {
+        } else if (_f === undefined || _f === '') {
           setError(2); // error en los patrones
         } else {
           setError(3); // error en el numero de bits
@@ -53,7 +53,7 @@ export default function useApp() {
    * Descarga / Elimina la configuración actual del editor.
    */
   const unloadFormat = () => {
-    setFormats("");
+    setFormats('');
     setMBits(0);
     setError(null); // sin errores
   };
@@ -65,24 +65,24 @@ export default function useApp() {
    * Resumen: Traduce el condigo asm introducido por el usuario a
    * binario y a memoria con el formato de logisim.
    */
-  const [program, setProgram] = useState("");
+  const [program, setProgram] = useState('');
   const [binary, setBinary] = useState([[], []]);
-  const [memory, setMemory] = useState(["", <></>]);
+  const [memory, setMemory] = useState(['', <></>]);
 
   useEffect(() => {
     if (program.length > 0) {
       try {
-        const { tokens, error } = assamblyParser(program);
+        const {tokens} = assamblyParser(program);
         const bins = programSintaxReader(tokens, ISA, maxBits);
-        const formatedBinary = formatBinary_V2(bins, "0");
+        const formatedBinary = formatBinaryV2(bins, '0');
         setBinary([formatedBinary, formatBinary(bins)]);
-        if (/[01]/.test(String(bins).replace(",", ""))) {
+        if (/[01]/.test(String(bins).replace(',', ''))) {
           setMemory([
-            formatMemory_V2(formatedBinary),
+            formatMemoryV2(formatedBinary),
             formatMemory(formatedBinary),
           ]);
         } else {
-          setMemory(["", <></>]);
+          setMemory(['', <></>]);
         }
       } catch (error) {
         // console.error(error);
@@ -103,18 +103,18 @@ export default function useApp() {
    * @returns
    */
   const formatBinary = (_bin) => {
-    let binary = [];
+    const binary = [];
     _bin.forEach((linea) => {
       const regexp = /[-]+|[10x]+/g;
-      const array = [...linea.matchAll(regexp)].map((element) => {
-        if (element[0].includes("-")) {
+      [...linea.matchAll(regexp)].map((element) => {
+        if (element[0].includes('-')) {
           binary.push(
-            <span className="text-red-500">
-              {element[0].replaceAll("-", "0")}
-            </span>
+              <span className="text-red-500">
+                {element[0].replaceAll('-', '0')}
+              </span>,
           );
         } else {
-          binary.push(<>{element[0].replaceAll("x", "0")}</>);
+          binary.push(<>{element[0].replaceAll('x', '0')}</>);
         }
       });
       binary.push(<br />);
@@ -131,9 +131,9 @@ export default function useApp() {
    * @param {String} _x
    * @returns
    */
-  const formatBinary_V2 = (_bin, _x) => {
+  const formatBinaryV2 = (_bin, _x) => {
     const binary = _bin.map((linea) =>
-      linea.replaceAll("-", _x).replaceAll("x", _x)
+      linea.replaceAll('-', _x).replaceAll('x', _x),
     );
     return binary;
   };
@@ -150,14 +150,14 @@ export default function useApp() {
       <>
         <>v2.0 raw</>
         <br />
-        <>{hex.toString().replaceAll(",", " ")}</>
+        <>{hex.toString().replaceAll(',', ' ')}</>
       </>
     );
   };
 
-  const formatMemory_V2 = (_bin) => {
-    let memory = _bin.map((e) => bin2hex(e));
-    return "v2.0 raw\n" + String(memory).replaceAll(",", " ");
+  const formatMemoryV2 = (_bin) => {
+    const memory = _bin.map((e) => bin2hex(e));
+    return 'v2.0 raw\n' + String(memory).replaceAll(',', ' ');
   };
 
   return {

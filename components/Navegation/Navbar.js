@@ -1,20 +1,20 @@
-import { useScreen } from "../../context/ScreenContext";
-import { useSession, signIn, signOut } from "next-auth/react";
-import Tippy from "@tippyjs/react";
-import Link from "next/link";
-import Image from "next/image";
-import { FiUserPlus, FiLogOut } from "react-icons/fi";
-import { useState, useEffect } from "react";
-import copy from "copy-to-clipboard";
+import {useScreen} from '../../context/ScreenContext';
+import {useSession, signIn, signOut} from 'next-auth/react';
+import Tippy from '@tippyjs/react';
+import Link from 'next/link';
+import Image from 'next/image';
+import {FiUserPlus, FiLogOut} from 'react-icons/fi';
+import {useState, useEffect} from 'react';
+import copy from 'copy-to-clipboard';
 
 export default function Navbar() {
-  const { data: session, status } = useSession();
-  const { mzLayout } = useScreen();
+  const {data: session, status} = useSession();
+  const {mzLayout} = useScreen();
   const [menu, setMenu] = useState(false);
   const handleMenu = () => setMenu(!menu);
-  
+
   let user;
-  if (status === "authenticated") {
+  if (status === 'authenticated') {
     user = session.user;
   }
 
@@ -24,16 +24,16 @@ export default function Navbar() {
         setMenu(false);
       }
     };
-    document.addEventListener("click", checkIfClickedOutside);
+    document.addEventListener('click', checkIfClickedOutside);
     return () => {
-      document.removeEventListener("click", checkIfClickedOutside);
+      document.removeEventListener('click', checkIfClickedOutside);
     };
   }, [menu]);
 
   return (
     <div
       className={`items-center justify-between h-16 w-full bg-dark px-2
-      ${!mzLayout ? "flex" : "hidden"}`}
+      ${!mzLayout ? 'flex' : 'hidden'}`}
     >
       <Link href="/">
         <a className="px-4 py-1.5 rounded hover:bg-white hover:bg-opacity-10">
@@ -44,13 +44,13 @@ export default function Navbar() {
       </Link>
 
       <div>
-        {status === "authenticated" ? (
+        {status === 'authenticated' ? (
           <div className="flex items-center gap-4">
             <button
               onClick={() =>
-                copy("https://hotasm.vercel.app/", {
+                copy('https://hotasm.vercel.app/', {
                   debug: false,
-                  format: "text/plain",
+                  format: 'text/plain',
                 })
               }
               className="flex items-center text-green-300 gap-2 bg-green-500 px-4 py-1.5 bg-opacity-10 hover:bg-opacity-10 rounded hover:bg-green-600 focus:ring-green-500 focus:ring-2 focus:ring-opacity-75"
@@ -107,7 +107,7 @@ export default function Navbar() {
         ) : (
           <>
             <button
-              onClick={() => signIn("github")}
+              onClick={() => signIn('github')}
               className="flex items-center px-3.5 py-1.5 rounded bg-indigo-500 hover:bg-indigo-600"
             >
               <span className="text-white text-sm capitalize font-medium tracking-wide">

@@ -1,6 +1,6 @@
-import Head from "next/head";
+import Head from 'next/head';
 
-export default function Meta({ title, keywords, description }) {
+export default function Meta({title, keywords, description}) {
   return (
     <Head>
       <meta charSet="UTF-8" />
@@ -19,7 +19,7 @@ export default function Meta({ title, keywords, description }) {
 }
 
 Meta.defaultProps = {
-  title: "HOTASM",
-  keywords: "unizar, universidad de zaragoza, zaragoza, ic, aoc2, ensamblador, asm",
-  description: "Assembler to binary translator to save time and headache.",
+  title: 'HOTASM',
+  keywords: 'unizar, universidad de zaragoza, zaragoza, ic, aoc2, ensamblador, asm',
+  description: 'Assembler to binary translator to save time and headache.',
 };

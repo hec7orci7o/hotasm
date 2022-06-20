@@ -1,4 +1,4 @@
-import Layout from "../components/Layout/Legal";
+import Layout from '../components/Layout/Legal';
 
 export default function Tos() {
   return (
@@ -95,6 +95,6 @@ export default function Tos() {
 }
 
 Tos.getLayout = function getLayout(page) {
-    const docs = page.props;
-    return <Layout docs={docs}>{page}</Layout>;
+  const docs = page.props;
+  return <Layout docs={docs}>{page}</Layout>;
 };

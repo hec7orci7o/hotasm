@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from 'react';
 
 export default function useCalc() {
   const BASE_2 = 2;
   const BASE_10 = 10;
   const BASE_16 = 16;
-  const [caso, setCaso] = useState("");
+  const [caso, setCaso] = useState('');
   const [dec, setDec] = useState();
   const [bin, setBin] = useState();
   const [hex, setHex] = useState();
 
   const updateDecimal = (_n) => {
-    setDec(_n === "" ? 0 : _n);
+    setDec(_n === '' ? 0 : _n);
   };
   const updateBinario = (_n) => {
     setBin(_n);
@@ -20,23 +20,23 @@ export default function useCalc() {
   };
 
   const setDecimal = () => {
-    setCaso("DEC");
+    setCaso('DEC');
   };
   const setBinario = () => {
-    setCaso("BIN");
+    setCaso('BIN');
   };
   const setHexadecimal = () => {
-    setCaso("HEX");
+    setCaso('HEX');
   };
 
   useEffect(() => {
-    if (caso === "DEC") {
+    if (caso === 'DEC') {
       setBin(parseInt(dec, BASE_10).toString(BASE_2)); // dec -> bin
       setHex(parseInt(dec, BASE_10).toString(BASE_16)); // dec -> hex
-    } else if (caso === "BIN") {
+    } else if (caso === 'BIN') {
       setDec(parseInt(bin, BASE_2).toString(BASE_10)); // bin -> dec
       setHex(parseInt(bin, BASE_2).toString(BASE_16)); // bin -> hex
-    } else if (caso === "HEX") {
+    } else if (caso === 'HEX') {
       setDec(parseInt(hex, BASE_16).toString(BASE_10)); // hex -> dec
       setBin(parseInt(hex, BASE_16).toString(BASE_2)); // hex -> bin
     }

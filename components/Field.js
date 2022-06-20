@@ -1,8 +1,8 @@
-import { FiCopy } from "react-icons/fi";
-import copy from "copy-to-clipboard";
-import toast, { Toaster } from 'react-hot-toast';
+import {FiCopy} from 'react-icons/fi';
+import copy from 'copy-to-clipboard';
+import toast, {Toaster} from 'react-hot-toast';
 
-export default function Field({ name, value, update, select }) {
+export default function Field({name, value, update, select}) {
   return (
     <div className="h-10 flex flex-nowrap justify-between items-center gap-x-4 w-full bg-gray-800 bg-opacity-20">
       <Toaster position="top-center" reverseOrder={false} />
@@ -20,13 +20,12 @@ export default function Field({ name, value, update, select }) {
       />
       <div className="flex justify-center items-center w-20 h-full font-sans font-medium text-xl border-l-2 border-gray-800 border-opacity-40 px-3">
         <button
-          onClick={() =>
-            {
-              copy(value, {
+          onClick={() => {
+            copy(value, {
               debug: false,
-              format: "text/plain",
-            })
-            toast.success('content copied to clipboard.')
+              format: 'text/plain',
+            });
+            toast.success('content copied to clipboard.');
           }}
           className="rounded-md"
         >

@@ -1,14 +1,14 @@
-import { MDXRemote } from "next-mdx-remote";
-import { FiX } from "react-icons/fi";
-import { useScreen } from "../context/ScreenContext";
+import {MDXRemote} from 'next-mdx-remote';
+import {FiX} from 'react-icons/fi';
+import {useScreen} from '../context/ScreenContext';
 
-export default function Documentation({ source, frontMatter }) {
-  const { docsActive, handleDocs } = useScreen();
+export default function Documentation({source, frontMatter}) {
+  const {docsActive, handleDocs} = useScreen();
 
   return (
     <div
       className={`fixed right-0  flex-nowrap h-screen w-full z-50 
-      ${docsActive ? "flex" : "hidden"}`}
+      ${docsActive ? 'flex' : 'hidden'}`}
     >
       <div
         onClick={handleDocs}
