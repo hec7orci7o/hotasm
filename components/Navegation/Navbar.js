@@ -8,14 +8,21 @@ import {useState, useEffect} from 'react';
 import copy from 'copy-to-clipboard';
 
 export default function Navbar() {
-  const {data: session, status} = useSession();
   const {mzLayout} = useScreen();
   const [menu, setMenu] = useState(false);
+  const [status, setStatus] = useState('unauthenticated');
+  const [user, setUser] = useState({
+    image: '/develop.png',
+    name: 'dev',
+    email: 'dev@hotasm.io',
+  });
   const handleMenu = () => setMenu(!menu);
-
-  let user;
-  if (status === 'authenticated') {
-    user = session.user;
+  if (process.env.NODE_ENV === 'development') {
+  } else {
+    const {data: session, status} = useSession();
+    if (status === 'authenticated') {
+      setUser(session.user);
+    }
   }
 
   useEffect(() => {
@@ -75,7 +82,7 @@ export default function Navbar() {
                 >
                   <div className="w-8 h-8 relative bg-dark rounded-full">
                     <Image
-                      src={user.image}
+                      src={user.image || '/develop.png'}
                       alt="Picture of the author"
                       layout="fill"
                       className="object-contain rounded-full"
@@ -85,14 +92,20 @@ export default function Navbar() {
               </Tippy>
               {menu && (
                 <div className="w-40 flex flex-col gap-3 divide-y divide-gray-500 bg-dark shadow-md bg-blend-hard-light px-2 py-1 absolute top-0 right-0 mt-10 truncate">
-                  <div className="flex flex-col text-white opacity-60">
+                  <div className="flex flex-col text-white opacity-60 truncate">
                     <span className="text-sm">{user.name}</span>
                     <span className="text-xs">{user.email}</span>
                   </div>
                   <div className="flex flex-col">
                     <div className="mt-2 py-2 text-white opacity-60 hover:opacity-100 hover:bg-gray-600 hover:bg-opacity-30 rounded px-3">
                       <button
-                        onClick={() => signOut()}
+                        onClick={() => {
+                          if (process.env.NODE_ENV === 'development') {
+                            setStatus('unauthenticated');
+                            return;
+                          }
+                          signOut();
+                        }}
                         className="flex items-center gap-2"
                       >
                         <FiLogOut className="text-sm" />
@@ -107,7 +120,13 @@ export default function Navbar() {
         ) : (
           <>
             <button
-              onClick={() => signIn('github')}
+              onClick={() => {
+                if (process.env.NODE_ENV === 'development') {
+                  setStatus('authenticated');
+                  return;
+                }
+                signIn('github');
+              }}
               className="flex items-center px-3.5 py-1.5 rounded bg-indigo-500 hover:bg-indigo-600"
             >
               <span className="text-white text-sm capitalize font-medium tracking-wide">

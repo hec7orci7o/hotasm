@@ -32,7 +32,6 @@ export default function useApp() {
    */
   const loadFormat = (_f, _n) => {
     if (status === 'authenticated' || process.env.NODE_ENV === 'development') {
-      console.log(_f, _n);
       if (_f !== undefined && _f !== '' && _n !== undefined && _n !== 0) {
         setFormats(_f);
         setMBits(_n);
