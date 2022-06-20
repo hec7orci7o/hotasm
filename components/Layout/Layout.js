@@ -1,15 +1,15 @@
 import Link from 'next/link';
 import {useRouter} from 'next/router';
 import CookieConsent from 'react-cookie-consent';
-import Meta from '../Meta';
-import Navbar from '../Navegation/Navbar';
-import Sidebar from '../Navegation/SidebarI';
-import Footer from '../Navegation/Footer';
-import Documentation from '../Documentation';
-import {ScreenProvider} from '../../context/ScreenContext';
-import {ShareProvider} from '../../context/ShareContext';
-import useKey from '../../hooks/useKey';
-import Share from '../Share';
+import Meta from '@/components/Meta';
+import Navbar from '@/components/Navegation/Navbar';
+import Sidebar from '@/components/Navegation/SidebarI';
+import Footer from '@/components/Navegation/Footer';
+import Documentation from '@/components/Documentation';
+import {ScreenProvider} from '@/context/ScreenContext';
+import {ShareProvider} from '@/context/ShareContext';
+import useKey from '@/hooks/useKey';
+import Share from '@/components/Share';
 
 export default function Layout({children, docs}) {
   const router = useRouter();

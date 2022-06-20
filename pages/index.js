@@ -1,12 +1,12 @@
-import Layout from '../components/Layout/Layout';
-import Editor from '../components/Editor';
-import Configuracion from '../components/Configuration';
-import SidebarD from '../components/Navegation/SidebarD';
+import Layout from '@/components/Layout/Layout';
+import Editor from '@/components/Editor';
+import Configuracion from '@/components/Configuration';
+import SidebarD from '@/components/Navegation/SidebarD';
 import Split from 'react-split';
-import useApp from '../hooks/useApp';
-import {getPost} from '../libs/mdxUtils';
+import useApp from '@/hooks/useApp';
+import {getPost} from '@/lib/mdxUtils';
 import {serialize} from 'next-mdx-remote/serialize';
-import {useScreen} from '../context/ScreenContext';
+import {useScreen} from '@/context/ScreenContext';
 
 export default function Home() {
   const {

@@ -14,8 +14,8 @@ import {
 import Link from 'next/link';
 import Tippy from '@tippyjs/react';
 import copy from 'copy-to-clipboard';
-import {useScreen} from '../../context/ScreenContext';
-import {useShare} from '../../context/ShareContext';
+import {useScreen} from '@/context/ScreenContext';
+import {useShare} from '@/context/ShareContext';
 import toast, {Toaster} from 'react-hot-toast';
 
 export default function Footer() {

@@ -1,4 +1,4 @@
-import Layout from '../components/Layout/Legal';
+import Layout from '@/components/Layout/Legal';
 
 export default function PrivacyPolicy() {
   return (

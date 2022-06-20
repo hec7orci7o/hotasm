@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
-import {formatParser, assamblyParser} from '../libs/lexico';
-import {formatSintaxReader, programSintaxReader} from '../libs/sintactico';
-import {bin2hex} from '../libs/conversores';
+import {formatParser, assamblyParser} from '@/lib/lexico';
+import {formatSintaxReader, programSintaxReader} from '@/lib/sintactico';
+import {bin2hex} from '@/lib/conversores';
 import {useSession} from 'next-auth/react';
 
 export default function useApp() {

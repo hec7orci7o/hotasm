@@ -1,4 +1,4 @@
-import {useShare} from '../context/ShareContext';
+import {useShare} from '@/context/ShareContext';
 import copy from 'copy-to-clipboard';
 import {FiX, FiCopy} from 'react-icons/fi';
 import {RiTwitterLine, RiRedditLine, RiFacebookFill, RiLinkedinFill, RiMailLine} from 'react-icons/ri';

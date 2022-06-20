@@ -1,5 +1,5 @@
-import Meta from '../Meta';
-import NavbarLegal from '../Navegation/NavbarLegal';
+import Meta from '@/components/Meta';
+import NavbarLegal from '@/components/Navegation/NavbarLegal';
 
 export default function Layout({children, docs}) {
   return (
