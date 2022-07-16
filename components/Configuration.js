@@ -17,8 +17,8 @@ export default function Configuracion({error, loadFormat, unloadFormat}) {
           </span>
           <input
             maxLength={2}
-            className={`font-mono caret-white ml-4 w-8 h-8 bg-transparent rounded-lg border-2 text-sm p-1 focus:outline-none
-                      ${error === null || error === 2 ? 'border-white border-opacity-20' : 'border-light-red-2 border-opacity-100 animate-[pulse_4s_ease-in-out_infinite]'}`}
+            className={`font-mono caret-black dark:caret-white ml-4 w-8 h-8 bg-transparent rounded-lg border-2 text-sm p-1 focus:outline-none
+                      ${error === null || error === 2 ? 'border-black border-opacity-20 dark:border-white dark:border-opacity-20' : 'border-light-red-2 border-opacity-100 animate-[pulse_4s_ease-in-out_infinite]'}`}
             onChange={(e) => setBits(Number(e.target.value))}
             required
           />

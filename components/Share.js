@@ -9,8 +9,8 @@ export default function Share() {
   const {popUp, handleClose} = useShare();
   return (
     <div className={`h-full absolute top-0 left-0 w-full z-50 flex justify-center ${popUp ? '' : 'hidden'}`}>
-      <div className='h-full w-full absolute bg-black opacity-60'/>
-      <div className='mt-32 h-fit max-w-lg bg-color-5 text-white p-6 rounded-lg flex flex-col gap-2 relative'>
+      <div className='h-full w-full absolute bg-white dark:bg-black opacity-60'/>
+      <div className='mt-32 h-fit max-w-lg bg-neutral-gray-2 dark:bg-color-5 text-black dark:text-white p-6 rounded-lg flex flex-col gap-2 relative'>
         <h2 className='text-xl font-bold opacity-95'>
           Invite your friends
         </h2>
@@ -45,7 +45,7 @@ export default function Share() {
                       format: 'text/plain',
                     })
                   }
-                  className='flex-1 border py-5 rounded-md flex flex-col gap-1.5 items-center justify-center opacity-70 hover:opacity-100'
+                  className='flex-1 border-2 dark:border py-5 rounded-md flex flex-col gap-1.5 items-center justify-center opacity-70 hover:opacity-100'
                 >
                   {social.icon}
                   <span className='capitalize text-sm select-none'>{social.text}</span>
@@ -80,7 +80,7 @@ export default function Share() {
                       format: 'text/plain',
                     })
                   }
-                  className='flex-1 border py-5 rounded-md flex flex-col gap-1.5 items-center justify-center opacity-70 hover:opacity-100'
+                  className='flex-1 border-2 dark:border py-5 rounded-md flex flex-col gap-1.5 items-center justify-center opacity-70 hover:opacity-100'
                 >
                   {social.icon}
                   <span className='capitalize text-sm select-none'>{social.text}</span>
