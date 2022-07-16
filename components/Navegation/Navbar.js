@@ -7,6 +7,7 @@ import {FiUserPlus, FiLogOut} from 'react-icons/fi';
 import {useState, useEffect} from 'react';
 import copy from 'copy-to-clipboard';
 import Theme from '@/components/Theme';
+import toast, {Toaster} from 'react-hot-toast';
 
 export default function Navbar() {
   const {data: session, status} = useSession();
@@ -36,6 +37,7 @@ export default function Navbar() {
       className={`items-center justify-between h-16 w-full bg-color-2 dark:bg-color-5 px-2
       ${!mzLayout ? 'flex' : 'hidden'}`}
     >
+      <Toaster position="top-center" reverseOrder={false} />
       <Link href="/">
         <a className="px-4 py-1.5 rounded hover:bg-black hover:bg-opacity-10 dark:hover:bg-white dark:hover:bg-opacity-10">
           <span className="text-black dark:text-white uppercase font-medium tracking-wide">
@@ -48,12 +50,13 @@ export default function Navbar() {
         {status === 'authenticated' ? (
           <div className="flex items-center gap-4">
             <button
-              onClick={() =>
+              onClick={() => {
                 copy('https://hotasm.vercel.app/', {
                   debug: false,
                   format: 'text/plain',
-                })
-              }
+                });
+                toast.success('content copied to clipboard.');
+              }}
               className="flex items-center text-light-green-1 gap-2 bg-neutral-green-2 px-4 py-1.5 bg-opacity-10 hover:bg-opacity-10 rounded-lg hover:bg-nuetral-green-3 focus:ring-neutral-green-2 duration 300"
             >
               <FiUserPlus className="text-lg" />
