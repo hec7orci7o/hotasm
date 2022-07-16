@@ -29,7 +29,7 @@ export default function Footer() {
   const {handleOpen} = useShare();
 
   return (
-    <div className="flex justify-between items-center h-8 w-full bg-color-5 text-white">
+    <div className="flex justify-between items-center h-8 w-full bg-color-2 text-black dark:bg-color-5 dark:text-white">
       <Toaster position="top-center" reverseOrder={false} />
       <div className="flex gap-4 px-2 relative">
         <Tippy
@@ -42,7 +42,7 @@ export default function Footer() {
         >
           <button onClick={handleSl} className="opacity-80 hover:opacity-100">
             <FiSidebar
-              className={`text-lg cursor-pointer stroke-1 text-white duration-150
+              className={`text-lg cursor-pointer stroke-1 dark:text-white duration-150
                ${leftSidebar ? 'rotate-180' : ''}`}
             />
           </button>
@@ -57,9 +57,9 @@ export default function Footer() {
         >
           <button onClick={handleMode} className="opacity-80 hover:opacity-100">
             {mzLayout ? (
-              <FiMinimize className="text-lg cursor-pointer stroke-1 text-white" />
+              <FiMinimize className="text-lg cursor-pointer stroke-1 dark:text-white" />
             ) : (
-              <FiMaximize className="text-lg cursor-pointer stroke-1 text-white" />
+              <FiMaximize className="text-lg cursor-pointer stroke-1 dark:text-white" />
             )}
           </button>
         </Tippy>
@@ -71,36 +71,36 @@ export default function Footer() {
           interactive={true}
           allowHTML={true}
           content={
-            <div className='p-4 overflow-hidden w-48 h-56 mb-4 bg-color-5 shadow-sm shadow-color-6 rounded-lg'>
-              <div className='flex flex-col items-start text-white divide-y divide-neutral-gray-2 w-full h-full overflow-y-auto'>
+            <div className='p-4 overflow-hidden w-48 h-56 mb-4 bg-color-2 dark:bg-color-5 shadow-sm shadow-color-5 dark:shadow-color-4 rounded-lg'>
+              <div className='flex flex-col items-start dark:text-white divide-y divide-color-5 dark:divide-neutral-gray-2 w-full h-full overflow-y-auto'>
                 <a
                   href='mailto:contact@hec7or.me'
-                  className='w-full py-1.5 px-2 flex gap-3 items-center mb-2 cursor-pointer justify-between opacity-60 hover:opacity-100 hover:bg-neutral-gray-2 hover:bg-opacity-5 rounded-md'
+                  className='w-full py-1.5 px-2 flex gap-3 items-center mb-2 cursor-pointer justify-between opacity-60 hover:opacity-100 dark:hover:opacity-100 hover:bg-color-5 dark:hover:bg-neutral-gray-2 hover:bg-opacity-5 dark:hover:bg-opacity-10 rounded-md'
                 >
                   <div className='flex gap-2'>
                     <FiMessageCircle className='w-4 h-4'/>
                     <p className='text-xs font-medium'>Talk to us</p>
                   </div>
-                  <span className='block text-xs font-medium bg-black bg-opacity-40 py-1 px-2 rounded-lg'>Q</span>
+                  <span className='block text-xs font-medium bg-black bg-opacity-10 dark:bg-opacity-40 py-1 px-2 rounded-lg'>Q</span>
                 </a>
                 <div className='w-full flex flex-col items-start'>
-                  <a href='https://github.com/hec7orci7o/asm-editor' className='w-full mt-2 py-2.5 px-2 flex gap-3 items-center justify-start cursor-pointer opacity-60 hover:opacity-100 hover:bg-neutral-gray-2 hover:bg-opacity-5 rounded-md'>
+                  <a href='https://github.com/hec7orci7o/asm-editor' className='w-full mt-2 py-2.5 px-2 flex gap-3 items-center justify-start cursor-pointer opacity-60 hover:opacity-100 dark:hover:opacity-100 hover:bg-color-5 dark:hover:bg-neutral-gray-2 hover:bg-opacity-5 dark:hover:bg-opacity-10 rounded-md'>
                     <FiGithub className='w-4 h-4'/>
                     <p className='text-xs font-medium'>GitHub</p>
                   </a>
                   <button
                     onClick={handleOpen}
-                    className='w-full py-2.5 px-2 flex gap-3 items-center justify-start  cursor-pointer opacity-60 hover:opacity-100 hover:bg-neutral-gray-2 hover:bg-opacity-5 rounded-md'
+                    className='w-full py-2.5 px-2 flex gap-3 items-center justify-start  cursor-pointer opacity-60 hover:opacity-100 dark:hover:opacity-100 hover:bg-color-5 dark:hover:bg-neutral-gray-2 hover:bg-opacity-5 dark:hover:bg-opacity-10 rounded-md'
                   >
                     <FiUserPlus className='w-4 h-4'/>
                     <p className='text-xs font-medium'>Invite</p>
                   </button>
-                  <a href='https://hotasm.betteruptime.com/' className='w-full py-2.5 px-2 flex gap-3 items-center justify-start  cursor-pointer opacity-60 hover:opacity-100 hover:bg-neutral-gray-2 hover:bg-opacity-5 rounded-md'>
+                  <a href='https://hotasm.betteruptime.com/' className='w-full py-2.5 px-2 flex gap-3 items-center justify-start  cursor-pointer opacity-60 hover:opacity-100 dark:hover:opacity-100 hover:bg-color-5 dark:hover:bg-neutral-gray-2 hover:bg-opacity-5 dark:hover:bg-opacity-10 rounded-md'>
                     <FiActivity className='w-4 h-4'/>
                     <p className='text-xs font-medium'>Status</p>
                   </a>
                   <Link href='/tos'>
-                    <a className='w-full py-2.5 px-2 flex gap-3 items-center justify-start  cursor-pointer opacity-60 hover:opacity-100 hover:bg-neutral-gray-2 hover:bg-opacity-5 rounded-md'>
+                    <a className='w-full py-2.5 px-2 flex gap-3 items-center justify-start  cursor-pointer opacity-60 hover:opacity-100 dark:hover:opacity-100 hover:bg-color-5 dark:hover:bg-neutral-gray-2 hover:bg-opacity-5 dark:hover:bg-opacity-10 rounded-md'>
                       <FiLock className='w-4 h-4'/>
                       <p className='text-xs font-medium'>Terms and Privacy</p>
                     </a>
@@ -115,9 +115,9 @@ export default function Footer() {
           }
         >
           <button
-            className='flex items-center gap-2 font-bold text-xs opacity-90 hover:opacity-100 text-white select-none relative'
+            className='flex items-center gap-2 font-bold text-xs opacity-90 hover:opacity-100 dark:text-white select-none relative'
           >
-            <FiHelpCircle className='w-4 h-4 cursor-pointer stroke-2 text-white select-none'/>
+            <FiHelpCircle className='w-4 h-4 cursor-pointer stroke-2 dark:text-white select-none'/>
             Help & feedback
           </button>
         </Tippy>
@@ -133,7 +133,7 @@ export default function Footer() {
             onClick={handleDocs}
             className="flex items-center opacity-80 hover:opacity-100"
           >
-            <FiBook className="text-lg cursor-pointer stroke-1 text-white" />
+            <FiBook className="text-lg cursor-pointer stroke-1 dark:text-white" />
           </button>
         </Tippy>
         <Tippy
@@ -154,7 +154,7 @@ export default function Footer() {
             }}
             className="opacity-80 hover:opacity-100"
           >
-            <FiShare2 className="text-lg cursor-pointer stroke-1 text-white" />
+            <FiShare2 className="text-lg cursor-pointer stroke-1 dark:text-white" />
           </button>
         </Tippy>
       </div>

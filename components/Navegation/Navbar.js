@@ -33,12 +33,12 @@ export default function Navbar() {
 
   return (
     <div
-      className={`items-center justify-between h-16 w-full bg-color-5 px-2
+      className={`items-center justify-between h-16 w-full bg-color-2 dark:bg-color-5 px-2
       ${!mzLayout ? 'flex' : 'hidden'}`}
     >
       <Link href="/">
-        <a className="px-4 py-1.5 rounded hover:bg-white hover:bg-opacity-10">
-          <span className="text-white uppercase font-medium tracking-wide">
+        <a className="px-4 py-1.5 rounded hover:bg-black hover:bg-opacity-10 dark:hover:bg-white dark:hover:bg-opacity-10">
+          <span className="text-black dark:text-white uppercase font-medium tracking-wide">
             hotasm
           </span>
         </a>

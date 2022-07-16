@@ -57,7 +57,7 @@ export default function Editor({updateProgram}) {
                 toast.success('content copied to clipboard.');
               }}
             >
-              <FiCopy className="text-lg stroke-1 hover:text-green-300" />
+              <FiCopy className="text-lg stroke-1 hover:text-neutral-green-2" />
             </button>
           </Tippy>
         </div>

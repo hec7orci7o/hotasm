@@ -4,7 +4,7 @@ import toast, {Toaster} from 'react-hot-toast';
 
 export default function Field({name, value, update, select}) {
   return (
-    <div className="h-10 flex flex-nowrap justify-between items-center gap-x-4 w-full bg-gray-800 bg-opacity-20">
+    <div className="h-10 flex flex-nowrap justify-between items-center gap-x-4 w-full bg-gray-200 bg-opacity-60 dark:bg-gray-800 dark:bg-opacity-20">
       <Toaster position="top-center" reverseOrder={false} />
       <div className="flex justify-center items-center w-20 min-w-[2rem] h-full border-r-2 border-gray-800 border-opacity-40 px-3">
         <span className="font-sans font-medium text-base opacity-80 text-left w-full select-none">
@@ -29,7 +29,7 @@ export default function Field({name, value, update, select}) {
           }}
           className="rounded-md"
         >
-          <FiCopy className="text-lg text-white stroke-1 hover:text-green-300" />
+          <FiCopy className="text-lg text-black dark:text-white stroke-1 hover:text-neutral-green-2" />
         </button>
       </div>
     </div>

@@ -23,13 +23,13 @@ export default function Layout({children, docs}) {
       <ScreenProvider>
         <ShareProvider>
           <Meta/>
-          <div className="h-screen flex flex-col divide-y divide-dark-gray-1 overflow-hidden">
+          <div className="h-screen flex flex-col divide-y divide-color-6 dark:divide-dark-gray-1 overflow-hidden">
             <div>
               <Documentation source={docs.source} frontMatter={docs.frontMatter} />
               <Navbar />
             </div>
             <main
-              className="flex divide-x divide-dark-gray-1 w-full flex-1"
+              className="flex divide-x divide-color-6 dark:divide-dark-gray-1 w-full flex-1"
               style={{height: 'calc(100vh - 6rem)'}}
             >
               <Sidebar />

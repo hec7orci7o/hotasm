@@ -71,7 +71,7 @@ export default function SidebarD({binary, memory}) {
   };
 
   return (
-    <div className="flex divide-x divide-neutral-gray-2 bg-color-5 text-base">
+    <div className="flex divide-x divide-color-5 bg-color-2 dark:divide-neutral-gray-2 dark:bg-color-5 text-base">
       <Toaster position="top-center" reverseOrder={false} />
       <div className="flex flex-col items-center gap-6 h-full p-3">
         <Tippy
@@ -86,7 +86,7 @@ export default function SidebarD({binary, memory}) {
           <button onClick={() => setState(estados['conversor'])}>
             <FiSmartphone
               className={`text-lg stroke-1 
-            ${state === estados['conversor'] ? 'text-indigo-400' : ''}`}
+            ${state === estados['conversor'] ? 'text-blue-600 opacity-60 dark:text-indigo-400' : 'opacity-60'}`}
             />
           </button>
         </Tippy>
@@ -102,7 +102,7 @@ export default function SidebarD({binary, memory}) {
           <button onClick={() => setState(estados['binario'])}>
             <FiFolder
               className={`text-lg stroke-1 
-            ${state === estados['binario'] ? 'text-indigo-400' : ''}`}
+            ${state === estados['binario'] ? 'text-blue-600 dark:text-indigo-400' : 'opacity-60'}`}
             />
           </button>
         </Tippy>
@@ -118,12 +118,12 @@ export default function SidebarD({binary, memory}) {
           <button onClick={() => setState(estados['memoria'])}>
             <FiLayers
               className={`text-lg stroke-1 
-            ${state === estados['memoria'] ? 'text-indigo-400' : ''}`}
+            ${state === estados['memoria'] ? 'text-blue-600 opacity-60 dark:text-indigo-400' : 'opacity-60'}`}
             />
           </button>
         </Tippy>
       </div>
-      <div className="flex-1 flex flex-col divide-y divide-neutral-gray-2 bg-dark overflow-hidden text-base">
+      <div className="flex-1 flex flex-col divide-y divide-color-5 dark:divide-neutral-gray-2 overflow-hidden text-base">
         <div className="flex items-center justify-between gap-6 px-6 h-10">
           <span className="text-sm font-bold opacity-80 capitalize">
             output

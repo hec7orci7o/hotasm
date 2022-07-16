@@ -5,7 +5,7 @@ import {useScreen} from '@/context/ScreenContext';
 export default function Sidebar() {
   const {leftSidebar, handleDocs} = useScreen();
   return (
-    <div className="flex flex-col items-center bg-color-5 text-white">
+    <div className="flex flex-col items-center bg-color-2 text-black dark:bg-color-5 dark:text-white">
       <Link href="/">
         <a className="flex flex-col justify-center items-center gap-2 py-4 tracking-normal hover:bg-neutral-gray-2 hover:bg-opacity-5 cursor-pointer opacity-100">
           <span className="px-5">
