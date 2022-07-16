@@ -55,7 +55,7 @@ export default function Navbar() {
                   debug: false,
                   format: 'text/plain',
                 });
-                toast.success('content copied to clipboard.');
+                toast.success('invitation link copied to clipboard.');
               }}
               className="flex items-center text-light-green-1 gap-2 bg-neutral-green-2 px-4 py-1.5 bg-opacity-10 hover:bg-opacity-10 rounded-lg hover:bg-nuetral-green-3 focus:ring-neutral-green-2 duration 300"
             >
