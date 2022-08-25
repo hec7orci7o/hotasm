@@ -63,6 +63,7 @@ export default function Configuracion({error, loadFormat, unloadFormat}) {
         </div>
       </div>
       <textarea
+        spellCheck={false}
         onChange={(e) => setFormat(e.target.value)}
         className={`flex-1 flex p-6  resize-none focus:outline-none text-base font-mono 
                   ${error === null || error === 3 ? 'bg-transparent' : 'bg-light-red-2 bg-opacity-10 animate-[pulse_4s_ease-in-out_infinite]'}`}

@@ -63,6 +63,7 @@ export default function Editor({updateProgram}) {
         </div>
       </div>
       <textarea
+        spellCheck={false}
         onChange={(e) => {
           updateProgram(e.target.value);
           setProgram(e.target.value);
