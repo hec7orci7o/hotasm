@@ -24,7 +24,7 @@ export default function DSidebar() {
     },
   }, { theme: true }, {
     name: 'Upgrades & FAQ',
-    href: 'faq',
+    href: '/faq',
     icon: ArrowTopRightOnSquareIcon,
   }, {
     name: 'Log out',

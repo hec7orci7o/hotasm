@@ -27,11 +27,11 @@ export default function Panel({
     try {
       if (title.toLowerCase().includes('config')) {
         const data = JSON.parse(__value);
-        const newValue = { bits: data.bits || app.bits, rules: data.rules || app.rules };
+        const newValue = { bits: data.bits ?? app.bits, rules: data.rules ?? app.rules };
         setValue(newValue);
         updateApp(newValue);
       } else if (title.toLowerCase().includes('editor')) {
-        const newValue = { lines: __value.split('\n').filter((i) => i !== '') || app.lines };
+        const newValue = { lines: __value.split('\n').filter((i) => i !== '') ?? app.lines };
         setValue(newValue);
         updateApp(newValue);
       }
@@ -46,10 +46,10 @@ export default function Panel({
   const {id} = router.query;
   const [downloadLink, setDownloadLink] = useState('');
 
-  const makeTextFile = (_var) => {
+  const makeTextFile = (value, type) => {
     try {
       // This creates the file.
-      const data = new Blob([_var], {type: 'text/plain'});
+      const data = new Blob([value], {type});
       // this part avoids memory leaks
       if (downloadLink !== '') window.URL.revokeObjectURL(downloadLink);
       // update the download link state
@@ -60,7 +60,8 @@ export default function Panel({
   };
 
   useEffect(() => {
-    makeTextFile(value);
+    if (title.toLowerCase().includes('config')) makeTextFile(JSON.stringify(app, null, 2), 'application/json');
+    else if (title.toLowerCase().includes('editor')) makeTextFile(app?.lines.join('\n'), 'text/plain');
   }, [value]);
 
   const handleButtonClick = () => {
@@ -68,38 +69,44 @@ export default function Panel({
   };
 
   const handleFileChange = (event) => {
-    const file = event.target.files[0];
+    try {
+      const file = event.target.files[0];
 
-    // Verifica la extensión del archivo
-    const validExtensions = ['.json', '.txt'];
-    const fileExtension = file?.name.slice(file.name.lastIndexOf('.'));
-    if (!validExtensions.includes(fileExtension)) {
-      console.error('El archivo debe ser de tipo JSON o TXT');
-      setValue(null);
-      return;
-    }
-
-
-    // Lee el contenido del archivo
-    const reader = new FileReader();
-    reader.readAsText(file, 'UTF-8');
-    reader.onload = (e) => {
-      const content = e.target.result;
-
-      // Analiza el contenido como objeto JSON si es un archivo JSON
-      if (fileExtension === '.json') {
-        try {
-          const data = JSON.parse(content);
-          setValue(data);
-        } catch (error) {
-          console.error(error);
-          setValue(null);
-        }
-      } else {
-        // Muestra el contenido como texto plano si es un archivo TXT
-        setValue(content);
+      // Verifica la extensión del archivo
+      const validExtensions = ['.json', '.txt'];
+      const fileExtension = file?.name.slice(file.name.lastIndexOf('.'));
+      if (!validExtensions.includes(fileExtension)) {
+        console.error('El archivo debe ser de tipo JSON o TXT');
+        return;
       }
-    };
+
+      // Lee el contenido del archivo
+      const reader = new FileReader();
+      reader.readAsText(file, 'UTF-8');
+      reader.onload = (e) => {
+        const content = e.target.result;
+
+        // Analiza el contenido como objeto JSON si es un archivo JSON
+        if (fileExtension === '.json') {
+          const data = JSON.parse(content);
+          console.log(data.bits, data.rules);
+          console.log({
+            bits: data.bits ?? app.bits,
+            rules: [...data.rules] ?? app.rules,
+          });
+          setValue({
+            bits: data.bits ?? app.bits,
+            rules: [...data.rules] ?? app.rules,
+          });
+        } else {
+          console.log({lines: content.split('\n')});
+          // Muestra el contenido como texto plano si es un archivo TXT
+          setValue({lines: content.split('\n')});
+        }
+      };
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const actions = [
@@ -121,7 +128,13 @@ export default function Panel({
     {
       icon: ClipboardIcon,
       onClick: () => {
-        copy(value, { debug: false, format: 'text/plain' });
+        let message;
+        if (title.toLowerCase().includes('config')) {
+          message = JSON.stringify(value, null, 2);
+        } else if (title.toLowerCase().includes('editor')) {
+          message = value.lines.join('\n');
+        }
+        copy(message, { debug: false, format: 'text/plain' });
         toast.success('Successfully copied!');
       },
       label: 'Copy to clipboard',
@@ -129,7 +142,14 @@ export default function Panel({
     {
       icon: PaperAirplaneIcon,
       onClick: () => {
-        const url = `https://wa.me/?text=${encodeURIComponent(value)}`;
+        let message;
+        if (title.toLowerCase().includes('config')) {
+          message = JSON.stringify(value, null, 2);
+        } else if (title.toLowerCase().includes('editor')) {
+          message = value.lines.join('\n');
+        }
+
+        const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
         window.open(url, '_blank');
       },
       label: 'Share via WhatsApp ',
@@ -166,7 +186,7 @@ export default function Panel({
               {action.href ? (
                 <a
                   href={action.href}
-                  download={String(title).toLowerCase() === 'editor' ? `${id}.s` : 'config.json'}
+                  download={String(title).toLowerCase() === 'editor' ? `${id}.txt` : 'config.json'}
                   className={`p-1.5 border border-white/20 rounded-lg group focus:bg-white/20 focus:border-white`}
                 >
                   <action.icon className='w-5 h-5 stroke-1 group-focus:text-white'/>
