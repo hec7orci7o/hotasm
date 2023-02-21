@@ -1,33 +1,54 @@
 import {useState, useEffect} from 'react';
-import {FiSun, FiMoon} from 'react-icons/fi';
+
+import { SunIcon, MoonIcon} from '@heroicons/react/24/outline';
 
 export default function Theme() {
   const [theme, setTheme] = useState();
-  const colorTheme = theme === 'dark' ? 'light' : 'dark';
 
   useEffect(() => {
-    setTheme(localStorage.ASMtheme || 'light');
+    const localTheme = localStorage.getItem('editor-theme');
+    if (localTheme !== 'null' && localTheme !== 'undefined') {
+      setTheme(localTheme);
+    }
   }, []);
 
   useEffect(() => {
     const root = window.document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+    localStorage.setItem('editor-theme', theme);
+  }, [theme]);
 
-    root.classList.remove(colorTheme);
-    root.classList.add(theme);
-    localStorage.setItem('ASMtheme', theme);
-  }, [theme, colorTheme]);
-
+  const handleThemeChange = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+  };
 
   return (
     <button
-      onClick={() => setTheme(colorTheme)}
-      className='relative'
+      key={theme}
+      onClick={handleThemeChange}
+      className='cursor-pointer text-gray-200 hover:bg-gray-800/30 group flex items-center px-3 py-3 text-sm font-medium rounded-md w-full'
     >
-      {colorTheme === 'dark' ?
-       <FiMoon className='w-4 h-4'/>:
-       <FiSun className='w-4 h-4 text-white'/>
+      {theme === 'dark' ?
+      <>
+        <SunIcon
+          className='text-gray-200  mr-3 flex-shrink-0 h-5 w-5'
+          aria-hidden="true"
+        />
+        Light mode
+      </> :
+       <>
+         <MoonIcon
+           className='text-gray-200  mr-3 flex-shrink-0 h-5 w-5'
+           aria-hidden="true"
+         />
+        Dark mode
+       </>
       }
-      <span className='absolute opacity-0'>theme</span>
     </button>
   );
 }

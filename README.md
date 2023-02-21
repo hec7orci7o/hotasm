@@ -1,54 +1,70 @@
-# HOT ASM 
+# next-template [![Production CI](https://github.com/hec7orci7o/next-template/actions/workflows/production.yml/badge.svg)](https://github.com/hec7orci7o/next-template/actions/workflows/production.yml)
 
-## Configuración
+![node](https://img.shields.io/badge/node-16.x-blue)
+![npm](https://img.shields.io/badge/npm-8.15.0-blue)
 
-**`REQUISITOS`**
- - npm >= 8.3.1
- - node >= v16.14.0
+![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![cypress](https://img.shields.io/badge/-cypress-%23E5E5E5?style=for-the-badge&logo=cypress&logoColor=058a5e)
 
-<br>
+## Folder structure
 
-Clona el repositorio.
+> **Note** 
+> **_document.js vs. _app.js -- [What is the difference?](https://github.com/vercel/next.js/discussions/39821)**
+
+- `_app.js`: Core of the application, everything is assembled from here at runtime.
+- `_document.js`: Where side effects are possible.
+- `components`: Contains the reusable layouts of the application.
+- `context`: Encapsulates a global state that can be accessed from anywhere in the application.
+- `hooks`: Encapsulates small pieces of code that represent a certain type of logic.
+- `lib`: Chaos property, stores here functionalities that do not have to do with the rest of the mentioned sections. 
+- `pages/api`: Endpoints for creating an api rest.
+- `pages`: pages accessible from the browser via `.../page`
+- `public`: Static content.
+- `styles`: Contains the styles of the application. Override or new styles in `tailwind.config.js`.
+- `nginx`: Contains the nginx server configuration.
+
+## Getting Started
+
+### Run for a development environment
+> **Warning** 
+> This version does not include `nginx` redirectión.<br>Server will be available in: `localhost:3000`
+
+```bash
+npm run dev
 ```
-git clone https://github.com/hec7orci7o/asm-editor.git
+
+### Run for a production environment
+> **Warning** 
+> This version does not include `nginx` redirectión.<br>Server will be available in: `localhost:3000`
+
+```bash
+npm run build
+npm run start
 ```
-Instala las dependencias y lanza el servidor de desarrollo.
+
+### Run for a production environment with [`pm2`](https://pm2.keymetrics.io/)
+> **Warning** 
+> This version does not include `nginx` redirectión.<br>Server will be available in: `localhost:3000`
+```bash
+pm2 start pm2-deploy.json
 ```
-npm i | npm run dev
+
+### Compile for docker
+> **Note** 
+> This version includes `nginx` redirectión.<br>Server will be available in: `localhost:80`
+
+```bash
+docker-compose up -d
 ```
 
-## Acuerdos para desarrollo
+## Learn More
 
-A la hora de subir una nueva 'feature' asegurate de seguir la guía de estilos definida con `eslint` usando `npm run lint`, si te sale algún aviso o error arreglalo antes de subir los cambios para intentar mantener el codigo dentro de un orden.
-De esto por lo general se encargará el paquete de npm `husky`
+To learn more about Next.js, take a look at the following resources:
 
-## Como funciona
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-## Como usarlo
-
-Como se ve en la imagen a continuación, la aplicacion consta de 3 partes principales.
- - `Code` - Area de código
- - `Configuration` - Area de configuración
- - `Output` - Area para ver los resultados [binario, hex]
-
- <!-- insertar imagen -->
- <!-- fin imagen -->
-
- Para comenzar con el uso de la app deberemos seguir los siguientes pasos:
-  1. **Iniciar sesión** en **GitHub**.
-  2. Establecer una configuración valida.
-  3. Escribir nuestro codigo ASM.
-
-### Configuración 
-
-```
-32
-```
-```
-nop; 000 31:29;
-beq ra rb #K; 001 31:29 28:24 23:19 18:3;
-mov #K rb; 010 31:29 18:3 23:19;
-add ra rb rd; 011 31:29 28:24 23:19 18:14;
-ld ra rb; 100 31:29 28:24 23:19 18:3;
-st rb ra; 101 31:29 23:19 28:24 18:3;
-```
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/)

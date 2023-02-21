@@ -1,177 +1,62 @@
 import {useState, useEffect} from 'react';
+import toast from 'react-hot-toast';
 import {formatParser, assamblyParser} from '@/lib/lexico';
 import {formatSintaxReader, programSintaxReader} from '@/lib/sintactico';
-import {bin2hex} from '@/lib/conversores';
-import {useSession} from 'next-auth/react';
 
-export default function useApp() {
-  const {status} = useSession();
+export default function useApp(__config, __editor) {
+  const [config, setConfig] = useState(__config); // {bits: 8, rules:[strings]}
+  const [editor, setEditor] = useState(__editor); // {lines: []}
+  const [ISA, setISA] = useState({}); // {op: null, types: [], ranges: []}
+  const [output, setOutput] = useState({}); // []
 
-  /* Módulo que permite cargar y procesar los datos para
-   * establecer la configuración del editor de ensamblador
-   * en base a las necesidades del usuario.
-   * Resumen: Establece una configuracion de traducción
-   * para entender el ensamblador del editor.
-   */
-  const [formatError, setError] = useState(null);
-  const [formats, setFormats] = useState('');
-  const [maxBits, setMBits] = useState(0);
-  const [ISA, setISA] = useState({}); // Instruction Set Architecture
 
-  useEffect(() => {
-    const {tokens} = formatParser(formats);
-    const isaAux = formatSintaxReader(tokens);
-    setISA(isaAux);
-  }, [formats, maxBits]);
-
-  /**
-   * Carga la configuración para el editor.
-   *
-   * @param {String} _f // Conjunto de formatos de instrucciones.
-   * @param {Number} _n // Número máximo de bits de una instrucción.
-   */
-  const loadFormat = (_f, _n) => {
-    if (status === 'authenticated' || process.env.NODE_ENV === 'development') {
-      if (_f !== undefined && _f !== '' && _n !== undefined && _n !== 0) {
-        setFormats(_f);
-        setMBits(_n);
-        setError(null); // sin errores
-      } else {
-        if ((_f === undefined || _f === '') && (_n === undefined || _n === 0)) {
-          setError(1); // error en la configuracion
-        } else if (_f === undefined || _f === '') {
-          setError(2); // error en los patrones
-        } else {
-          setError(3); // error en el numero de bits
-        }
-      }
-    }
-  };
-
-  /**
-   * Descarga / Elimina la configuración actual del editor.
-   */
-  const unloadFormat = () => {
-    setFormats('');
-    setMBits(0);
-    setError(null); // sin errores
-  };
-
-  /* Módulo que se encarga de generar el resultado
-   * final de la aplicacion, es decir, la lectura de ccódigo asm
-   * introducido y su posterior traducción a ensamblador y a formato
-   * de memoria de logisim.
-   * Resumen: Traduce el condigo asm introducido por el usuario a
-   * binario y a memoria con el formato de logisim.
-   */
-  const [program, setProgram] = useState('');
-  const [binary, setBinary] = useState([[], []]);
-  const [memory, setMemory] = useState(['', <></>]);
-
-  useEffect(() => {
-    if (program.length > 0) {
-      try {
-        const {tokens} = assamblyParser(program);
-        const bins = programSintaxReader(tokens, ISA, maxBits);
-        const formatedBinary = formatBinaryV2(bins, '0');
-        setBinary([formatedBinary, formatBinary(bins)]);
-        if (/[01]/.test(String(bins).replace(',', ''))) {
-          setMemory([
-            formatMemoryV2(formatedBinary),
-            formatMemory(formatedBinary),
-          ]);
-        } else {
-          setMemory(['', <></>]);
-        }
-      } catch (error) {
-        // console.error(error);
-      }
-    }
-  }, [program, ISA, maxBits]);
-
-  const updateProgram = (_c) => setProgram(_c);
-
-  /* Módulo de funciones para formatear la salida
-   */
-
-  /**
-   * Formatea la lista de instrucciones binarias para
-   * representarlas en la zona de output
-   *
-   * @param {Array} _bin
-   * @returns
-   */
-  const formatBinary = (_bin) => {
-    const binary = [];
-    _bin.forEach((linea) => {
-      const regexp = /[-]+|[10x]+/g;
-      [...linea.matchAll(regexp)].map((element) => {
-        if (element[0].includes('-')) {
-          binary.push(
-              <span className="text-neutral-red-2">
-                {element[0].replaceAll('-', '0')}
-              </span>,
-          );
-        } else {
-          binary.push(<>{element[0].replaceAll('x', '0')}</>);
-        }
-      });
-      binary.push(<br />);
+  const updateConfig = (value) => {
+    setConfig({
+      bits: value.bits || __config.bits,
+      rules: value.rules || __config.rules,
     });
-    return binary;
   };
 
-  /**
-   * Prepara la lista de binarios para ser copia
-   * al portapapeles de forma correcta.
-   * Forma correcta es aquella que solo contiene 1's y 0's
-   *
-   * @param {Array} _bin
-   * @param {String} _x
-   * @returns
-   */
-  const formatBinaryV2 = (_bin, _x) => {
-    const binary = _bin.map((linea) =>
-      linea.replaceAll('-', _x).replaceAll('x', _x),
-    );
-    return binary;
+  const updateEditor = (value) => {
+    setEditor({
+      lines: value.lines || __editor.lines,
+    });
   };
 
-  /**
-   * Formatea la lista de instrucciones binarias para
-   * representarlas en la zona de output con formato hexadecimal
-   *
-   * @param {Array} _bin
-   */
-  const formatMemory = (_bin) => {
-    const hex = _bin.map((e) => bin2hex(e));
-    return (
-      <>
-        <>v2.0 raw</>
-        <br />
-        <>{hex.toString().replaceAll(',', ' ')}</>
-      </>
-    );
-  };
+  useEffect(() => {
+    const {error: errFP, tokens} = formatParser(config.rules.join(' '));
+    if (errFP) {
+      toast.error(errFP);
+      return;
+    }
+    const isa = formatSintaxReader(tokens);
+    setISA(isa);
+  }, [config]);
 
-  const formatMemoryV2 = (_bin) => {
-    const memory = _bin.map((e) => bin2hex(e));
-    return 'v2.0 raw\n' + String(memory).replaceAll(',', ' ');
-  };
+  useEffect(() => {
+    try {
+      const program = editor.lines.join(' ');
+      if (program.length > 0) {
+        const {error: errAP, tokens} = assamblyParser(program);
+        if (errAP) {
+          toast.error(errAP);
+          return;
+        }
+
+        const binaryRaw = programSintaxReader(tokens, ISA, config.bits);
+        console.log(binaryRaw);
+        setOutput(binaryRaw);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, [config, editor, ISA]);
 
   return {
-    // error
-    formatError,
-    // modulo configuracion
-    formats,
-    maxBits,
-    ISA,
-    loadFormat,
-    unloadFormat,
-    // modulo editor
-    program,
-    binary,
-    memory,
-    updateProgram,
+    config,
+    editor,
+    output,
+    updateConfig,
+    updateEditor,
   };
 }
