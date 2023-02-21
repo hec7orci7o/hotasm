@@ -135,8 +135,8 @@ export default function SlideOver({
                       <a
                         href={downloadLink}
                         download={
-                          selected === 'logisim' ? 'memory' :
-                          selected === 'binary' ? 'binary' : ''
+                          selected === 'logisim' ? 'memory.txt' :
+                          selected === 'binary' ? 'binary.txt' : ''
                         }
                         className="ml-4 inline-flex justify-center rounded-md border border-transparent bg-emerald/80 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-emerald focus:outline-none focus:ring-2 duration-300 focus:ring-emerald focus:ring-offset-2"
                       >
