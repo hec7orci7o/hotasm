@@ -1,12 +1,8 @@
-import {
-  SunIcon,
-  BoltIcon,
-  ExclamationTriangleIcon,
-} from '@heroicons/react/24/outline';
+import {SunIcon} from '@heroicons/react/24/outline';
 import {useProjects} from '@/context/ProjectsContext';
 import {useRouter} from 'next/router';
 import * as samples from '@/data/examples';
-
+import {capabilities, limitations} from '@/data/header';
 
 export function Column(props) {
   return (
@@ -61,41 +57,10 @@ export default function Header() {
       },
     ],
   };
-  const capabilities = {
-    name: 'Capabilities',
-    icon: BoltIcon,
-    items: [
-      {
-        text: 'Remembers what user said earlier in the conversation',
-      },
-      {
-        text: 'Allows user to provide follow-up corrections',
-      },
-      {
-        text: 'Trained to decline inappropriate requests',
-      },
-    ],
-  };
-  const limitations = {
-    name: 'Limitations',
-    icon: ExclamationTriangleIcon,
-    items: [
-      {
-        text: 'May occasionally generate incorrect information',
-      },
-      {
-        text: 'May occasionally produce harmful instructions or biased content',
-      },
-      {
-        text: 'Limited knowledge of world and events after 2021',
-      },
-    ],
-  };
-
 
   return (
     <div className='h-fit space-y-16 text-gray-800 dark:text-white/80 py-20'>
-      <h1 className='text-4xl font-semibold text-center'>HOT-ASM</h1>
+      <h1 className='text-4xl font-semibold text-center'>HOT ASM</h1>
       <div className='mx-auto flex flex-col lg:flex-row justify-evenly items-start gap-x-4 max-w-lg lg:max-w-4xl px-2 lg:px6 lg:w-full'>
         <Column {...examples} />
         <Column {...capabilities} />

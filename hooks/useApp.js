@@ -4,7 +4,7 @@ import {formatParser, assamblyParser} from '@/lib/lexico';
 import {formatSintaxReader, programSintaxReader} from '@/lib/sintactico';
 
 export default function useApp(__config, __editor) {
-  const [config, setConfig] = useState(__config); // {bits: 8, rules:[strings]}
+  const [config, setConfig] = useState(__config); // {name: '', bits: 8, rules:[strings]}
   const [editor, setEditor] = useState(__editor); // {lines: []}
   const [ISA, setISA] = useState({}); // {op: null, types: [], ranges: []}
   const [output, setOutput] = useState({}); // []
@@ -44,11 +44,10 @@ export default function useApp(__config, __editor) {
         }
 
         const binaryRaw = programSintaxReader(tokens, ISA, config.bits);
-        console.log(binaryRaw);
         setOutput(binaryRaw);
       }
     } catch (error) {
-      console.error(error);
+      toast.error(error.message);
     }
   }, [config, editor, ISA]);
 

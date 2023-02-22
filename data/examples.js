@@ -8,6 +8,7 @@ export const defaultEditor = {
 };
 
 export const exConfig1 = {
+  name: 'example 1',
   bits: 8,
   rules: [
     'nop; 000 7:5;',
@@ -19,6 +20,7 @@ export const exEditor1 = {
 };
 
 export const exConfig2 = {
+  name: 'example 2',
   bits: 16,
   rules: [
     'nop; 000 15:13;',
@@ -30,6 +32,7 @@ export const exEditor2 = {
 };
 
 export const exConfig3 = {
+  name: 'example 3',
   bits: 32,
   rules: [
     'nop; 000 31:29;',

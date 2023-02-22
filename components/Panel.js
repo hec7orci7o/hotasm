@@ -11,6 +11,7 @@ import copy from 'copy-to-clipboard';
 import { useState, useEffect, useRef } from 'react';
 import {useRouter} from 'next/router';
 import toast from 'react-hot-toast';
+import {useProjects} from '@/context/ProjectsContext';
 
 export default function Panel({
   title,
@@ -22,29 +23,34 @@ export default function Panel({
 }) {
   // ----------------- State -----------------
   const [value, setValue] = useState(defaultValue);
-
-  const updateValue = (__value) => {
-    try {
-      if (title.toLowerCase().includes('config')) {
-        const data = JSON.parse(__value);
-        const newValue = { bits: data.bits ?? app.bits, rules: data.rules ?? app.rules };
-        setValue(newValue);
-        updateApp(newValue);
-      } else if (title.toLowerCase().includes('editor')) {
-        const newValue = { lines: __value.split('\n').filter((i) => i !== '') ?? app.lines };
-        setValue(newValue);
-        updateApp(newValue);
-      }
-    } catch (error) {
-      return;
-    }
-  };
+  const {updateProject} = useProjects();
 
   // ------------- Functionality -------------
   const fileInputRef = useRef();
   const router = useRouter();
   const {id} = router.query;
   const [downloadLink, setDownloadLink] = useState('');
+
+  const updateValue = (__value) => {
+    try {
+      if (title.toLowerCase().includes('config')) {
+        const data = JSON.parse(__value);
+        const newValue = { name: data?.name, bits: data.bits ?? app.bits, rules: data.rules ?? app.rules };
+        setValue(newValue);
+        updateApp(newValue);
+        updateProject(id, newValue, app.editor);
+
+        console.log(newValue);
+      } else if (title.toLowerCase().includes('editor')) {
+        const newValue = { lines: __value.split('\n').filter((i) => i !== '') ?? app.lines };
+        setValue(newValue);
+        updateApp(newValue);
+        updateProject(id, app.config, newValue);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   const makeTextFile = (value, type) => {
     try {
@@ -76,7 +82,7 @@ export default function Panel({
       const validExtensions = ['.json', '.txt'];
       const fileExtension = file?.name.slice(file.name.lastIndexOf('.'));
       if (!validExtensions.includes(fileExtension)) {
-        console.error('El archivo debe ser de tipo JSON o TXT');
+        toast.error('El archivo debe ser de tipo JSON o TXT');
         return;
       }
 
@@ -89,23 +95,18 @@ export default function Panel({
         // Analiza el contenido como objeto JSON si es un archivo JSON
         if (fileExtension === '.json') {
           const data = JSON.parse(content);
-          console.log(data.bits, data.rules);
-          console.log({
-            bits: data.bits ?? app.bits,
-            rules: [...data.rules] ?? app.rules,
-          });
           setValue({
+            name: data.name ?? app.createdAt,
             bits: data.bits ?? app.bits,
             rules: [...data.rules] ?? app.rules,
           });
         } else {
-          console.log({lines: content.split('\n')});
           // Muestra el contenido como texto plano si es un archivo TXT
           setValue({lines: content.split('\n')});
         }
       };
     } catch (error) {
-      console.error(error);
+      toast.error(error.message);
     }
   };
 

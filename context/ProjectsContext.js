@@ -30,12 +30,24 @@ export function ProjectsProvider({children}) {
     setData([]);
   };
 
+  const updateProject = (id, config, editor) => {
+    const newData = data.map((project) => {
+      if (project.id === id) {
+        return {id, config, editor, createdAt: project.createdAt, updatedAt: new Date().toISOString()};
+      }
+      return project;
+    });
+
+    setData(newData);
+  };
+
   const getProject = (id) => data.find((project) => project.id === id);
 
   return (
     <ProjectsContext.Provider value={{
       data,
       createProject,
+      updateProject,
       deleteProjects,
       getProject,
     }}>

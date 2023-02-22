@@ -10,7 +10,6 @@ export default function SignIn() {
           <img src="/vercel2-cropped.svg" className="w-24 h-16 mx-auto" />
         </div>
       </div>
-
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="py-8 px-4 sm:px-10">
           <form className="space-y-6" action="#" method="POST">

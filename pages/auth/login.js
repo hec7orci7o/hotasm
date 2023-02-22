@@ -6,8 +6,8 @@ export default function login() {
       <div className="w-fit h-fit">
         <img src="/vercel-cropped.svg" className="w-24 h-16 mx-auto" />
       </div>
-      <h1 className="font-medium tracking-wide">Welcome to ChatGPT</h1>
-      <p className="tracking-wide">Log in with your OpenAI account to continue</p>
+      <h1 className="font-medium tracking-wide">Welcome to the editor</h1>
+      <p className="tracking-wide">Log in with your HotAsm account to continue</p>
       <div className="flex gap-x-4 py-4">
         <button
           type="button"
