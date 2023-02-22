@@ -116,7 +116,7 @@ export default function SlideOver({
                       <div className="relative mt-6 flex-1 px-4 sm:px-6">
                         {/* Replace with your content */}
                         <div className="absolute inset-0 px-4 sm:px-6 pb-6">
-                          <div className="h-fit p-4 flex justify-center items-center border-2 border-dashed border-gray-300" aria-hidden="true">
+                          <div className="h-fit p-4 flex justify-center items-center border-2 border-dashed border-gray-300 overflow-x-auto" aria-hidden="true">
                             {selected === 'logisim' && <Logisim binary={output}/>}
                             {selected === 'binary' &&<Binary binary={output}/>}
                           </div>
