@@ -4,10 +4,8 @@ import { getToken } from 'next-auth/jwt';
 
 export default function Home() {
   return (
-    <div className='mx-auto max-w-4xl px-4 sm:px-6 md:px-8 h-full flex flex-col justify-center'>
-      <div className='-mt-56'>
-        <Header />
-      </div>
+    <div className='mx-auto max-w-4xl px-4 sm:px-6 md:px-8 h-full flex flex-col justify-start lg:justify-center'>
+      <Header />
     </div>
   );
 }

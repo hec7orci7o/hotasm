@@ -94,7 +94,7 @@ export default function Header() {
 
 
   return (
-    <div className='space-y-16 text-gray-800 dark:text-white/80 py-20'>
+    <div className='h-fit space-y-16 text-gray-800 dark:text-white/80 py-20'>
       <h1 className='text-4xl font-semibold text-center'>HOT-ASM</h1>
       <div className='mx-auto flex flex-col lg:flex-row justify-evenly items-start gap-x-4 max-w-lg lg:max-w-4xl px-2 lg:px6 lg:w-full'>
         <Column {...examples} />
