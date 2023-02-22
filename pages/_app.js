@@ -15,7 +15,16 @@ export default function MyApp({
       >
         {getLayout(<Component {...pageProps} />)}
       </SessionProvider>
-      <Analytics />
+      <Analytics
+        beforeSend={(event) => {
+          const url = new URL(event.url);
+          const pathname = url.pathname.split('/').slice(0, 2).join('/');
+          url.pathname = pathname;
+          return {
+            ...event,
+            url: url.toString(),
+          };
+        }}/>
     </>
   );
 }
