@@ -6,8 +6,8 @@ export default function SignIn() {
   return (
     <div className="flex min-h-screen flex-col justify-around sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="w-fit h-fit mx-auto">
-          <img src="/vercel2.svg" className="w-24 h-24" />
+        <div className="w-fit h-fit mx-auto py-4">
+          <img src="/vercel2-cropped.svg" className="w-24 h-16 mx-auto" />
         </div>
       </div>
 

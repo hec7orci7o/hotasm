@@ -39,7 +39,7 @@ export default function DSidebar() {
         <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
           <nav className="flex-1 space-y-1">
             <Link href="/" className="w-full h-fit">
-              <img src="/vercel.svg" className="w-24 h-24 mx-auto" />
+              <img src="/vercel-cropped.svg" className="w-24 h-16 mx-auto" />
             </Link>
             <button
               onClick={() => createProject()}
