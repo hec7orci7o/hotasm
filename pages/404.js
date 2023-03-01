@@ -6,8 +6,8 @@ export default function Error() {
     <div className='min-h-screen flex flex-col justify-around'>
       <main className="mx-auto w-full max-w-7xl px-6 pt-10 pb-16 sm:pb-24 lg:px-8">
         <img
-          className="mx-auto h-10 w-auto sm:h-12"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+          className="mx-auto h-6 w-auto sm:h-8"
+          src="/vercel2-cropped.svg"
           alt="Hot asm logo"
         />
         <div className="mx-auto mt-20 max-w-2xl text-center sm:mt-24">
