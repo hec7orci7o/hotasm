@@ -8,7 +8,7 @@ export const defaultEditor = {
 };
 
 export const exConfig1 = {
-  name: 'example 1',
+  name: 'How to prepare the environment for an 8 bit ISA?',
   bits: 8,
   rules: [
     'nop; 000 7:5;',
@@ -20,7 +20,7 @@ export const exEditor1 = {
 };
 
 export const exConfig2 = {
-  name: 'example 2',
+  name: 'How to prepare the environment for an 16 bit ISA?',
   bits: 16,
   rules: [
     'nop; 000 15:13;',
@@ -32,7 +32,7 @@ export const exEditor2 = {
 };
 
 export const exConfig3 = {
-  name: 'example 3',
+  name: 'This is an example for the AOC2 course at the University of Zaragoza.',
   bits: 32,
   rules: [
     'nop; 000 31:29;',

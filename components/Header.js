@@ -41,19 +41,19 @@ export default function Header() {
           const project = createProject(samples.exConfig1, samples.exEditor1);
           router.push(`/p/${project.id}`);
         },
-        text: 'Explain quantum computing in simple terms',
+        text: samples.exConfig1.name,
       }, {
         onclick: () => {
           const project = createProject(samples.exConfig2, samples.exEditor2);
           router.push(`/p/${project.id}`);
         },
-        text: 'Got any creative ideas for a 10 year old’s birthday?',
+        text: samples.exConfig2.name,
       }, {
         onclick: () => {
           const project = createProject(samples.exConfig3, samples.exEditor3);
           router.push(`/p/${project.id}`);
         },
-        text: 'How do I make an HTTP request in Javascript?',
+        text: samples.exConfig3.name,
       },
     ],
   };

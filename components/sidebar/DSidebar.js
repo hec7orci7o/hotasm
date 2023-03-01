@@ -13,6 +13,7 @@ import {useRouter} from 'next/router';
 
 export default function DSidebar() {
   const router = useRouter();
+  const {id} = router.query;
   const {data, createProject, deleteProjects} = useProjects();
 
   const navigation = [{
@@ -58,10 +59,12 @@ export default function DSidebar() {
                 className='cursor-pointer text-gray-200 hover:bg-gray-800/30 group flex items-center px-3 py-3 text-sm font-medium rounded-md'
               >
                 <ChatBubbleLeftIcon
-                  className='text-gray-200  mr-3 flex-shrink-0 h-5 w-5'
+                  className={`text-gray-200 mr-3 flex-shrink-0 h-5 w-5 ${item.id === id && 'fill-white/20'}`}
                   aria-hidden="true"
                 />
-                {item.config?.name ?? item.createdAt}
+                <span className='whitespace-nowrap truncate'>
+                  {item.config?.name ?? item.createdAt}
+                </span>
               </Link>
             ))}
           </nav>

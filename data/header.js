@@ -8,28 +8,29 @@ export const capabilities = {
   icon: BoltIcon,
   items: [
     {
-      text: 'Remembers what user said earlier in the conversation',
+      text: 'Saves user\'s work for later reference',
     },
     {
-      text: 'Allows user to provide follow-up corrections',
+      text: 'Allows translation to different formats such us: binary, logisim',
     },
     {
-      text: 'Trained to decline inappropriate requests',
+      text: 'allows the user to define custom ISAs',
     },
   ],
 };
+
 export const limitations = {
   name: 'Limitations',
   icon: ExclamationTriangleIcon,
   items: [
     {
-      text: 'May occasionally generate incorrect information',
+      text: 'Support is limited and bugs are solved gradually',
     },
     {
-      text: 'May occasionally produce harmful instructions or biased content',
+      text: 'Improper navigation can lead to bugs that can cause you to lose your work',
     },
     {
-      text: 'Limited knowledge of world and events after 2021',
+      text: 'The information does not persist in a database',
     },
   ],
 };
