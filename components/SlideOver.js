@@ -3,7 +3,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import Logisim from '@/components/output/Logisim';
 import Binary from '@/components/output/Binary';
-import {toPainText, toLogisim} from '@/lib/outputFormarters';
+import { toPainText, toLogisim } from '@/lib/outputFormarters';
 import toast from 'react-hot-toast';
 
 export default function SlideOver({
@@ -22,7 +22,7 @@ export default function SlideOver({
   const makeTextFile = (content, type) => {
     try {
       // This creates the file.
-      const data = new Blob([content], {type});
+      const data = new Blob([content], { type });
       // this part avoids memory leaks
       if (downloadLink !== '') window.URL.revokeObjectURL(downloadLink);
       // update the download link state
@@ -40,11 +40,11 @@ export default function SlideOver({
   }, [selected]);
 
   return (
-    <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setOpen}>
+    <Transition.Root show={ open } as={ Fragment }>
+      <Dialog as="div" className="relative z-10" onClose={ setOpen }>
         <div className="fixed inset-0" />
         <Transition.Child
-          as={Fragment}
+          as={ Fragment }
           enter="ease-in-out duration-500"
           enterFrom="opacity-0"
           enterTo="opacity-100"
@@ -58,7 +58,7 @@ export default function SlideOver({
           <div className="absolute inset-0 overflow-hidden">
             <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
               <Transition.Child
-                as={Fragment}
+                as={ Fragment }
                 enter="transform transition ease-in-out duration-500 sm:duration-700"
                 enterFrom="translate-x-full"
                 enterTo="translate-x-0"
@@ -68,7 +68,7 @@ export default function SlideOver({
               >
                 <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
                   <Transition.Child
-                    as={Fragment}
+                    as={ Fragment }
                     enter="ease-in-out duration-500"
                     enterFrom="opacity-0"
                     enterTo="opacity-100"
@@ -80,7 +80,7 @@ export default function SlideOver({
                       <button
                         type="button"
                         className="rounded-sm text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
-                        onClick={() => setOpen(false)}
+                        onClick={ () => setOpen(false) }
                       >
                         <span className="sr-only">Close panel</span>
                         <XMarkIcon className="h-6 w-6" aria-hidden="true" />
@@ -93,15 +93,15 @@ export default function SlideOver({
                         <div className="flex items-center justify-between">
                           <Dialog.Title className="text-lg font-medium text-white">
                             {
-                            selected === 'logisim' ? 'Logisim output' :
-                            selected === 'binary' ? 'Binary output' : ''
+                              selected === 'logisim' ? 'Logisim output' :
+                                selected === 'binary' ? 'Binary output' : ''
                             }
                           </Dialog.Title>
                           <div className="ml-3 flex h-7 items-center">
                             <button
                               type="button"
                               className="rounded-md text-indigo-200 hover:text-white focus:outline-none"
-                              onClick={swithselected}
+                              onClick={ swithselected }
                             >
                               <span className="sr-only">Change type of output</span>
                               <ChevronRightIcon className="h-6 w-6" aria-hidden="true" />
@@ -110,38 +110,39 @@ export default function SlideOver({
                         </div>
                         <div className="mt-1">
                           <p className="text-sm text-gray-200">
-                          Lorem, ipsum dolor sit amet consectetur adipisicing elit aliquam ad hic recusandae soluta.
+                            { selected === 'logisim' && 'Aquí puedes ver la vista previa de la memoria de tu programa en Logisim.' }
+                            { selected === 'binary' && 'Aquí puedes ver las instrucciones en binario de tu programa.' }
                           </p>
                         </div>
                       </div>
                       <div className="relative mt-6 flex-1 px-4 sm:px-6">
-                        {/* Replace with your content */}
+                        {/* Replace with your content */ }
                         <div className="absolute inset-0 px-4 sm:px-6 pb-6">
                           <div className="h-fit p-4 flex justify-center items-center border-2 border-dashed border-gray-300 overflow-x-auto" aria-hidden="true">
-                            {selected === 'logisim' && <Logisim binary={output}/>}
-                            {selected === 'binary' && Array.isArray(output) &&<Binary binary={output}/>}
+                            { selected === 'logisim' && <Logisim binary={ output } /> }
+                            { selected === 'binary' && Array.isArray(output) && <Binary binary={ output } /> }
                           </div>
                         </div>
-                        {/* /End replace */}
+                        {/* /End replace */ }
                       </div>
                     </div>
                     <div className="flex flex-shrink-0 justify-end px-4 py-4">
                       <button
                         type="button"
                         className="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 duration-300 focus:ring-emerald focus:ring-offset-2"
-                        onClick={() => setOpen(false)}
+                        onClick={ () => setOpen(false) }
                       >
-                        Cancel
+                        Cancelar
                       </button>
                       <a
-                        href={downloadLink}
+                        href={ downloadLink }
                         download={
                           selected === 'logisim' ? 'memory.txt' :
-                          selected === 'binary' ? 'binary.txt' : ''
+                            selected === 'binary' ? 'binary.txt' : ''
                         }
                         className="ml-4 inline-flex justify-center rounded-md border border-transparent bg-emerald/80 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-emerald focus:outline-none focus:ring-2 duration-300 focus:ring-emerald focus:ring-offset-2"
                       >
-                        Download
+                        Descargar
                       </a>
                     </div>
                   </div>

@@ -8,8 +8,8 @@
     "npm": "8.15.0"
   },
   "scripts": {
-    "start": "next start",
-    "dev": "next dev",
+    "start": "set NODE_ENV=production && next start",
+    "dev": "set NODE_ENV=development && next dev",
     "build": "next build",
     "test:e2e": "npx cypress run",
     "lint": "next lint --cache --fix",
@@ -28,6 +28,7 @@
     "fs": "^0.0.1-security",
     "next": "13.1.6",
     "next-auth": "^4.20.1",
+    "nookies": "^2.5.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.4.0",

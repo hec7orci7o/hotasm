@@ -4,33 +4,33 @@ import {
 } from '@heroicons/react/24/outline';
 
 export const capabilities = {
-  name: 'Capabilities',
+  name: 'Capacidades',
   icon: BoltIcon,
   items: [
     {
-      text: 'Saves user\'s work for later reference',
+      text: 'Guarda el trabajo del usuario para consultarlo más tarde',
     },
     {
-      text: 'Allows translation to different formats such us: binary, logisim',
+      text: 'Permite la traducción a diferentes formatos como: binario, logisim',
     },
     {
-      text: 'allows the user to define custom ISAs',
+      text: 'Permite al usuario definir ISA personalizadas',
     },
   ],
 };
 
 export const limitations = {
-  name: 'Limitations',
+  name: 'Limitaciones',
   icon: ExclamationTriangleIcon,
   items: [
     {
-      text: 'Support is limited and bugs are solved gradually',
+      text: 'El soporte es limitado y los fallos se resuelven gradualmente',
     },
     {
-      text: 'Improper navigation can lead to bugs that can cause you to lose your work',
+      text: 'El soporte es limitado y los fallos se resuelven gradualmente',
     },
     {
-      text: 'The information does not persist in a database',
+      text: 'La información no persiste en una base de datos',
     },
   ],
 };

@@ -1,27 +1,27 @@
 export const faqs = [
   {
-    question: 'How can I create a custom isa?',
+    question: '¿Cómo puedo crear una ISA personalizada?',
     answer:
-      'To create your own ISA you must create a project, specify the number of bits your instructions will occupy and then start creating the patterns for your operations.',
+      'Para crear tu propia ISA debes crear un proyecto, especificar el número de bits que ocuparán tus instrucciones y después empezar a crear los patrones de tus operaciones.',
   },
   {
-    question: 'Can I create my own example and share it?',
+    question: '¿Puedo crear mi propio ejemplo y compartirlo?',
     answer:
-      'It is not yet possible to share the examples but the idea is that it will be available soon.',
+      'Todavía no es posible compartir los ejemplos, pero la idea es que esté disponible en breve.',
   },
   {
-    question: 'What happens with my data?',
+    question: '¿Qué ocurre con mis datos?',
     answer:
-      'Your session data is not stored in any database, it is only used to check that the people using the service are human.',
+      'Sus datos de sesión no se almacenan en ninguna base de datos, sólo se utilizan para comprobar que las personas que utilizan el servicio son humanas.',
   },
   {
-    question: 'Where is the project information stored?',
+    question: '¿Dónde se almacena la información del proyecto?',
     answer:
-      'Project information is stored in the browser\'s local storage, so if the page is reloaded you will lose the information.',
+      'La información del proyecto se guarda en el almacenamiento local del navegador, por lo que si se recarga la página se perderá la información.',
   },
   {
-    question: 'Can I contribute to the project?',
+    question: '¿Puedo contribuir al proyecto?',
     answer:
-      'Of course, if you want to improve the project with an idea or develop a new feature, please contact the developers through the github profiles.',
+      'Por supuesto, si quieres mejorar el proyecto con una idea o desarrollar una nueva función, ponte en contacto con los desarrolladores a través de los perfiles de github.',
   },
 ];
