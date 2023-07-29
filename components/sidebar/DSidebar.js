@@ -6,11 +6,13 @@ import Link from 'next/link';
 import { useProjects } from '@/context/ProjectsContext';
 import { useRouter } from 'next/router';
 import Dropdown from '@/components/Dropdown';
+import { useSession } from 'next-auth/react';
 
 export default function DSidebar() {
   const router = useRouter();
   const { id } = router.query;
   const { data, createProject } = useProjects();
+  const { data: session, isLoading } = useSession();
 
   return (
     <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col bg-gray-900">
@@ -47,9 +49,9 @@ export default function DSidebar() {
         </div>
         <div className="flex flex-col flex-shrink-0 border-gray-200 py-2.5">
           <Dropdown
-            isLoading={ true }
-            avatar={ '' }
-            username={ '' }
+            isLoading={ isLoading === true }
+            avatar={ session?.user?.image }
+            username={ session?.user?.name }
           />
         </div>
       </div>

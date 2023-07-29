@@ -9,11 +9,13 @@ import Link from 'next/link';
 import { useProjects } from '@/context/ProjectsContext';
 import { useRouter } from 'next/router';
 import Dropdown from '@/components/Dropdown';
+import { useSession } from 'next-auth/react';
 
 export default function MSidebar({ sidebarOpen, setSidebarOpen }) {
   const router = useRouter();
   const { id } = router.query;
   const { data, createProject } = useProjects();
+  const { data: session, isLoading } = useSession();
 
   return (
     <Transition.Root show={ sidebarOpen } as={ Fragment }>
@@ -92,9 +94,9 @@ export default function MSidebar({ sidebarOpen, setSidebarOpen }) {
               </div>
               <div className="flex flex-col flex-shrink-0 border-gray-200 py-2.5 border-t border-white/20">
                 <Dropdown
-                  isLoading={ true }
-                  avatar={ '' }
-                  username={ '' }
+                  isLoading={ isLoading === true }
+                  avatar={ session?.user?.image }
+                  username={ session?.user?.name }
                 />
               </div>
             </Dialog.Panel>

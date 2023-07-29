@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { Menu, Transition } from '@headlessui/react';
 import {
@@ -17,6 +18,7 @@ function classNames(...classes) {
 }
 
 export default function Dropdown({ isLoading, username, avatar }) {
+  console.log('Datos del usuario:', username, avatar); // Aquí tienes los datos del usuario
   const { deleteProjects } = useProjects();
   const router = useRouter();
 
@@ -25,11 +27,14 @@ export default function Dropdown({ isLoading, username, avatar }) {
       <div>
         <Menu.Button className="inline-flex w-full gap-x-1.5 rounded-md text-sm font-semibold shadow-sm cursor-pointer text-gray-200 hover:bg-gray-800/30 group items-center justify-between p-3">
           <span className='flex items-center gap-x-2 capitalize'>
-            <img
-              className="h-7 w-7 object-cover rounded-full select-none"
-              src={ isLoading ? `/animals/1.webp` : `/${avatar}` }
-              alt={ avatar }
-            />
+            <div className="h-7 w-7 object-cover rounded-full select-none relative">
+              <Image
+                src={ isLoading ? `/animals/1.webp` : avatar }
+                alt={ avatar }
+                fill="responsive"
+                className="w-full h-full object-cover rounded-full select-none absolute"
+              />
+            </div>
             { username || 'User' }
           </span>
           <EllipsisHorizontalIcon className='h-5 w-5' />

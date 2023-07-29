@@ -1,5 +1,6 @@
 import { SessionProvider } from 'next-auth/react';
 import { Analytics } from '@vercel/analytics/react';
+import Meta from '@/components/Meta';
 import '@/styles/globals.css';
 
 export default function MyApp({
@@ -8,15 +9,16 @@ export default function MyApp({
   const getLayout = Component.getLayout || ((page) => page);
   return (
     <>
+      <Meta />
       <SessionProvider
-        session={session}
-        refetchInterval={60 * 5}
-        refetchWhenOffline={false}
+        session={ session }
+        refetchInterval={ 60 * 5 }
+        refetchWhenOffline={ false }
       >
-        {getLayout(<Component {...pageProps} />)}
+        { getLayout(<Component { ...pageProps } />) }
       </SessionProvider>
       <Analytics
-        beforeSend={(event) => {
+        beforeSend={ (event) => {
           const url = new URL(event.url);
           const pathname = url.pathname.split('/').slice(0, 2).join('/');
           url.pathname = pathname;
@@ -24,7 +26,7 @@ export default function MyApp({
             ...event,
             url: url.toString(),
           };
-        }}/>
+        } } />
     </>
   );
 }
